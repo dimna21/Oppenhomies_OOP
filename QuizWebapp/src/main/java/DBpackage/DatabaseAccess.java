@@ -22,8 +22,9 @@ public class DatabaseAccess {
     }
     public boolean login(String name, String hashcode) {
         //ArrayList<ProductInfo> students = new ArrayList<>();
-        String query = "select * from users where id = " + name +
-                "and password = " + hashcode +" ;";
+        String query = "select * from users where username = '" + name +
+                "' and password = '" + hashcode + "';";
+
         int total=0;
         try {
 
@@ -37,7 +38,7 @@ public class DatabaseAccess {
         return total == 1;
     }
     public User getUserInfo(String name){
-        String query = "select * from users where id = " + name +" ;";
+        String query = "select * from users where username = '" + name +"' ;";
         User user = null;
         try {
 
@@ -61,7 +62,7 @@ public class DatabaseAccess {
         return user;
     }
     public boolean addUser(String User, String Hashcode){
-
+        return false;
     }
 
 }

@@ -1,3 +1,4 @@
+
 USE QuizDatabase;
 
 -- Drop tables if they exist

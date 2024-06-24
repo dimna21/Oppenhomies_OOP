@@ -25,6 +25,44 @@ public class User {
         this.profile_pic_url = profile_pic_url;
     }
 
+    // Setter methods
+
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setAdmin_status(int admin_status) {
+        this.admin_status = admin_status;
+    }
+
+    public void setQuizzes_taken(int quizzes_taken) {
+        this.quizzes_taken = quizzes_taken;
+    }
+
+    public void setQuizzes_created(int quizzes_created) {
+        this.quizzes_created = quizzes_created;
+    }
+
+    public void setHighest_scorer(int highest_scorer) {
+        this.highest_scorer = highest_scorer;
+    }
+
+    public void setPractice_mode(int practice_mode) {
+        this.practice_mode = practice_mode;
+    }
+
+    public void setProfile_pic_url(String profile_pic_url) {
+        this.profile_pic_url = profile_pic_url;
+    }
     // Getter methods
     public int getUser_id() {
         return user_id;

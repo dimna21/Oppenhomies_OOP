@@ -61,8 +61,19 @@ public class DatabaseAccess {
         }
         return user;
     }
-    public boolean addUser(String User, String Hashcode){
-        return false;
+    public boolean addUser(String username, String Hashcode){
+        if(getUserInfo(username)!=null)return false;
+        String query = "INSERT INTO Users ( username, password, admin_status, quizzes_taken, quizzes_created, highest_scorer, practice_mode, profile_pic_url) VALUES" +
+                "( '" + username+ "', ' "+Hashcode +"', 1, 10, 5, 1, 0, 'http://example.com/images/john.jpg')";
+
+        try {
+
+            stmt.executeUpdate(query);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return true;
     }
 
 }

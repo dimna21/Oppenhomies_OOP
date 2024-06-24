@@ -17,15 +17,14 @@ public class DBtest extends TestCase{
 
 
     }
-    //can only run 1 test because tests do not run sequentially, which messes things up.
-    public void test2() throws SQLException {
+    public void test1() throws SQLException {
         boolean ans;
         ans = dbCall.login("john_doe","password123");
         assertEquals(true,ans);
         ans = dbCall.login("john_doe","password13");
         assertEquals(false,ans);
     }
-    public void test3() throws SQLException{
+    public void test2() throws SQLException{
         User user;
         user = dbCall.getUserInfo("charlie_black");
         assertEquals(user.getUser_id(),5);
@@ -33,6 +32,15 @@ public class DBtest extends TestCase{
         user = dbCall.getUserInfo("hi");
         assertNull(user);
     }
+    public void test3() throws SQLException{
+        boolean added;
+        added = dbCall.addUser("a","b");
+        assertEquals(added,true);
+        added = dbCall.addUser("c","d");
+        assertEquals(added,true);
+        added = dbCall.addUser("a","d");
+        assertEquals(added,false);
 
+    }
 
 }

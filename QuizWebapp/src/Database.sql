@@ -1,3 +1,4 @@
+
 USE QuizDatabase;
 
 -- Drop tables if they exist
@@ -13,7 +14,6 @@ DROP TABLE IF EXISTS Picture_questions;
 DROP TABLE IF EXISTS Scores;
 DROP TABLE IF EXISTS Textbox_questions;
 DROP TABLE IF EXISTS Quiz_questions;
-
 -- Create Users table
 CREATE TABLE Users (
                        user_id INT(10) AUTO_INCREMENT PRIMARY KEY,
@@ -27,12 +27,14 @@ CREATE TABLE Users (
                        profile_pic_url VARCHAR(300)
 );
 
-INSERT INTO Users (username, password, admin_status, quizzes_taken, quizzes_created, highest_scorer, practice_mode, profile_pic_url) VALUES
-                                                                                                                                         ('john_doe', 'password123', 1, 10, 5, 1, 0, 'http://example.com/images/john.jpg'),
-                                                                                                                                         ('jane_smith', 'password456', 0, 8, 3, 0, 1, 'http://example.com/images/jane.jpg'),
-                                                                                                                                         ('alice_jones', 'password789', 0, 15, 7, 0, 0, 'http://example.com/images/alice.jpg'),
-                                                                                                                                         ('bob_brown', 'password321', 0, 5, 2, 1, 1, 'http://example.com/images/bob.jpg'),
-                                                                                                                                         ('charlie_black', 'password654', 1, 20, 10, 1, 1, 'http://example.com/images/charlie.jpg');
+INSERT INTO Users ( username, password, admin_status, quizzes_taken,
+                   quizzes_created, highest_scorer, practice_mode, profile_pic_url) VALUES
+                                                                                        ( 'john_doe', 'password123', 1, 10, 5, 1, 0, 'http://example.com/images/john.jpg'),
+                                                                                        ('jane_smith', 'password456', 0, 8, 3, 0, 1, 'http://example.com/images/jane.jpg'),
+                                                                                        ('alice_jones', 'password789', 0, 15, 7, 0, 0, 'http://example.com/images/alice.jpg'),
+                                                                                        ('bob_brown', 'password321', 0, 5, 2, 1, 1, 'http://example.com/images/bob.jpg'),
+                                                                                        ('charlie_black', 'password654', 1, 20, 10, 1, 1, 'http://example.com/images/charlie.jpg');
+
 
 -- Create Friends table
 CREATE TABLE Friends (
@@ -44,14 +46,13 @@ CREATE TABLE Friends (
 
 -- Create Messages table
 CREATE TABLE Messages (
-                          message_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-                          friendship_id INT(6), -- Foreign Key with Friends table
+                          message_id INT(6) AUTO_INCREMENT PRIMARY KEY, -- Primary and Foreign Key with Friends table
                           from_id INT(6),
                           to_id INT(6),
                           notification INT(1) -- Boolean: 0 or 1
 );
 
--- Create Friend_requests table
+-- Create Friend_Requests table
 CREATE TABLE Friend_requests (
                                  request_id INT(6) AUTO_INCREMENT PRIMARY KEY,
                                  from_id INT(6),
@@ -73,7 +74,7 @@ CREATE TABLE Quizzes (
                          times_taken INT(6)
 );
 
--- Create Quiz_questions table
+-- Create questions table
 CREATE TABLE Quiz_questions(
                                question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
                                quiz_id INT(6),
@@ -81,7 +82,7 @@ CREATE TABLE Quiz_questions(
                                type INT(2)
 );
 
--- Create Textbox_questions table
+-- Create textbox question table
 CREATE TABLE Textbox_questions(
                                   question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
                                   quiz_id INT(6),
@@ -111,14 +112,15 @@ CREATE TABLE Multiple_choice_questions (
 -- Create Multiple_choice_answers table
 CREATE TABLE Multiple_choice_answers (
                                          answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-                                         question_id INT(6), -- Foreign Key with Multiple_choice_questions
+                                         quiz_id INT(6), -- Foreign Key with Quizzes
+                                         sub_id INT(3), -- Numeric order of the question in the quiz
                                          answer VARCHAR(30),
                                          correct INT(1) -- Boolean: 0 or 1
 );
 
 -- Create Picture_questions table
 CREATE TABLE Picture_questions (
-                                   question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
+                                   answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
                                    quiz_id INT(6), -- Foreign Key with Quizzes
                                    sub_id INT(3), -- Numeric order of the question in the quiz
                                    question VARCHAR(300),
@@ -129,7 +131,7 @@ CREATE TABLE Picture_questions (
 -- Create Scores table
 CREATE TABLE Scores (
                         score_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-                        user_id INT(6), -- Foreign Key with Users
+                        user_id INT(6), -- Foreign Key
                         score INT(6),
                         time INT(10),
                         date_scored DATE

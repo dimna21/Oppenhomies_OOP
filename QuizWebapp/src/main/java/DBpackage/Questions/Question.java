@@ -6,7 +6,9 @@ public class Question {
     private int questionNumber;
 
     public Question(int type, int quizID, int questionNumber){
-
+        this.type = type;
+        this.quizID = quizID;
+        this.questionNumber = questionNumber;
     }
 
     public int getQuestionNumber() {

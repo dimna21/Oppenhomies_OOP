@@ -13,7 +13,7 @@ public class QuestionMultipleChoice extends Question{
         super(type, quizID, questionNumber);
         this.question = question;
         this.correctAnswer = correctAnswer;
-        initAnswerList();
+        //initAnswerList();
     }
     private void initAnswerList() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -32,7 +32,7 @@ public class QuestionMultipleChoice extends Question{
         try {
             ResultSet resultSet = stmt.executeQuery(query);
             while (resultSet.next()){
-                answerList.add();
+                //answerList.add();
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);

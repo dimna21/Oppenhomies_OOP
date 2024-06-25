@@ -20,9 +20,9 @@ public class DBtest extends TestCase{
     public void test1() throws SQLException {
         boolean ans;
         ans = dbCall.login("john_doe","password123");
-        assertEquals(true,ans);
+        assertTrue(ans);
         ans = dbCall.login("john_doe","password13");
-        assertEquals(false,ans);
+        assertFalse(ans);
     }
     public void test2() throws SQLException{
         User user;
@@ -35,12 +35,40 @@ public class DBtest extends TestCase{
     public void test3() throws SQLException{
         boolean added;
         added = dbCall.addUser("a","b");
-        assertEquals(added,true);
+        assertTrue(added);
         added = dbCall.addUser("c","d");
-        assertEquals(added,true);
+        assertTrue(added);
         added = dbCall.addUser("a","d");
-        assertEquals(added,false);
+        assertFalse(added);
 
     }
+    public void test4() throws SQLException{
+        boolean added;
+        added = dbCall.updatePicture("asddf","picture.jpg");
+        assertFalse(added);
+        added = dbCall.updatePicture("john_doe","picture.jpg");
+        assertTrue(added);
+    }
+    public void testGetNewestQuiz() throws SQLException{
+        ArrayList<Quiz> ls;
+        ls=dbCall.getNewestQuiz(0);
+        assertEquals(ls.size(),5);
+        ls=dbCall.getNewestQuiz(3);
+        assertEquals(ls.size(),3);
+        assertEquals(ls.get(0).getQuiz_id(),1);
+        assertEquals(ls.get(1).getQuiz_id(),5);
+        assertEquals(ls.get(2).getQuiz_id(),4);
+    }
+    public void testGetQuizInfo()throws SQLException{
+        Quiz qz;
+        qz= dbCall.getQuizInfo(1);
+        assertEquals(qz.getName(),"General Knowledge");
+        qz= dbCall.getQuizInfo(6);
+        assertNull(qz);
+        qz= dbCall.getQuizInfo(5);
+        assertEquals(qz.getTimesTaken(),3);
+
+    }
+
 
 }

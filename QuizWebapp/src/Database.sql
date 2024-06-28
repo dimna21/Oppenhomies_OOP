@@ -27,7 +27,7 @@ Create table Challenge(
 );
 CREATE TABLE Users (
                        user_id INT(10) AUTO_INCREMENT PRIMARY KEY,
-                       username VARCHAR(15),
+                       username VARCHAR(150),
                        password VARCHAR(130),
                        admin_status INT(1), -- Boolean: 0 or 1
                        quizzes_taken INT(5),
@@ -73,8 +73,8 @@ CREATE TABLE Friend_requests (
 -- Create Quizzes table
 CREATE TABLE Quizzes (
                          quiz_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-                         quiz_name VARCHAR(25),
-                         quiz_description VARCHAR(50),
+                         quiz_name VARCHAR(300),
+                         quiz_description VARCHAR(300),
                          quiz_creator_id INT(6), -- Foreign Key
                          random_question INT(1), -- Boolean: 0 or 1
                          one_page INT(1), -- Boolean: 0 or 1
@@ -104,8 +104,8 @@ CREATE TABLE Textbox_questions(
                                   question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
                                   quiz_id INT(6),
                                   sub_id INT(3),
-                                  question VARCHAR(100),
-                                  answer VARCHAR(30)
+                                  question VARCHAR(300),
+                                  answer VARCHAR(300)
 );
 
 -- Create Fill_blank_questions table
@@ -115,7 +115,7 @@ CREATE TABLE Fill_blank_questions (
                                       sub_id INT(3), -- Numeric order of the question in the quiz
                                       text_before VARCHAR(300),
                                       text_after VARCHAR(300),
-                                      answer VARCHAR(50)
+                                      answer VARCHAR(300)
 );
 
 -- Create Multiple_choice_questions table
@@ -131,7 +131,7 @@ CREATE TABLE Multiple_choice_answers (
                                          answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
                                          quiz_id INT(6), -- Foreign Key with Quizzes
                                          sub_id INT(3), -- Numeric order of the question in the quiz
-                                         answer VARCHAR(30),
+                                         answer VARCHAR(300),
                                          correct INT(1) -- Boolean: 0 or 1
 );
 
@@ -141,8 +141,8 @@ CREATE TABLE Picture_questions (
                                    quiz_id INT(6), -- Foreign Key with Quizzes
                                    sub_id INT(3), -- Numeric order of the question in the quiz
                                    question VARCHAR(300),
-                                   answer VARCHAR(30),
-                                   image_url VARCHAR(100)
+                                   answer VARCHAR(300),
+                                   image_url VARCHAR(300)
 );
 
 -- Create Scores table
@@ -154,3 +154,49 @@ CREATE TABLE Scores (
                         time INT(10),
                         date_scored DATE
 );
+
+CREATE TABLE Multi_fill_Blank_questions(
+    question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
+    quiz_id INT(6), -- Foreign Key with Quizzes
+    sub_id INT(3), -- Numeric order of the question in the quiz
+    question VARCHAR(300)
+);
+
+CREATE TABLE Multi_fill_Blank_answers(
+    answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
+    multifill_id INT(6), -- foreign key with question_id of questions
+    answer VARCHAR(300)
+);
+
+CREATE TABLE Multi_multiple_choice_questions(
+      question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
+      quiz_id INT(6), -- Foreign Key with Quizzes
+      sub_id INT(3), -- Numeric order of the question in the quiz
+      question VARCHAR(300)
+
+);
+
+CREATE TABLE Multi_multiple_choice_answers(
+     answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
+     multichoice_id INT(6), -- foreign key with question_id of questions
+     answer VARCHAR(300),
+     correct INT(1) -- Boolean: 0 or 1
+);
+
+CREATE TABLE Matching_questions(
+     question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
+     quiz_id INT(6), -- Foreign Key with Quizzes
+     sub_id INT(3), -- Numeric order of the question in the quiz
+     question VARCHAR(300)
+
+);
+
+CREATE TABLE Matching_answers(
+     answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
+     match_id INT(6), -- foreign key with question_id of questions
+     word VARCHAR(300),
+     matching_word VARCHAR(300)
+);
+
+
+

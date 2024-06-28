@@ -9,11 +9,11 @@ public class QuestionMultipleChoice extends Question{
     private String question;
     private String correctAnswer;
     private ArrayList<String> answerList;
-    public QuestionMultipleChoice(int type, int quizID, int questionNumber, String question, String correctAnswer) {
+    public QuestionMultipleChoice(int type, int quizID, int questionNumber, String question, String correctAnswer) throws SQLException, ClassNotFoundException {
         super(type, quizID, questionNumber);
         this.question = question;
         this.correctAnswer = correctAnswer;
-        //initAnswerList();
+        initAnswerList();
     }
     private void initAnswerList() throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.cj.jdbc.Driver");
@@ -26,16 +26,19 @@ public class QuestionMultipleChoice extends Question{
         Statement stmt = con.createStatement();
         int quizID = this.getQuizID();
         int questionOrder = this.getQuestionNumber();
-        String query = "select * from Multiple_choice_answers where quiz_id = '" + quizID +
+        String query = "select answer from Multiple_choice_answers where quiz_id = '" + quizID +
                 "' and sub_id = '" + questionOrder + "';";
 
         try {
             ResultSet resultSet = stmt.executeQuery(query);
-            while (resultSet.next()){
-                //answerList.add();
+            while (resultSet.next()) {
+                String answer = resultSet.getString("answer");
+                answerList.add(answer);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } finally {
+            if (stmt != null) stmt.close();
         }
     }
 

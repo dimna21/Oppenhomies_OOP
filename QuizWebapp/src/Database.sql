@@ -1,4 +1,6 @@
-
+# UPDATE Users SET profile_pic_url = 'hello.jpg' WHERE username = 'john_doe';
+# select * from users;
+#SELECT * FROM quizzes ORDER BY creation_date desc LIMIT 3;
 USE QuizDatabase;
 
 -- Drop tables if they exist
@@ -14,7 +16,15 @@ DROP TABLE IF EXISTS Picture_questions;
 DROP TABLE IF EXISTS Scores;
 DROP TABLE IF EXISTS Textbox_questions;
 DROP TABLE IF EXISTS Quiz_questions;
+drop table if exists Challenge;
 -- Create Users table
+Create table Challenge(
+                          challenge_id INT(6) AUTO_INCREMENT PRIMARY KEY, -- Primary and Foreign Key with Friends table
+                          from_id INT(6),
+                          to_id INT(6),
+                          quiz_id int(6),
+                          notification INT(1)
+);
 CREATE TABLE Users (
                        user_id INT(10) AUTO_INCREMENT PRIMARY KEY,
                        username VARCHAR(15),
@@ -73,6 +83,13 @@ CREATE TABLE Quizzes (
                          creation_date DATE,
                          times_taken INT(6)
 );
+INSERT INTO Quizzes (quiz_name, quiz_description, quiz_creator_id, random_question, one_page, immediate, practice, creation_date, times_taken)
+VALUES
+    ('General Knowledge', 'A basic general knowledge quiz.', 1, 0, 1, 1, 0, '2024-06-25', 10),
+    ('Science Quiz', 'Test your science knowledge.', 2, 1, 0, 0, 1, '2024-06-20', 5),
+    ('Math Quiz', 'Challenge yourself with math problems.', 3, 0, 0, 1, 0, '2024-06-18', 8),
+    ('History Quiz', 'How well do you know history?', 4, 1, 1, 1, 1, '2024-06-22', 12),
+    ('Literature Quiz', 'Test your literature knowledge.', 5, 0, 0, 0, 0, '2024-06-24', 3);
 
 -- Create questions table
 CREATE TABLE Quiz_questions(
@@ -131,6 +148,7 @@ CREATE TABLE Picture_questions (
 -- Create Scores table
 CREATE TABLE Scores (
                         score_id INT(6) AUTO_INCREMENT PRIMARY KEY,
+                        quiz_id int(6),
                         user_id INT(6), -- Foreign Key
                         score INT(6),
                         time INT(10),

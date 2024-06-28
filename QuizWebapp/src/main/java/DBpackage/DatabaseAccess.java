@@ -75,5 +75,139 @@ public class DatabaseAccess {
         }
         return true;
     }
+    public boolean updatePicture(String username, String pic){
+        if(getUserInfo(username)==null)return false;
+        String query = "UPDATE Users SET profile_pic_url = '" + pic+
+                "' WHERE username = '"+username +"';";
+
+        try {
+
+            stmt.executeUpdate(query);
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return true;
+    }
+    public ArrayList<FriendRequest> friendRequests(String currentUser){
+        ArrayList<FriendRequest> ls= new ArrayList<>();
+        if(getUserInfo(currentUser)==null)return null;
+        int userID = getUserInfo(currentUser).getUser_id();
+        String query = "select * from friend_request where from_id = '" + userID
+        + "';";
+
+        try {
+            FriendRequest fr;
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()){
+                fr =  new FriendRequest(
+                        resultSet.getInt("request_id"),
+                        resultSet.getInt("from_id"),
+                        resultSet.getInt("to_id"),
+                        resultSet.getInt("notification")
+
+                );
+                ls.add(fr);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return ls;
+    }
+    public ArrayList<Challenge> challenges(String currentUser){
+        ArrayList<Challenge> ls= new ArrayList<>();
+        if(getUserInfo(currentUser)==null)return null;
+        int userID = getUserInfo(currentUser).getUser_id();
+        String query = "select * from friend_request where from_id = '" + userID
+                + "';";
+
+        try {
+            Challenge ch;
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()){
+                ch =  new Challenge(
+                        resultSet.getInt("request_id"),
+                        resultSet.getInt("from_id"),
+                        resultSet.getInt("to_id"),
+                        resultSet.getInt("quiz_id"),
+                        resultSet.getInt("notification")
+
+
+                );
+                ls.add(ch);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return ls;
+    }
+
+
+
+
+    public Quiz getQuizInfo(int quiz_id){
+        String query = "select * from quizzes where quiz_id = '" + quiz_id +"' ;";
+        Quiz q = null;
+        try {
+
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()){
+                q =  new Quiz(
+                        resultSet.getInt("quiz_id"),
+                        resultSet.getString("quiz_name"),
+                        resultSet.getString("quiz_description"),
+                        resultSet.getInt("quiz_creator_id"),
+                        resultSet.getInt("random_question"),
+                        resultSet.getInt("one_page"),
+                        resultSet.getInt("immediate"),
+                        resultSet.getInt("practice"),
+                        resultSet.getDate("creation_date"),
+                        resultSet.getInt("times_taken")
+                );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return q;
+    }
+
+
+
+
+    public ArrayList<Quiz> getNewestQuiz(int amountToGet){
+        ArrayList<Quiz> ls= new ArrayList<>();
+        String query;
+        if(amountToGet>0){
+            query = "SELECT * FROM quizzes ORDER BY creation_date desc LIMIT " + amountToGet
+                    + ";";
+        }else{
+            query = "SELECT * FROM quizzes ORDER BY creation_date desc;";
+        }
+
+
+        try {
+            Quiz q;
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()){
+                q =  new Quiz(
+                        resultSet.getInt("quiz_id"),
+                        resultSet.getString("quiz_name"),
+                        resultSet.getString("quiz_description"),
+                        resultSet.getInt("quiz_creator_id"),
+                        resultSet.getInt("random_question"),
+                        resultSet.getInt("one_page"),
+                        resultSet.getInt("immediate"),
+                        resultSet.getInt("practice"),
+                        resultSet.getDate("creation_date"),
+                        resultSet.getInt("times_taken")
+                );
+                ls.add(q);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return ls;
+    }
+
 
 }

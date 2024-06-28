@@ -3,109 +3,135 @@ package DBpackage;
 import java.util.Date;
 
 public class Quiz {
-    private String name;
-    private String description;
-    private int creatorID;
-    private boolean randomQuestion;
-    private boolean onePage;
-    private boolean immediate;
-    private boolean practice;
-    private Date creationDate;
-    private int timesTaken;
+    private  int quiz_id;
+    private String quiz_name;
+    private String quiz_description;
+    private int quiz_creator_id;
+    private int random_question;
+    private int one_page;
+    private int immediate;
+    private int practice;
+    private java.sql.Date creation_date;
+    private int times_taken;
 
-    public Quiz(String name, String description, int creatorID, boolean randomQuestion,
-                boolean onePage, boolean immediate, boolean practice, Date creationDate,
+    public Quiz(int quiz_id, String name, String description, int creatorID, int randomQuestion,
+                int onePage, int immediate, int practice, java.sql.Date creationDate,
                 int timesTaken){
-        this.name = name;
-        this.description = description;
-        this.creatorID = creatorID;
-        this.randomQuestion = randomQuestion;
-        this.onePage = onePage;
+        this.quiz_id = quiz_id;
+        this.quiz_name = name;
+        this.quiz_description = description;
+        this.quiz_creator_id = creatorID;
+        this.random_question = randomQuestion;
+        this.one_page = onePage;
         this.immediate = immediate;
         this.practice = practice;
-        this.creationDate = creationDate;
-        this.timesTaken = timesTaken;
+        this.creation_date = creationDate;
+        this.times_taken = timesTaken;
+    }
+
+    public int getQuiz_id() {
+        return quiz_id;
+    }
+
+    public void setQuiz_id(int quiz_id) {
+        this.quiz_id = quiz_id;
+    }
+
+    public int isImmediate() {
+        return immediate;
+    }
+
+    public int isOnePage() {
+        return one_page;
+    }
+
+    public int isPractice() {
+        return practice;
+    }
+
+    public int isRandomQuestion() {
+        return random_question;
     }
 
     //Setters
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
+    public void setCreationDate(java.sql.Date creationDate) {
+        this.creation_date = creationDate;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.quiz_name = name;
     }
 
     public void setCreatorID(int creatorID) {
-        this.creatorID = creatorID;
+        this.quiz_creator_id = creatorID;
     }
 
     public void setDescription(String description) {
-        this.description = description;
+        this.quiz_description = description;
     }
 
-    public void setImmediate(boolean immediate) {
+    public void setImmediate(int immediate) {
         this.immediate = immediate;
     }
 
-    public void setOnePage(boolean onePage) {
-        this.onePage = onePage;
+    public void setOnePage(int onePage) {
+        this.one_page = onePage;
     }
 
-    public void setPractice(boolean practice) {
+    public void setPractice(int practice) {
         this.practice = practice;
     }
 
-    public void setRandomQuestion(boolean randomQuestion) {
-        this.randomQuestion = randomQuestion;
+    public void setRandomQuestion(int randomQuestion) {
+        this.random_question = randomQuestion;
     }
 
     public void setTimesTaken(int timesTaken) {
-        this.timesTaken = timesTaken;
+        this.times_taken = timesTaken;
     }
 
 
     // Getters
     public Date getCreationDate() {
-        return creationDate;
+        return creation_date;
     }
 
     public int getCreatorID() {
-        return creatorID;
+        return quiz_creator_id;
     }
 
     public int getTimesTaken() {
-        return timesTaken;
+        return times_taken;
     }
 
     public String getDescription() {
-        return description;
+        return quiz_description;
     }
 
     public String getName() {
-        return name;
+        return quiz_name;
     }
 
-    public boolean getImmediate() {
+    public int getImmediate() {
         return immediate;
     }
 
-    public boolean getOnePage() {
-        return onePage;
+    public int getOnePage() {
+        return one_page;
     }
 
-    public boolean getPractice() {
+    public int getPractice() {
         return practice;
     }
 
-    public boolean getRandomQuestion() {
-       return randomQuestion;
+    public int getRandomQuestion() {
+       return random_question;
     }
 
     // Additional functionality
 
     public void incrementQuizTaken(){
-        timesTaken++;
+        times_taken++;
     }
 
 

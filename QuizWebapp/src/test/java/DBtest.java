@@ -117,8 +117,22 @@ public class DBtest extends TestCase{
         testArray.add("charlie_black");
 
         for(int i = 0; i < list.size(); i++){
-            String from = list.get(i).getTo_username();
+            String s = list.get(i).getFrom_username();
+            assertTrue(testArray.contains(s));
+        }
+    }
+    public void testChallenges(){
+        ArrayList<Challenge> list = dbCall.challenges("john_doe");
+        ArrayList<String> testArray = new ArrayList<>();
+        testArray.add("jane_smith");
+        testArray.add("alice_jones");
+        testArray.add("bob_brown");
+        testArray.add("charlie_black");
+
+        for(int i = 0; i < list.size(); i++){
+            String from = list.get(i).getFrom_username();
             assertTrue(testArray.contains(from));
+            assertEquals(list.get(i).getNotification(), 1);
         }
     }
     public void testGetQuizQuestions(){
@@ -147,6 +161,16 @@ public class DBtest extends TestCase{
 
         }
     }
+
+    public void testGetUsername(){
+        assertEquals(dbCall.getUsername(1),"john_doe");
+        assertEquals(dbCall.getUsername(2),"jane_smith");
+        assertEquals(dbCall.getUsername(3),"alice_jones");
+        assertEquals(dbCall.getUsername(4),"bob_brown");
+    }
+
+
+
 
 
 

@@ -155,14 +155,14 @@ CREATE TABLE Scores (
                         date_scored DATE
 );
 
-CREATE TABLE Multi_fill_Blank_questions(
+CREATE TABLE Multi_textbox_questions(
     question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
     quiz_id INT(6), -- Foreign Key with Quizzes
     sub_id INT(3), -- Numeric order of the question in the quiz
     question VARCHAR(300)
 );
 
-CREATE TABLE Multi_fill_Blank_answers(
+CREATE TABLE Multi_textbox_answers(
     answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
     multifill_id INT(6), -- foreign key with question_id of questions
     answer VARCHAR(300)

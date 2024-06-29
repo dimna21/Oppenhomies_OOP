@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="31f1af3e-aad2-4738-9909-3a6027b9bd1d" name="Changes" comment="Fixed URL paths in jsps and servlets" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="main" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;customColor&quot;: &quot;&quot;,
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2iKZ7cBa4LSVArAf7FNLVEAqEsY" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Maven.QuizWebapp [tomcat7:run].executor": "Run",
+    "Maven.studentsTable [tomcat7:run].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "feature/user-authentication",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/sandr/OneDrive/Desktop/OOPFinalRepo/Oppenhomies_OOP/QuizWebapp/src/main/webapp/UserAuthentication",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "vue.rearranger.settings.migration": "true"
+  },
+  "keyToStringList": {
+    "DatabaseDriversLRU": [
+      "mysql"
+    ]
+  }
+}]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\sandr\OneDrive\Desktop\OOPFinalRepo\Oppenhomies_OOP\QuizWebapp\src\main\webapp\UserAuthentication" />
+      <recent name="C:\Users\sandr\OneDrive\Desktop\OOPFinalRepo\Oppenhomies_OOP\QuizWebapp\src\main\java\ServletPackage" />
+      <recent name="C:\Users\sandr\OneDrive\Desktop\OOPFinalRepo\Oppenhomies_OOP\QuizWebapp\src\main\webapp" />
+      <recent name="C:\Users\sandr\OneDrive\Desktop\OOPFinalRepo\Oppenhomies_OOP\QuizWebapp\src\main\webapp\WEB-INF" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\sandr\OneDrive\Desktop\OOPFinalRepo\Oppenhomies_OOP\QuizWebapp\src\main\webapp\UserAuthentication" />
+      <recent name="C:\Users\sandr\OneDrive\Desktop\OOPFinalRepo\Oppenhomies_OOP\QuizWebapp\src\main\webapp" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="mvn tomcat7:run" />
+    </option>
+  </component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="QuizWebapp" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="QuizWebapp" />
+      <option name="filePath" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="31f1af3e-aad2-4738-9909-3a6027b9bd1d" name="Changes" comment="" />
+      <created>1719241064889</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1719241064889</updated>
+      <workItem from="1719241067018" duration="668000" />
+      <workItem from="1719241913486" duration="312000" />
+      <workItem from="1719589997761" duration="8314000" />
+      <workItem from="1719598641687" duration="104000" />
+      <workItem from="1719660663693" duration="1145000" />
+      <workItem from="1719664863341" duration="4668000" />
+      <workItem from="1719669846484" duration="2270000" />
+      <workItem from="1719673035634" duration="2530000" />
+    </task>
+    <task id="LOCAL-00001" summary="Add loginPage.jsp &amp; newAccount.jsp + updated pom.xml &amp; web.cml">
+      <option name="closed" value="true" />
+      <created>1719593786394</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1719593786394</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Add ServletPackage &amp; loginServlet Shell">
+      <option name="closed" value="true" />
+      <created>1719595119401</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1719595119401</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Add LoginServlet, Incomplete NewAccServlet, Empty ListenerClass, Updated web.xml">
+      <option name="closed" value="true" />
+      <created>1719597124310</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1719597124310</updated>
+    </task>
+    <task id="LOCAL-00004" summary="Add LoginServlet, Incomplete NewAccServlet, Empty ListenerClass, Updated web.xml">
+      <option name="closed" value="true" />
+      <created>1719597590168</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1719597590168</updated>
+    </task>
+    <task id="LOCAL-00005" summary="move user-authentication jsps to a directory, updated web.xml welcome-file">
+      <option name="closed" value="true" />
+      <created>1719667090535</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1719667090535</updated>
+    </task>
+    <task id="LOCAL-00006" summary="move user-authentication jsps to a directory, updated web.xml welcome-file">
+      <option name="closed" value="true" />
+      <created>1719667167321</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1719667167321</updated>
+    </task>
+    <task id="LOCAL-00007" summary="move user-authentication jsps to a directory, updated web.xml welcome-file">
+      <option name="closed" value="true" />
+      <created>1719668512857</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1719668512857</updated>
+    </task>
+    <task id="LOCAL-00008" summary="move user-authentication jsps to a directory, updated web.xml welcome-file">
+      <option name="closed" value="true" />
+      <created>1719668586615</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1719668586615</updated>
+    </task>
+    <task id="LOCAL-00009" summary="Finished user-authentication">
+      <option name="closed" value="true" />
+      <created>1719669101678</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1719669101678</updated>
+    </task>
+    <task id="LOCAL-00010" summary="Finished user-authentication">
+      <option name="closed" value="true" />
+      <created>1719669223367</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1719669223367</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Finished user-authentication - href Fix">
+      <option name="closed" value="true" />
+      <created>1719669429312</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1719669429312</updated>
+    </task>
+    <task id="LOCAL-00012" summary="Readded hasher">
+      <option name="closed" value="true" />
+      <created>1719670019755</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1719670019755</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Fixed URL paths in jsps and servlets">
+      <option name="closed" value="true" />
+      <created>1719674381920</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1719674381920</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Fixed URL paths in jsps and servlets">
+      <option name="closed" value="true" />
+      <created>1719675503439</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1719675503439</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Add loginPage.jsp &amp; newAccount.jsp + updated pom.xml &amp; web.cml" />
+    <MESSAGE value="Add ServletPackage &amp; loginServlet Shell" />
+    <MESSAGE value="Add LoginServlet, Incomplete NewAccServlet, Empty ListenerClass, Updated web.xml" />
+    <MESSAGE value="move user-authentication jsps to a directory, updated web.xml welcome-file" />
+    <MESSAGE value="Finished user-authentication" />
+    <MESSAGE value="Finished user-authentication - href Fix" />
+    <MESSAGE value="Readded hasher" />
+    <MESSAGE value="Fixed URL paths in jsps and servlets" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed URL paths in jsps and servlets" />
+  </component>
+</project>

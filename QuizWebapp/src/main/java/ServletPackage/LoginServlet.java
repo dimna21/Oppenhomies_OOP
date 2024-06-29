@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.SQLException;
 
 import DBpackage.DatabaseAccess;
 
@@ -20,16 +19,16 @@ public class LoginServlet extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        String hashedPass = "";
+        boolean isValid;
+        isValid = dbAccess.login(username, password);
 
-        boolean isValid = dbAccess.login(username, hashedPass);
-
+        RequestDispatcher dispatcher;
         if(isValid){
-            RequestDispatcher dispatcher = req.getRequestDispatcher("goodLogin.jsp");
-            dispatcher.forward(req, res);
+            //goodLogin.jsp will be replaced by the UserPage :3
+            dispatcher = req.getRequestDispatcher("goodLogin.jsp");
         }else{
-            RequestDispatcher dispatcher = req.getRequestDispatcher("badLogin.jsp");
-            dispatcher.forward(req, res);
+            dispatcher = req.getRequestDispatcher("UserAuthentication/badLogin.jsp");
         }
+        dispatcher.forward(req, res);
     }
 }

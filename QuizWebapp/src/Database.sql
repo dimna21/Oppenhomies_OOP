@@ -1,6 +1,9 @@
 # UPDATE Users SET profile_pic_url = 'hello.jpg' WHERE username = 'john_doe';
 # select * from users;
 #SELECT * FROM quizzes ORDER BY creation_date desc LIMIT 3;
+select * from fill_blank_questions where quiz_id = 6 and sub_id = 2;
+
+
 USE QuizDatabase;
 
 -- Drop tables if they exist
@@ -17,6 +20,12 @@ DROP TABLE IF EXISTS Scores;
 DROP TABLE IF EXISTS Textbox_questions;
 DROP TABLE IF EXISTS Quiz_questions;
 drop table if exists Challenge;
+drop table if exists Multi_fill_Blank_questions;
+drop table if exists Multi_fill_Blank_answers;
+drop table if exists Multi_multiple_choice_questions;
+drop table if exists Multi_multiple_choice_answers;
+drop table if exists Matching_questions;
+drop table if exists Matching_answers;
 -- Create Users table
 Create table Challenge(
                           challenge_id INT(6) AUTO_INCREMENT PRIMARY KEY, -- Primary and Foreign Key with Friends table
@@ -39,11 +48,16 @@ CREATE TABLE Users (
 
 INSERT INTO Users ( username, password, admin_status, quizzes_taken,
                    quizzes_created, highest_scorer, practice_mode, profile_pic_url) VALUES
-                                                                                        ( 'john_doe', 'password123', 1, 10, 5, 1, 0, 'http://example.com/images/john.jpg'),
-                                                                                        ('jane_smith', 'password456', 0, 8, 3, 0, 1, 'http://example.com/images/jane.jpg'),
-                                                                                        ('alice_jones', 'password789', 0, 15, 7, 0, 0, 'http://example.com/images/alice.jpg'),
-                                                                                        ('bob_brown', 'password321', 0, 5, 2, 1, 1, 'http://example.com/images/bob.jpg'),
-                                                                                        ('charlie_black', 'password654', 1, 20, 10, 1, 1, 'http://example.com/images/charlie.jpg');
+                                                                                        ( 'john_doe', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 1, 10, 5, 1, 0, 'http://example.com/images/john.jpg'),
+                                                                                        ('jane_smith', 'aa6ae8c005b9048b03f6059224c858650d9e52d5', 0, 8, 3, 0, 1, 'http://example.com/images/jane.jpg'),
+                                                                                        ('alice_jones', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 0, 15, 7, 0, 0, 'http://example.com/images/alice.jpg'),
+                                                                                        ('bob_brown', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 0, 5, 2, 1, 1, 'http://example.com/images/bob.jpg'),
+                                                                                        ('charlie_black', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 1, 20, 10, 1, 1, 'http://example.com/images/charlie.jpg');
+-- password123
+-- password234
+-- password123
+-- password123
+-- password123
 
 
 -- Create Friends table
@@ -68,6 +82,7 @@ CREATE TABLE Friend_requests (
                                  from_id INT(6),
                                  to_id INT(6),
                                  notification INT(1) -- Boolean: 0 or 1
+
 );
 
 -- Create Quizzes table
@@ -123,7 +138,8 @@ CREATE TABLE Multiple_choice_questions (
                                            question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
                                            quiz_id INT(6), -- Foreign Key with Quizzes
                                            sub_id INT(3), -- Numeric order of the question in the quiz
-                                           question VARCHAR(300)
+                                           question VARCHAR(300),
+                                           ordered int(1)
 );
 
 -- Create Multiple_choice_answers table
@@ -131,6 +147,7 @@ CREATE TABLE Multiple_choice_answers (
                                          answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
                                          quiz_id INT(6), -- Foreign Key with Quizzes
                                          sub_id INT(3), -- Numeric order of the question in the quiz
+                                         order_number int(3),
                                          answer VARCHAR(300),
                                          correct INT(1) -- Boolean: 0 or 1
 );
@@ -200,3 +217,37 @@ CREATE TABLE Matching_answers(
 
 
 
+-- -------------------------------------------------------------
+-- Add a new quiz
+INSERT INTO Quizzes (quiz_name, quiz_description, quiz_creator_id, random_question, one_page, immediate, practice, creation_date, times_taken)
+VALUES
+    ('Sample Quiz', 'This is a sample quiz to demonstrate table relationships.', 1, 0, 1, 1, 0, '2024-06-29', 0);
+
+-- Retrieve the quiz ID for the new quiz (Assume the quiz_id is 6 for the following inserts)
+SELECT quiz_id FROM Quizzes WHERE quiz_name = 'Sample Quiz';
+
+-- Add questions to the Quiz_questions table
+INSERT INTO Quiz_questions (quiz_id, sub_id, type) VALUES
+                                                       (6, 1, 1), -- Textbox question
+                                                       (6, 2, 2), -- Fill-in-the-blank question
+                                                       (6, 3, 3); -- Multiple-choice question
+
+-- Add a textbox question to the Textbox_questions table
+INSERT INTO Textbox_questions (quiz_id, sub_id, question, answer) VALUES
+    (6, 1, 'What is the capital of France?', 'Paris');
+
+-- Add a fill-in-the-blank question to the Fill_blank_questions table
+INSERT INTO Fill_blank_questions (quiz_id, sub_id, text_before, text_after, answer) VALUES
+    (6, 2, 'The chemical symbol for water is ', '.', 'H2O');
+
+-- Add a multiple-choice question to the Multiple_choice_questions table
+INSERT INTO Multiple_choice_questions (quiz_id, sub_id, question, ordered) VALUES
+    (6, 3, 'Which planet is known as the Red Planet?', 1);
+
+-- Add answers to the Multiple_choice_answers table
+INSERT INTO Multiple_choice_answers (quiz_id, sub_id, order_number, answer, correct) VALUES
+                                                                                         (6, 3, 1, 'Mars', 1),
+                                                                                         (6, 3, 2, 'Venus', 0),
+                                                                                         (6, 3, 3, 'Jupiter', 0),
+                                                                                         (6, 3, 4, 'Saturn', 0);
+-- ---------------------------------------------------------------

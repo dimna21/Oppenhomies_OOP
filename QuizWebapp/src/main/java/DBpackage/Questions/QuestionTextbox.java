@@ -9,7 +9,6 @@ public class QuestionTextbox extends Question{
         this.question = question;
     }
 
-
     public String getQuestion() {
         return question;
     }

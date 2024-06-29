@@ -8,38 +8,18 @@ import java.util.ArrayList;
 public class QuestionMultipleChoice extends Question{
     private String question;
     private String correctAnswer;
+    private int ordered;
     private ArrayList<String> answerList;
-    public QuestionMultipleChoice( int questionID, int quizID,int subID, int type, String question, String correctAnswer) throws SQLException, ClassNotFoundException {
+
+    public QuestionMultipleChoice( int questionID, int quizID,int subID, int type, String question, int ordered)  {
         super(questionID, quizID, subID, type);
         this.question = question;
-        this.correctAnswer = correctAnswer;
-        initAnswerList();
+        this.ordered = ordered;
+        this.answerList=new ArrayList<>();
     }
-    private void initAnswerList() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
 
-
-        Connection con = DriverManager.getConnection("jdbc:mysql://" +
-                        DatabaseInfo.server + "/" + DatabaseInfo.database,
-                DatabaseInfo.username, DatabaseInfo.password);
-
-        Statement stmt = con.createStatement();
-        int quizID = this.getQuizID();
-        int questionOrder = this.getQuestionNumber();
-        String query = "select answer from Multiple_choice_answers where quiz_id = '" + quizID +
-                "' and sub_id = '" + questionOrder + "';";
-
-        try {
-            ResultSet resultSet = stmt.executeQuery(query);
-            while (resultSet.next()) {
-                String answer = resultSet.getString("answer");
-                answerList.add(answer);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        } finally {
-            if (stmt != null) stmt.close();
-        }
+    public void setQuestion(String question) {
+        this.question = question;
     }
 
     public ArrayList<String> getAnswerList(){
@@ -50,5 +30,21 @@ public class QuestionMultipleChoice extends Question{
     }
     public String getCorrectAnswer(){
         return correctAnswer;
+    }
+
+    public void setCorrectAnswer(String correctAnswer) {
+        this.correctAnswer = correctAnswer;
+    }
+
+    public void setAnswerList(ArrayList<String> answerList) {
+        this.answerList = answerList;
+    }
+
+    public void setOrdered(int ordered) {
+        this.ordered = ordered;
+    }
+
+    public int getOrdered() {
+        return ordered;
     }
 }

@@ -5,11 +5,32 @@ public class FriendRequest {
     private int from_id;
     private int to_id;
     private int notification;
-    public FriendRequest(int requestID,int from_id, int to_id, int notification){
+    private String from_username;
+    private String to_username;
+
+    public FriendRequest(int requestID,int from_id, int to_id, int notification,String from_username,String to_username){
         this.from_id=from_id;
         this.to_id = to_id;
         this.notification = notification;
         this.requestId=requestID;
+        this.from_username=from_username;
+        this.to_username=to_username;
+    }
+
+    public String getFrom_username() {
+        return from_username;
+    }
+
+    public String getTo_username() {
+        return to_username;
+    }
+
+    public void setFrom_username(String from_username) {
+        this.from_username = from_username;
+    }
+
+    public void setTo_username(String to_username) {
+        this.to_username = to_username;
     }
 
     public int getTo_id() {

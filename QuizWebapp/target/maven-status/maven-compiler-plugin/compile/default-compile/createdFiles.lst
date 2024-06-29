@@ -1,7 +1,6 @@
 DBpackage\Questions\QuestionTypeConstants.class
 DBpackage\DatabaseAccess.class
 DBpackage\DatabaseInfo.class
-DBpackage\DBtest.class
 DBpackage\Questions\Question.class
 DBpackage\Quiz.class
 DBpackage\Questions\QuestionFillBlank.class

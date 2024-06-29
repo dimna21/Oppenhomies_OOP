@@ -26,6 +26,6 @@
       </div>
     </form>
 
-    <p><a href="newAccount.jsp">Create New Account</a></p>
+    <p><a href="UserAuthentication/newAccount.jsp">Create New Account</a></p>
   </body>
 </html>

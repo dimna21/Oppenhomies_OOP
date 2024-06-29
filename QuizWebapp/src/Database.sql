@@ -22,13 +22,21 @@ drop table if exists Multi_multiple_choice_questions;
 drop table if exists Multi_multiple_choice_answers;
 drop table if exists Matching_questions;
 drop table if exists Matching_answers;
--- Create Users table
+drop table if exists Quiz_ratings;
+
+Create table Quiz_ratings(
+    rating_id INT(6) AUTO_INCREMENT PRIMARY KEY,
+    rating INT(2),
+    quiz_id int(6),
+    user_id INT(10)
+);
+
 Create table Challenge(
                           challenge_id INT(6) AUTO_INCREMENT PRIMARY KEY, -- Primary and Foreign Key with Friends table
                           from_id INT(6),
                           to_id INT(6),
                           quiz_id int(6),
-                          notification INT(1)
+                          notification INT(1) Default 0 -- 0- not seen, 1-accepted, 2 - declined
 );
 
 INSERT INTO Challenge(from_id, to_id, quiz_id, notification) VALUES
@@ -36,7 +44,7 @@ INSERT INTO Challenge(from_id, to_id, quiz_id, notification) VALUES
 (2,1,1,1),
 (4,1,1,1),
 (5,1,1,1);
-
+-- Create Users table
 CREATE TABLE Users (
                        user_id INT(10) AUTO_INCREMENT PRIMARY KEY,
                        username VARCHAR(150),
@@ -46,7 +54,8 @@ CREATE TABLE Users (
                        quizzes_created INT(5),
                        highest_scorer INT(1), -- Boolean: 0 or 1
                        practice_mode INT(1), -- Boolean: 0 or 1
-                       profile_pic_url VARCHAR(300)
+                       profile_pic_url VARCHAR(300),
+                       activeAccount INT(1) DEFAULT 1
 );
 
 INSERT INTO Users ( username, password, admin_status, quizzes_taken,
@@ -75,6 +84,7 @@ CREATE TABLE Messages (
                           message_id INT(6) AUTO_INCREMENT PRIMARY KEY, -- Primary and Foreign Key with Friends table
                           from_id INT(6),
                           to_id INT(6),
+                          text VARCHAR(300), -- text message
                           notification INT(1) -- Boolean: 0 or 1
 );
 
@@ -83,7 +93,7 @@ CREATE TABLE Friend_requests (
                                  request_id INT(6) AUTO_INCREMENT PRIMARY KEY,
                                  from_id INT(6),
                                  to_id INT(6),
-                                 notification INT(1) -- Boolean: 0 or 1
+                                 notification INT(1) Default 0 -- 0 - not seen, 1-accepted, 2 - declined
 );
 
 INSERT INTO Friend_requests(from_id, to_id, notification) VALUES

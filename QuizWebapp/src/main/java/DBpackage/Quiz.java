@@ -91,6 +91,33 @@ public class Quiz {
         this.times_taken = timesTaken;
     }
 
+    public void setQuiz_description(String quiz_description) {
+        this.quiz_description = quiz_description;
+    }
+
+    public void setQuiz_creator_id(int quiz_creator_id) {
+        this.quiz_creator_id = quiz_creator_id;
+    }
+
+    public void setCreation_date(java.sql.Date creation_date) {
+        this.creation_date = creation_date;
+    }
+
+    public void setOne_page(int one_page) {
+        this.one_page = one_page;
+    }
+
+    public void setQuiz_name(String quiz_name) {
+        this.quiz_name = quiz_name;
+    }
+
+    public void setRandom_question(int random_question) {
+        this.random_question = random_question;
+    }
+
+    public void setTimes_taken(int times_taken) {
+        this.times_taken = times_taken;
+    }
 
     // Getters
     public Date getCreationDate() {
@@ -113,6 +140,34 @@ public class Quiz {
         return quiz_name;
     }
 
+    public java.sql.Date getCreation_date() {
+        return creation_date;
+    }
+
+    public int getOne_page() {
+        return one_page;
+    }
+
+    public int getQuiz_creator_id() {
+        return quiz_creator_id;
+    }
+
+    public int getRandom_question() {
+        return random_question;
+    }
+
+    public String getQuiz_description() {
+        return quiz_description;
+    }
+
+    public String getQuiz_name() {
+        return quiz_name;
+    }
+
+    public int getTimes_taken() {
+        return times_taken;
+    }
+
     public int getImmediate() {
         return immediate;
     }
@@ -128,6 +183,7 @@ public class Quiz {
     public int getRandomQuestion() {
        return random_question;
     }
+
 
     public String getCreatorUsername() throws SQLException, ClassNotFoundException {
         Class.forName("com.mysql.cj.jdbc.Driver");

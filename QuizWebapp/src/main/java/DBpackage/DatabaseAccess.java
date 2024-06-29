@@ -143,7 +143,7 @@ public class DatabaseAccess {
         ArrayList<Challenge> ls= new ArrayList<>();
         if(getUserInfo(currentUser)==null)return null;
         int userID = getUserInfo(currentUser).getUser_id();
-        String query = "select * from friend_request where from_id = '" + userID
+        String query = "select * from Friend_requests where from_id = '" + userID
                 + "';";
 
         try {
@@ -246,7 +246,6 @@ public class DatabaseAccess {
                         resultSet.getInt("quiz_id"),
                         resultSet.getInt("sub_id"),
                         resultSet.getInt("type")
-
                 );
                 qList1.add(q);
             }
@@ -396,7 +395,6 @@ public class DatabaseAccess {
         }
         return ans;
     }
-
 
 
 }

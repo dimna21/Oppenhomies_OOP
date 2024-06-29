@@ -3,6 +3,7 @@ import DBpackage.Quiz;
 import DBpackage.User;
 import junit.framework.TestCase;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -15,7 +16,7 @@ public class DBtest extends TestCase{
 
 
     }
-    public void testLogin() throws SQLException {
+    public void testLogin() throws SQLException, NoSuchAlgorithmException {
         boolean ans;
         ans = dbCall.login("john_doe","password123");
         assertTrue(ans);
@@ -67,6 +68,12 @@ public class DBtest extends TestCase{
         assertEquals(qz.getTimesTaken(),3);
 
     }
+    public void testHasher() throws NoSuchAlgorithmException {
 
+        System.out.println( hasher.getHash("password123"));
+        System.out.println( hasher.getHash("password234"));
+        System.out.println( hasher.getHash("molly"));
+
+    }
 
 }

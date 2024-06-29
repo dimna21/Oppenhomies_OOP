@@ -4,6 +4,7 @@ import DBpackage.Questions.QuestionFillBlank;
 import DBpackage.Questions.QuestionMultipleChoice;
 import DBpackage.Questions.QuestionTextbox;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +39,8 @@ public class DatabaseAccess {
         }
         return username;
     }
-    public boolean login(String name, String hashcode) {
+    public boolean login(String name, String pw) throws NoSuchAlgorithmException {
+        String hashcode = hasher.getHash(pw);
         String query = "select * from users where username = '" + name +
                 "' and password = '" + hashcode + "';";
 

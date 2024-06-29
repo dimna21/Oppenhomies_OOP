@@ -45,11 +45,16 @@ CREATE TABLE Users (
 
 INSERT INTO Users ( username, password, admin_status, quizzes_taken,
                    quizzes_created, highest_scorer, practice_mode, profile_pic_url) VALUES
-                                                                                        ( 'john_doe', 'password123', 1, 10, 5, 1, 0, 'http://example.com/images/john.jpg'),
-                                                                                        ('jane_smith', 'password456', 0, 8, 3, 0, 1, 'http://example.com/images/jane.jpg'),
-                                                                                        ('alice_jones', 'password789', 0, 15, 7, 0, 0, 'http://example.com/images/alice.jpg'),
-                                                                                        ('bob_brown', 'password321', 0, 5, 2, 1, 1, 'http://example.com/images/bob.jpg'),
-                                                                                        ('charlie_black', 'password654', 1, 20, 10, 1, 1, 'http://example.com/images/charlie.jpg');
+                                                                                        ( 'john_doe', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 1, 10, 5, 1, 0, 'http://example.com/images/john.jpg'),
+                                                                                        ('jane_smith', 'aa6ae8c005b9048b03f6059224c858650d9e52d5', 0, 8, 3, 0, 1, 'http://example.com/images/jane.jpg'),
+                                                                                        ('alice_jones', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 0, 15, 7, 0, 0, 'http://example.com/images/alice.jpg'),
+                                                                                        ('bob_brown', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 0, 5, 2, 1, 1, 'http://example.com/images/bob.jpg'),
+                                                                                        ('charlie_black', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 1, 20, 10, 1, 1, 'http://example.com/images/charlie.jpg');
+-- password123
+-- password234
+-- password123
+-- password123
+-- password123
 
 
 -- Create Friends table

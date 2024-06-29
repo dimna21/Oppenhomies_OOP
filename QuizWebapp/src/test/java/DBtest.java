@@ -121,7 +121,32 @@ public class DBtest extends TestCase{
             assertTrue(testArray.contains(from));
         }
     }
+    public void testGetQuizQuestions(){
+        Quiz quiz = dbCall.getQuizInfo(6);
+        ArrayList<Question> myQuestions= dbCall.getQuizQuestions(6);
+        assertEquals(myQuestions.size(),3);
 
+        for(Question q : myQuestions){
+            int type = q.getType();
+            Question myQuestion;
+            switch(type){
+                case 1:
+                    myQuestion = (QuestionTextbox)q;
+                    assertEquals(((QuestionTextbox) myQuestion).getAnswer(),"Paris");
+                    break;
+                case 2:
+                    myQuestion = (QuestionFillBlank)q;
+                    assertEquals(((QuestionFillBlank) myQuestion).getAnswer(),"H2O");
+                    break;
+                case 3:
+                    myQuestion = (QuestionMultipleChoice)q;
+                    assertEquals(((QuestionMultipleChoice) myQuestion).getAnswerList().size(),4);
+
+                    break;
+            }
+
+        }
+    }
 
 
 

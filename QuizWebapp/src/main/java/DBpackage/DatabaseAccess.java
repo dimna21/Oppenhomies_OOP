@@ -93,7 +93,7 @@ public class DatabaseAccess {
         }
         if(getUserInfo(username)!=null)return false;
         String query = "INSERT INTO Users ( username, password, admin_status, quizzes_taken, quizzes_created, highest_scorer, practice_mode, profile_pic_url) VALUES" +
-                "( '" + username+ "', ' "+Hashcode +"', "+ adminStatus + " , 0, 0, 0, 0, 'http://example.com/images/john.jpg')";
+                "( '" + username+ "', '"+Hashcode +"', "+ adminStatus + " , 0, 0, 0, 0, 'http://example.com/images/john.jpg')";
 
         try {
             stmt.executeUpdate(query);

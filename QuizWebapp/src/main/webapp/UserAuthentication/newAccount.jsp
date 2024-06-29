@@ -14,7 +14,7 @@
         <h1>Create New Account</h1>
         <p>Please enter proposed name and password.</p>
 
-        <form action="NewAccServlet" method="post">
+        <form action="<%= request.getContextPath() %>/NewAccServlet" method="post">
             <div>
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username">

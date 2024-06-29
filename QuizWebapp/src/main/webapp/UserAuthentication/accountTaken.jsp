@@ -19,7 +19,7 @@
     </h1>
         <p>Please enter another name and password.</p>
 
-        <form action="NewAccServlet" method="post">
+        <form action="<%= request.getContextPath() %>/NewAccServlet" method="post">
             <div>
                 <label for="username">Username:</label>
                 <input type="text" id="username" name="username">

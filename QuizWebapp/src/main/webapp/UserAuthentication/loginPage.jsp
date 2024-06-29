@@ -14,7 +14,7 @@
     <h1>QuizWebapp - Log in</h1>
     <p>Please log in.</p>
 
-    <form action="LoginServlet" method="post">
+    <form action="<%= request.getContextPath() %>/LoginServlet" method="post">
       <div>
         <label for="username">Username:</label>
         <input type="text" id="username" name="username">

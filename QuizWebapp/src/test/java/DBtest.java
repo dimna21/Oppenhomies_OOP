@@ -7,6 +7,7 @@ import DBpackage.Quiz;
 import DBpackage.User;
 import junit.framework.TestCase;
 
+import javax.validation.constraints.AssertTrue;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -17,8 +18,6 @@ public class DBtest extends TestCase{
     protected void setUp() throws Exception {
         super.setUp();
         dbCall = new DatabaseAccess();
-
-
     }
     public void testLogin() throws SQLException, NoSuchAlgorithmException {
         boolean ans;
@@ -108,4 +107,23 @@ public class DBtest extends TestCase{
         assertEquals(q2.getAnswerList().size(),4);
         assertEquals(q2.getSubID(),3);
     }
+
+    public void testFriendRequests(){
+        ArrayList<FriendRequest> list = dbCall.friendRequests("john_doe");
+        ArrayList<String> testArray = new ArrayList<>();
+        testArray.add("jane_smith");
+        testArray.add("alice_jones");
+        testArray.add("bob_brown");
+        testArray.add("charlie_black");
+
+        for(int i = 0; i < list.size(); i++){
+            String from = list.get(i).getTo_username();
+            assertTrue(testArray.contains(from));
+        }
+    }
+
+
+
+
+
 }

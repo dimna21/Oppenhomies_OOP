@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 
 import DBpackage.DatabaseAccess;
@@ -22,7 +23,12 @@ public class LoginServlet extends HttpServlet {
 
         String hashedPass = "";
 
-        boolean isValid = dbAccess.login(username, hashedPass);
+        boolean isValid = false;
+        try {
+            isValid = dbAccess.login(username, hashedPass);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
 
         if(isValid){
             RequestDispatcher dispatcher = req.getRequestDispatcher("goodLogin.jsp");

@@ -120,7 +120,7 @@ public class DatabaseAccess {
         ArrayList<FriendRequest> ls= new ArrayList<>();
         if(getUserInfo(currentUser)==null)return null;
         int userID = getUserInfo(currentUser).getUser_id();
-        String query = "select * from friend_requests where from_id = '" + userID
+        String query = "select * from friend_requests where to_id = '" + userID
                 + "';";
 
         try {
@@ -143,7 +143,7 @@ public class DatabaseAccess {
         ArrayList<Challenge> ls= new ArrayList<>();
         if(getUserInfo(currentUser)==null)return null;
         int userID = getUserInfo(currentUser).getUser_id();
-        String query = "select * from Friend_requests where from_id = '" + userID
+        String query = "select * from Friend_requests where to_id = '" + userID
                 + "';";
 
         try {

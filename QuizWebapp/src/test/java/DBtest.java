@@ -108,33 +108,6 @@ public class DBtest extends TestCase{
         assertEquals(q2.getSubID(),3);
     }
 
-    public void testFriendRequests(){
-        ArrayList<FriendRequest> list = dbCall.friendRequests("john_doe");
-        ArrayList<String> testArray = new ArrayList<>();
-        testArray.add("jane_smith");
-        testArray.add("alice_jones");
-        testArray.add("bob_brown");
-        testArray.add("charlie_black");
-
-        for(int i = 0; i < list.size(); i++){
-            String s = list.get(i).getFrom_username();
-            assertTrue(testArray.contains(s));
-        }
-    }
-    public void testChallenges(){
-        ArrayList<Challenge> list = dbCall.challenges("john_doe");
-        ArrayList<String> testArray = new ArrayList<>();
-        testArray.add("jane_smith");
-        testArray.add("alice_jones");
-        testArray.add("bob_brown");
-        testArray.add("charlie_black");
-
-        for(int i = 0; i < list.size(); i++){
-            String from = list.get(i).getFrom_username();
-            assertTrue(testArray.contains(from));
-            assertEquals(list.get(i).getNotification(), 1);
-        }
-    }
     public void testGetQuizQuestions(){
         Quiz quiz = dbCall.getQuizInfo(6);
         ArrayList<Question> myQuestions= dbCall.getQuizQuestions(6);
@@ -168,10 +141,34 @@ public class DBtest extends TestCase{
         assertEquals(dbCall.getUsername(3),"alice_jones");
         assertEquals(dbCall.getUsername(4),"bob_brown");
     }
+    public void testFriendRequests(){
 
+        ArrayList<FriendRequest> list = dbCall.friendRequests("john_doe");
+        ArrayList<String> testArray = new ArrayList<>();
+        testArray.add("jane_smith");
+        testArray.add("alice_jones");
+        testArray.add("bob_brown");
+        testArray.add("charlie_black");
 
+        for(int i = 0; i < list.size(); i++){
+            String s = list.get(i).getFrom_username();
+            assertTrue(testArray.contains(s));
+        }
+    }
+    public void testChallenges(){
+        ArrayList<Challenge> list = dbCall.challenges("john_doe");
+        ArrayList<String> testArray = new ArrayList<>();
+        testArray.add("jane_smith");
+        testArray.add("alice_jones");
+        testArray.add("bob_brown");
+        testArray.add("charlie_black");
 
-
+        for(int i = 0; i < list.size(); i++){
+            String from = list.get(i).getFrom_username();
+            assertTrue(testArray.contains(from));
+            assertEquals(list.get(i).getNotification(), 1);
+        }
+    }
 
 
 

@@ -5,8 +5,8 @@ public class QuestionPicture extends Question{
     private String answer;
     private String imageURL;
 
-    public QuestionPicture(int type, int quizID, int questionNumber, String question, String answer, String imageURL) {
-        super(type, quizID, questionNumber);
+    public QuestionPicture(int questionID, int quizID,int subID, int type, String question, String answer, String imageURL) {
+        super(questionID, quizID, subID, type);
         this.question = question;
         this.answer = answer;
         this.imageURL = imageURL;

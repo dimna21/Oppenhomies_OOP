@@ -3,8 +3,8 @@ package DBpackage.Questions;
 public class QuestionTextbox extends Question{
     private String question;
     private String answer;
-    public QuestionTextbox(int type, int quizID, int questionNumber, String question, String answer) {
-        super(type, quizID, questionNumber);
+    public QuestionTextbox(int questionID, int quizID,int subID, int type, String question, String answer) {
+        super(questionID, quizID, subID, type);
         this.answer = answer;
         this.question = question;
     }

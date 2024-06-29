@@ -7,7 +7,7 @@ public class Question {
     private int questionID;
 
     public Question(int questionID, int quizID, int subID, int type){
-        this.questionID=questionID;
+        this.questionID = questionID;
         this.type = type;
         this.quizID = quizID;
         this.subID = subID;

@@ -7,9 +7,9 @@ public class QuestionFillBlank extends Question{
     private String textAfter;
     private String answer;
 
-    public QuestionFillBlank(int type, int quizID, int questionNumber,
+    public QuestionFillBlank( int questionID, int quizID,int subID, int type,
                   String textBefore, String textAfter, String answer) {
-        super(type, quizID, questionNumber);
+        super(questionID, quizID, subID, type);
         this.textAfter = textAfter;
         this.textBefore = textBefore;
         this.answer = answer;

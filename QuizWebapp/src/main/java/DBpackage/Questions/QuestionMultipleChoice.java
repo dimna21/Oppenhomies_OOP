@@ -9,8 +9,8 @@ public class QuestionMultipleChoice extends Question{
     private String question;
     private String correctAnswer;
     private ArrayList<String> answerList;
-    public QuestionMultipleChoice(int type, int quizID, int questionNumber, String question, String correctAnswer) throws SQLException, ClassNotFoundException {
-        super(type, quizID, questionNumber);
+    public QuestionMultipleChoice( int questionID, int quizID,int subID, int type, String question, String correctAnswer) throws SQLException, ClassNotFoundException {
+        super(questionID, quizID, subID, type);
         this.question = question;
         this.correctAnswer = correctAnswer;
         initAnswerList();

@@ -93,7 +93,7 @@ public class DatabaseAccess {
         }
         if(getUserInfo(username)!=null)return false;
         String query = "INSERT INTO Users ( username, password, admin_status, quizzes_taken, quizzes_created, highest_scorer, practice_mode, profile_pic_url) VALUES" +
-                "( '" + username+ "', ' "+Hashcode +"', "+ adminStatus + " , 0, 0, 0, 0, 'http://example.com/images/john.jpg')";
+                "( '" + username+ "', '"+Hashcode +"', "+ adminStatus + " , 0, 0, 0, 0, 'http://example.com/images/john.jpg')";
 
         try {
             stmt.executeUpdate(query);
@@ -143,7 +143,7 @@ public class DatabaseAccess {
         ArrayList<Challenge> ls= new ArrayList<>();
         if(getUserInfo(currentUser)==null)return null;
         int userID = getUserInfo(currentUser).getUser_id();
-        String query = "select * from friend_request where from_id = '" + userID
+        String query = "select * from Friend_requests where from_id = '" + userID
                 + "';";
 
         try {
@@ -246,7 +246,6 @@ public class DatabaseAccess {
                         resultSet.getInt("quiz_id"),
                         resultSet.getInt("sub_id"),
                         resultSet.getInt("type")
-
                 );
                 qList1.add(q);
             }
@@ -365,7 +364,7 @@ public class DatabaseAccess {
         return q;
     }
     public boolean accountExists(String username){
-        String query = "select username from Users where username = " + username + " ;";
+        String query = "select username from Users where username = '" + username + "' ;";
         int len = 0;
         try {
             ResultSet resultSet = stmt.executeQuery(query);
@@ -378,29 +377,6 @@ public class DatabaseAccess {
         return len != 0;
     }
 
-
-    public ArrayList<Score> getScoresForUserAndQuiz(int userId, int quizId) throws SQLException {
-        ArrayList<Score> scores = new ArrayList<>();
-
-        String query = "SELECT * FROM scores " +
-                "WHERE user_id = " + userId + " quiz_id = " + quizId +
-                "ORDER BY date_scored DESC";
-
-        ResultSet rs = stmt.executeQuery(query);
-        while(rs.next()) {
-            Score score = new Score(
-                    rs.getInt("score_id"),
-                    rs.getInt("quiz_id"),
-                    rs.getInt("user_id"),
-                    rs.getInt("score"),
-                    rs.getInt("time"),
-                    rs.getDate("date_scored")
-            );
-            scores.add(score);
-        }
-
-        return scores;
-    }
     public HashMap<String, Integer> getTopScorers(int quizID, int numScorers){
 
         String query =  "select user_id, score from Scores where quiz_id = " + quizID + " order by score DESC;";
@@ -419,5 +395,6 @@ public class DatabaseAccess {
         }
         return ans;
     }
+
 
 }

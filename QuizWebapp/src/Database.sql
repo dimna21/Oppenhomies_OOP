@@ -23,7 +23,9 @@ Create table Challenge(
                           from_id INT(6),
                           to_id INT(6),
                           quiz_id int(6),
-                          notification INT(1)
+                          notification INT(1),
+                          from_username VARCHAR(300),
+                          to_username VARCHAR(300)
 );
 CREATE TABLE Users (
                        user_id INT(10) AUTO_INCREMENT PRIMARY KEY,
@@ -39,11 +41,11 @@ CREATE TABLE Users (
 
 INSERT INTO Users ( username, password, admin_status, quizzes_taken,
                    quizzes_created, highest_scorer, practice_mode, profile_pic_url) VALUES
-                                                                                        ( 'john_doe', 'password123', 1, 10, 5, 1, 0, 'http://example.com/images/john.jpg'),
-                                                                                        ('jane_smith', 'password456', 0, 8, 3, 0, 1, 'http://example.com/images/jane.jpg'),
-                                                                                        ('alice_jones', 'password789', 0, 15, 7, 0, 0, 'http://example.com/images/alice.jpg'),
-                                                                                        ('bob_brown', 'password321', 0, 5, 2, 1, 1, 'http://example.com/images/bob.jpg'),
-                                                                                        ('charlie_black', 'password654', 1, 20, 10, 1, 1, 'http://example.com/images/charlie.jpg');
+   ( 'john_doe', 'password123', 1, 10, 5, 1, 0, 'http://example.com/images/john.jpg'),
+   ('jane_smith', 'password456', 0, 8, 3, 0, 1, 'http://example.com/images/jane.jpg'),
+   ('alice_jones', 'password789', 0, 15, 7, 0, 0, 'http://example.com/images/alice.jpg'),
+   ('bob_brown', 'password321', 0, 5, 2, 1, 1, 'http://example.com/images/bob.jpg'),
+   ('charlie_black', 'password654', 1, 20, 10, 1, 1, 'http://example.com/images/charlie.jpg');
 
 
 -- Create Friends table
@@ -67,7 +69,9 @@ CREATE TABLE Friend_requests (
                                  request_id INT(6) AUTO_INCREMENT PRIMARY KEY,
                                  from_id INT(6),
                                  to_id INT(6),
-                                 notification INT(1) -- Boolean: 0 or 1
+                                 notification INT(1), -- Boolean: 0 or 1,
+                                 from_username VARCHAR(300),
+                                 to_username VARCHAR(300)
 );
 
 -- Create Quizzes table
@@ -123,7 +127,8 @@ CREATE TABLE Multiple_choice_questions (
                                            question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
                                            quiz_id INT(6), -- Foreign Key with Quizzes
                                            sub_id INT(3), -- Numeric order of the question in the quiz
-                                           question VARCHAR(300)
+                                           question VARCHAR(300),
+                                           ordered INT(1) -- Boolean: 0 or 1
 );
 
 -- Create Multiple_choice_answers table

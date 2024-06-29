@@ -15,14 +15,14 @@ public class DBtest extends TestCase{
 
 
     }
-    public void test1() throws SQLException {
+    public void testLogin() throws SQLException {
         boolean ans;
         ans = dbCall.login("john_doe","password123");
         assertTrue(ans);
         ans = dbCall.login("john_doe","password13");
         assertFalse(ans);
     }
-    public void test2() throws SQLException{
+    public void testGetUserInfo() throws SQLException{
         User user;
         user = dbCall.getUserInfo("charlie_black");
         assertEquals(user.getUser_id(),5);
@@ -30,13 +30,13 @@ public class DBtest extends TestCase{
         user = dbCall.getUserInfo("hi");
         assertNull(user);
     }
-    public void test3() throws SQLException{
+    public void testAddUser() throws SQLException{
         boolean added;
-        added = dbCall.addUser("a","b");
+        added = dbCall.addUser("a","b",0);
         assertTrue(added);
-        added = dbCall.addUser("c","d");
+        added = dbCall.addUser("c","d",0);
         assertTrue(added);
-        added = dbCall.addUser("a","d");
+        added = dbCall.addUser("a","d",1);
         assertFalse(added);
 
     }

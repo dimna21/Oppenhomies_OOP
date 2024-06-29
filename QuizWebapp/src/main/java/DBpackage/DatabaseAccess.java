@@ -364,7 +364,7 @@ public class DatabaseAccess {
         return q;
     }
     public boolean accountExists(String username){
-        String query = "select username from Users where username = " + username + " ;";
+        String query = "select username from Users where username = '" + username + "' ;";
         int len = 0;
         try {
             ResultSet resultSet = stmt.executeQuery(query);

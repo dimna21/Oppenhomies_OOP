@@ -214,3 +214,37 @@ CREATE TABLE Matching_answers(
 
 
 
+-- -------------------------------------------------------------
+-- Add a new quiz
+INSERT INTO Quizzes (quiz_name, quiz_description, quiz_creator_id, random_question, one_page, immediate, practice, creation_date, times_taken)
+VALUES
+    ('Sample Quiz', 'This is a sample quiz to demonstrate table relationships.', 1, 0, 1, 1, 0, '2024-06-29', 0);
+
+-- Retrieve the quiz ID for the new quiz (Assume the quiz_id is 6 for the following inserts)
+SELECT quiz_id FROM Quizzes WHERE quiz_name = 'Sample Quiz';
+
+-- Add questions to the Quiz_questions table
+INSERT INTO Quiz_questions (quiz_id, sub_id, type) VALUES
+                                                       (6, 1, 1), -- Textbox question
+                                                       (6, 2, 2), -- Fill-in-the-blank question
+                                                       (6, 3, 3); -- Multiple-choice question
+
+-- Add a textbox question to the Textbox_questions table
+INSERT INTO Textbox_questions (quiz_id, sub_id, question, answer) VALUES
+    (6, 1, 'What is the capital of France?', 'Paris');
+
+-- Add a fill-in-the-blank question to the Fill_blank_questions table
+INSERT INTO Fill_blank_questions (quiz_id, sub_id, text_before, text_after, answer) VALUES
+    (6, 2, 'The chemical symbol for water is ', '.', 'H2O');
+
+-- Add a multiple-choice question to the Multiple_choice_questions table
+INSERT INTO Multiple_choice_questions (quiz_id, sub_id, question, ordered) VALUES
+    (6, 3, 'Which planet is known as the Red Planet?', 1);
+
+-- Add answers to the Multiple_choice_answers table
+INSERT INTO Multiple_choice_answers (quiz_id, sub_id, order_number, answer, correct) VALUES
+                                                                                         (6, 3, 1, 'Mars', 1),
+                                                                                         (6, 3, 2, 'Venus', 0),
+                                                                                         (6, 3, 3, 'Jupiter', 0),
+                                                                                         (6, 3, 4, 'Saturn', 0);
+-- ---------------------------------------------------------------

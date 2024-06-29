@@ -1,4 +1,7 @@
 import DBpackage.*;
+import DBpackage.Questions.Question;
+import DBpackage.Questions.QuestionFillBlank;
+import DBpackage.Questions.QuestionTextbox;
 import DBpackage.Quiz;
 import DBpackage.User;
 import junit.framework.TestCase;
@@ -73,7 +76,26 @@ public class DBtest extends TestCase{
         System.out.println( hasher.getHash("password123"));
         System.out.println( hasher.getHash("password234"));
         System.out.println( hasher.getHash("molly"));
+        System.out.println( hasher.getHash("b"));
+        System.out.println( hasher.getHash("d"));
 
     }
-
+    public void testTextBox(){
+        Question q;
+        Question Ques = new Question(1,6,1,1);
+        q=dbCall.getTextBox(Ques);
+        QuestionTextbox q2 = (QuestionTextbox)q;
+        assertEquals(q2.getAnswer(),"Paris");
+        assertEquals(q2.getQuizID(),6);
+        assertEquals(q2.getSubID(),1);
+    }
+    public void testFillBlank(){
+        Question q;
+        Question Ques = new Question(2,6,2,2);
+        q=dbCall.getTextBox(Ques);
+        QuestionFillBlank q2 = (QuestionFillBlank)q;
+        assertEquals(q2.getAnswer(),"Paris");
+        assertEquals(q2.getQuizID(),6);
+        assertEquals(q2.getSubID(),1);
+    }
 }

@@ -7,8 +7,6 @@ import DBpackage.Questions.QuestionTextbox;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.List;
-
 
 
 public class DatabaseAccess {
@@ -39,8 +37,13 @@ public class DatabaseAccess {
         }
         return username;
     }
-    public boolean login(String name, String pw) throws NoSuchAlgorithmException {
-        String hashcode = hasher.getHash(pw);
+    public boolean login(String name, String pw)  {
+        String hashcode = null;
+        try {
+            hashcode = hasher.getHash(pw);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
         String query = "select * from users where username = '" + name +
                 "' and password = '" + hashcode + "';";
 
@@ -80,7 +83,13 @@ public class DatabaseAccess {
         }
         return user;
     }
-    public boolean addUser(String username, String Hashcode, int adminStatus){
+    public boolean addUser(String username, String pw, int adminStatus){
+        String Hashcode = null;
+        try {
+            Hashcode = hasher.getHash(pw);
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
         if(getUserInfo(username)!=null)return false;
         String query = "INSERT INTO Users ( username, password, admin_status, quizzes_taken, quizzes_created, highest_scorer, practice_mode, profile_pic_url) VALUES" +
                 "( '" + username+ "', ' "+Hashcode +"', "+ adminStatus + " , 0, 0, 0, 0, 'http://example.com/images/john.jpg')";
@@ -353,7 +362,19 @@ public class DatabaseAccess {
 
         return q;
     }
-
+    public boolean accountExists(String username){
+        String query = "select username from Users where username = " + username + " ;";
+        int len = 0;
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()) {
+                len++;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return len != 0;
+    }
 
 
 }

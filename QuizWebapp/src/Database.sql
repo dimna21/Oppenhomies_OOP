@@ -1,6 +1,9 @@
 # UPDATE Users SET profile_pic_url = 'hello.jpg' WHERE username = 'john_doe';
 # select * from users;
 #SELECT * FROM quizzes ORDER BY creation_date desc LIMIT 3;
+select * from fill_blank_questions where quiz_id = 6 and sub_id = 2;
+
+
 USE QuizDatabase;
 
 -- Drop tables if they exist

@@ -1,6 +1,7 @@
 import DBpackage.*;
 import DBpackage.Questions.Question;
 import DBpackage.Questions.QuestionFillBlank;
+import DBpackage.Questions.QuestionMultipleChoice;
 import DBpackage.Questions.QuestionTextbox;
 import DBpackage.Quiz;
 import DBpackage.User;
@@ -92,10 +93,19 @@ public class DBtest extends TestCase{
     public void testFillBlank(){
         Question q;
         Question Ques = new Question(2,6,2,2);
-        q=dbCall.getTextBox(Ques);
+        q=dbCall.getFillBlank(Ques);
         QuestionFillBlank q2 = (QuestionFillBlank)q;
-        assertEquals(q2.getAnswer(),"Paris");
-        assertEquals(q2.getQuizID(),6);
-        assertEquals(q2.getSubID(),1);
+        assertEquals(q2.getTextAfter(),".");
+        assertEquals(q2.getAnswer(),"H2O");
+        assertEquals(q2.getSubID(),2);
+    }
+    public void testMultipleChoice(){
+        Question q;
+        Question Ques = new Question(3,6,3,3);
+        q=dbCall.getMultipleChoice(Ques);
+        QuestionMultipleChoice q2 = (QuestionMultipleChoice)q;
+        assertEquals(q2.getCorrectAnswer(),"Mars");
+        assertEquals(q2.getAnswerList().size(),4);
+        assertEquals(q2.getSubID(),3);
     }
 }

@@ -7,6 +7,7 @@ import DBpackage.Questions.QuestionTextbox;
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 
 public class DatabaseAccess {
@@ -24,7 +25,7 @@ public class DatabaseAccess {
 
         stmt = con.createStatement();
     }
-    private String getUsername(int userID) {
+    public String getUsername(int userID) {
         String query = "SELECT username FROM users WHERE user_id = '" + userID + "';";
         String username = null;
         try {
@@ -301,6 +302,7 @@ public class DatabaseAccess {
     }
     public Question getFillBlank(Question ques) {
         int quizId=ques.getQuizID(); int subId=ques.getSubID();
+
         String query = "select * from fill_blank_questions where quiz_id = " + quizId + " and sub_id = " + subId + " ;";
         QuestionFillBlank q=null;
         try {
@@ -375,6 +377,25 @@ public class DatabaseAccess {
         }
         return len != 0;
     }
+
+    public HashMap<String, Integer> getTopScorers(int quizID, int numScorers){
+        String query =  "select user_id, score from Scores where quiz_id = " + quizID + " order by score DESC;";
+        HashMap<String, Integer> ans = new HashMap<>();
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()) {
+                if(numScorers == 0)break;
+                String user = resultSet.getString("user_id");
+                int score = resultSet.getInt("score");
+                ans.put(user, score);
+                numScorers--;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return ans;
+    }
+
 
 
 }

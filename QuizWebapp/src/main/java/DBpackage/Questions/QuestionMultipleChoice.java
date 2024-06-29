@@ -15,7 +15,7 @@ public class QuestionMultipleChoice extends Question{
         super(questionID, quizID, subID, type);
         this.question = question;
         this.ordered = ordered;
-
+        this.answerList=new ArrayList<>();
     }
 
     public void setQuestion(String question) {

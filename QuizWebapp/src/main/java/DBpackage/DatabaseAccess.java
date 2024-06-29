@@ -401,7 +401,6 @@ public class DatabaseAccess {
 
         return scores;
     }
-}
     public HashMap<String, Integer> getTopScorers(int quizID, int numScorers){
 
         String query =  "select user_id, score from Scores where quiz_id = " + quizID + " order by score DESC;";
@@ -420,7 +419,5 @@ public class DatabaseAccess {
         }
         return ans;
     }
-
-
 
 }

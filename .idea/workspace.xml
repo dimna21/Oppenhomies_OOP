@@ -39,7 +39,7 @@
     "Maven.QuizWebapp [tomcat7:run].executor": "Run",
     "Maven.studentsTable [tomcat7:run].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feature/user-authentication",
+    "git-widget-placeholder": "main",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/sandr/OneDrive/Desktop/OOPFinalRepo/Oppenhomies_OOP/QuizWebapp/src/main/webapp/UserAuthentication",
     "node.js.detected.package.eslint": "true",

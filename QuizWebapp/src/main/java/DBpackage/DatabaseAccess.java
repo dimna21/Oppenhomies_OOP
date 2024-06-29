@@ -1,5 +1,7 @@
 package DBpackage;
 import DBpackage.Questions.Question;
+import DBpackage.Questions.QuestionFillBlank;
+import DBpackage.Questions.QuestionTextbox;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -183,8 +185,9 @@ public class DatabaseAccess {
             query = "SELECT * FROM quizzes ORDER BY creation_date desc LIMIT " + amountToGet
                     + ";";
         }else{
-            query = "SELECT * FROM quizzes ORDER BY creation_date desc;";
+            query = "select * from quizdatabase.quizzes ORDER BY creation_date desc;";
         }
+
 
 
         try {
@@ -211,7 +214,7 @@ public class DatabaseAccess {
         return ls;
     }
     public ArrayList<Question> getQuizQuestions(int quizId){
-        ArrayList<Question> questions = new ArrayList<>();
+        ArrayList<Question> questions2 = new ArrayList<>();
         ArrayList<Question> qList1 = new ArrayList<>();
         String query;
         query = "select * from quiz_questions where quiz_id = " + quizId + " order by sub_id ASC;";
@@ -232,11 +235,74 @@ public class DatabaseAccess {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+
+
         for(Question q : qList1){
+            Question q2;
+            switch(q.getType()){
+                case 1:
+                    q2=getQuizResp(q);
+                    questions2.add(q2);
+                    break;
+                case 2:
+                    q2 = getFillBlank(q);
+                    questions2.add(q2);
+                    break;
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+            }
 
         }
-        return questions;
+        return questions2;
 
     }
+    public Question getQuizResp(Question ques) {
+        int quizId=ques.getQuizID(); int subId=ques.getSubID();
+        String query = "select * from quiz_questions where quiz_id = " + quizId + " and sub_id = " + subId + " ;";
+        QuestionTextbox q=null;
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()) {
+                q = new QuestionTextbox(
+                        resultSet.getInt("question_id"),
+                        resultSet.getInt("quiz_id"),
+                        resultSet.getInt("sub_id"),
+                        resultSet.getInt("type"),
+                        resultSet.getString("question"),
+                        resultSet.getString("answer")
+                );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return q;
+    }
+    public Question getFillBlank(Question ques) {
+        int quizId=ques.getQuizID(); int subId=ques.getSubID();
+        String query = "select * from fill_blank_questions where quiz_id = " + quizId + " and sub_id = " + subId + " ;";
+        QuestionFillBlank q=null;
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()) {
+                q = new QuestionFillBlank(
+                        resultSet.getInt("question_id"),
+                        resultSet.getInt("quiz_id"),
+                        resultSet.getInt("sub_id"),
+                        resultSet.getInt("type"),
+                        resultSet.getString("text_before"),
+                        resultSet.getString("text_after"),
+                        resultSet.getString("answer")
+                );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return q;
+    }
+
+
 
 }

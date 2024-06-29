@@ -1,5 +1,6 @@
 package DBpackage;
 
+import java.sql.*;
 import java.util.Date;
 
 public class Quiz {
@@ -128,8 +129,28 @@ public class Quiz {
        return random_question;
     }
 
-    // Additional functionality
+    public String getCreatorUsername() throws SQLException, ClassNotFoundException {
+        Class.forName("com.mysql.cj.jdbc.Driver");
 
+        Connection con = DriverManager.getConnection("jdbc:mysql://" +
+                        DatabaseInfo.server + "/" + DatabaseInfo.database,
+                DatabaseInfo.username, DatabaseInfo.password);
+
+        Statement stmt = con.createStatement();
+        String query = "SELECT username FROM users WHERE user_id = '" + this.quiz_creator_id + "';";
+        String username = null;
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            if (resultSet.next()){
+                username = resultSet.getString("username");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return username;
+    }
+
+    // Additional functionality
     public void incrementQuizTaken(){
         times_taken++;
     }

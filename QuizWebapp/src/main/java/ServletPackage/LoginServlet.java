@@ -24,11 +24,7 @@ public class LoginServlet extends HttpServlet {
         String hashedPass = "";
 
         boolean isValid = false;
-        try {
-            isValid = dbAccess.login(username, hashedPass);
-        } catch (NoSuchAlgorithmException e) {
-            throw new RuntimeException(e);
-        }
+        isValid = dbAccess.login(username, hashedPass);
 
         if(isValid){
             RequestDispatcher dispatcher = req.getRequestDispatcher("goodLogin.jsp");

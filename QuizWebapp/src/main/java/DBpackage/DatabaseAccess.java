@@ -1,8 +1,10 @@
 package DBpackage;
 import DBpackage.Questions.Question;
 import DBpackage.Questions.QuestionFillBlank;
+import DBpackage.Questions.QuestionMultipleChoice;
 import DBpackage.Questions.QuestionTextbox;
 
+import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -24,8 +26,21 @@ public class DatabaseAccess {
 
         stmt = con.createStatement();
     }
-    public boolean login(String name, String hashcode) {
-        //ArrayList<ProductInfo> students = new ArrayList<>();
+    private String getUsername(int userID) {
+        String query = "SELECT username FROM users WHERE user_id = '" + userID + "';";
+        String username = null;
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            if (resultSet.next()) {
+                username = resultSet.getString("username");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return username;
+    }
+    public boolean login(String name, String pw) throws NoSuchAlgorithmException {
+        String hashcode = hasher.getHash(pw);
         String query = "select * from users where username = '" + name +
                 "' and password = '" + hashcode + "';";
 
@@ -65,15 +80,13 @@ public class DatabaseAccess {
         }
         return user;
     }
-    public boolean addUser(String username, String Hashcode){
+    public boolean addUser(String username, String Hashcode, int adminStatus){
         if(getUserInfo(username)!=null)return false;
         String query = "INSERT INTO Users ( username, password, admin_status, quizzes_taken, quizzes_created, highest_scorer, practice_mode, profile_pic_url) VALUES" +
-                "( '" + username+ "', ' "+Hashcode +"', 1, 10, 5, 1, 0, 'http://example.com/images/john.jpg')";
+                "( '" + username+ "', ' "+Hashcode +"', "+ adminStatus + " , 0, 0, 0, 0, 'http://example.com/images/john.jpg')";
 
         try {
-
             stmt.executeUpdate(query);
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -98,19 +111,17 @@ public class DatabaseAccess {
         if(getUserInfo(currentUser)==null)return null;
         int userID = getUserInfo(currentUser).getUser_id();
         String query = "select * from friend_requests where from_id = '" + userID
-        + "';";
+                + "';";
 
         try {
             FriendRequest fr;
             ResultSet resultSet = stmt.executeQuery(query);
             while (resultSet.next()){
-                fr =  new FriendRequest(
-                        resultSet.getInt("request_id"),
-                        resultSet.getInt("from_id"),
-                        resultSet.getInt("to_id"),
-                        resultSet.getInt("notification")
-
-                );
+                int req = resultSet.getInt("request_id");
+                int fromid =  resultSet.getInt("from_id");
+                int toid =  resultSet.getInt("to_id");
+                int notif =  resultSet.getInt("notification");
+                fr =  new FriendRequest(req, fromid, toid, notif, getUsername(fromid), getUsername(toid));
                 ls.add(fr);
             }
         } catch (SQLException e) {
@@ -129,15 +140,12 @@ public class DatabaseAccess {
             Challenge ch;
             ResultSet resultSet = stmt.executeQuery(query);
             while (resultSet.next()){
-                ch =  new Challenge(
-                        resultSet.getInt("request_id"),
-                        resultSet.getInt("from_id"),
-                        resultSet.getInt("to_id"),
-                        resultSet.getInt("quiz_id"),
-                        resultSet.getInt("notification")
-
-
-                );
+                int req = resultSet.getInt("request_id");
+                int fromid = resultSet.getInt("from_id");
+                int toid = resultSet.getInt("to_id");
+                int quizid = resultSet.getInt("quiz_id");
+                int notif = resultSet.getInt("notification");
+                ch =  new Challenge(req,fromid,toid,quizid,notif, getUsername(fromid),getUsername(toid));
                 ls.add(ch);
             }
         } catch (SQLException e) {
@@ -240,28 +248,30 @@ public class DatabaseAccess {
         for(Question q : qList1){
             Question q2;
             switch(q.getType()){
-                case 1:
-                    q2=getQuizResp(q);
+                case 1:    //textbox
+                    q2=getTextBox(q);
                     questions2.add(q2);
                     break;
-                case 2:
+                case 2:    //fillBlank
                     q2 = getFillBlank(q);
                     questions2.add(q2);
                     break;
-                case 3:
-                case 4:
-                case 5:
-                case 6:
-                case 7:
+                case 3:    //multipleChoice
+                    q2=getMultipleChoice(q);
+                    questions2.add(q2);
+                case 4:    //picture
+                case 5:     //multitextbox
+                case 6:      //multi-multi-choice
+                case 7:      //match
             }
 
         }
         return questions2;
 
     }
-    public Question getQuizResp(Question ques) {
+    public Question getTextBox(Question ques) {
         int quizId=ques.getQuizID(); int subId=ques.getSubID();
-        String query = "select * from quiz_questions where quiz_id = " + quizId + " and sub_id = " + subId + " ;";
+        String query = "select * from textbox_questions where quiz_id = " + quizId + " and sub_id = " + subId + " ;";
         QuestionTextbox q=null;
         try {
             ResultSet resultSet = stmt.executeQuery(query);
@@ -270,7 +280,7 @@ public class DatabaseAccess {
                         resultSet.getInt("question_id"),
                         resultSet.getInt("quiz_id"),
                         resultSet.getInt("sub_id"),
-                        resultSet.getInt("type"),
+                        ques.getType(),
                         resultSet.getString("question"),
                         resultSet.getString("answer")
                 );
@@ -291,7 +301,7 @@ public class DatabaseAccess {
                         resultSet.getInt("question_id"),
                         resultSet.getInt("quiz_id"),
                         resultSet.getInt("sub_id"),
-                        resultSet.getInt("type"),
+                        ques.getType(),
                         resultSet.getString("text_before"),
                         resultSet.getString("text_after"),
                         resultSet.getString("answer")
@@ -300,6 +310,47 @@ public class DatabaseAccess {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return q;
+    }
+
+    public Question getMultipleChoice(Question ques){
+        int quizId=ques.getQuizID(); int subId=ques.getSubID();
+        String query = "select * from multiple_choice_questions where quiz_id = " + quizId + " and sub_id = " + subId + " ;";
+        QuestionMultipleChoice q=null;
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()) {
+//( int questionID, int quizID,int subID, int type, String question, String correctAnswer)
+                q = new QuestionMultipleChoice(
+                        resultSet.getInt("question_id"),
+                        resultSet.getInt("quiz_id"),
+                        resultSet.getInt("sub_id"),
+                        ques.getType(),
+                        resultSet.getString("question"),
+                        resultSet.getInt("ordered")
+                );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        query = "select * from multiple_choice_answers where quiz_id = " + quizId+ " and sub_id = " + subId + " order by order_number ASC;";
+        ArrayList<String> strings = new ArrayList<>();
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()) {
+//( int questionID, int quizID,int subID, int type, String question, String correctAnswer)
+                if(resultSet.getInt("correct")==1){
+                    q.setCorrectAnswer(resultSet.getString("answer"));
+                }
+                strings.add(resultSet.getString("answer"));
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        q.setAnswerList(strings);
+
         return q;
     }
 

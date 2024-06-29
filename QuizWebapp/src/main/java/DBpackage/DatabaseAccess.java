@@ -378,6 +378,30 @@ public class DatabaseAccess {
         return len != 0;
     }
 
+
+    public ArrayList<Score> getScoresForUserAndQuiz(int userId, int quizId) throws SQLException {
+        ArrayList<Score> scores = new ArrayList<>();
+
+        String query = "SELECT * FROM scores " +
+                "WHERE user_id = " + userId + " quiz_id = " + quizId +
+                "ORDER BY date_scored DESC";
+
+        ResultSet rs = stmt.executeQuery(query);
+        while(rs.next()) {
+            Score score = new Score(
+                    rs.getInt("score_id"),
+                    rs.getInt("quiz_id"),
+                    rs.getInt("user_id"),
+                    rs.getInt("score"),
+                    rs.getInt("time"),
+                    rs.getDate("date_scored")
+            );
+            scores.add(score);
+        }
+
+        return scores;
+    }
+}
     public HashMap<String, Integer> getTopScorers(int quizID, int numScorers){
 
         String query =  "select user_id, score from Scores where quiz_id = " + quizID + " order by score DESC;";

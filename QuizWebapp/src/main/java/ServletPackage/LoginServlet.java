@@ -21,21 +21,21 @@ public class LoginServlet extends HttpServlet {
         String username = req.getParameter("username");
         String password = req.getParameter("password");
 
-        String hashedPass = "";
+        boolean isValid;
 
-        boolean isValid = false;
         try {
-            isValid = dbAccess.login(username, hashedPass);
+            isValid = dbAccess.login(username, password);
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
         }
 
+        RequestDispatcher dispatcher;
         if(isValid){
-            RequestDispatcher dispatcher = req.getRequestDispatcher("goodLogin.jsp");
-            dispatcher.forward(req, res);
+            //goodLogin.jsp will be replaced by the UserPage :3
+            dispatcher = req.getRequestDispatcher("goodLogin.jsp");
         }else{
-            RequestDispatcher dispatcher = req.getRequestDispatcher("badLogin.jsp");
-            dispatcher.forward(req, res);
+            dispatcher = req.getRequestDispatcher("UserAuthentication/badLogin.jsp");
         }
+        dispatcher.forward(req, res);
     }
 }

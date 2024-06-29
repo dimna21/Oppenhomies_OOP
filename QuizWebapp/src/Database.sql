@@ -235,9 +235,10 @@ CREATE TABLE Matching_answers(
 
 -- -------------------------------------------------------------
 -- Add a new quiz
+-- Add a new quiz
 INSERT INTO Quizzes (quiz_name, quiz_description, quiz_creator_id, random_question, one_page, immediate, practice, creation_date, times_taken)
 VALUES
-    ('Sample Quiz', 'This is a sample quiz to demonstrate table relationships.', 1, 0, 1, 1, 0, '2024-06-29', 0);
+    ('Sample Quiz', 'This is a sample quiz to demonstrate table relationships.', 1, 0, 1, 1, 0, '2023-06-18', 0);
 
 -- Retrieve the quiz ID for the new quiz (Assume the quiz_id is 6 for the following inserts)
 SELECT quiz_id FROM Quizzes WHERE quiz_name = 'Sample Quiz';
@@ -246,7 +247,8 @@ SELECT quiz_id FROM Quizzes WHERE quiz_name = 'Sample Quiz';
 INSERT INTO Quiz_questions (quiz_id, sub_id, type) VALUES
                                                        (6, 1, 1), -- Textbox question
                                                        (6, 2, 2), -- Fill-in-the-blank question
-                                                       (6, 3, 3); -- Multiple-choice question
+                                                       (6, 3, 3), -- Multiple-choice question
+                                                       (6, 4, 4); -- Picture question
 
 -- Add a textbox question to the Textbox_questions table
 INSERT INTO Textbox_questions (quiz_id, sub_id, question, answer) VALUES
@@ -266,4 +268,15 @@ INSERT INTO Multiple_choice_answers (quiz_id, sub_id, order_number, answer, corr
                                                                                          (6, 3, 2, 'Venus', 0),
                                                                                          (6, 3, 3, 'Jupiter', 0),
                                                                                          (6, 3, 4, 'Saturn', 0);
+
+-- Add a picture question to the Picture_questions table
+INSERT INTO Picture_questions (quiz_id, sub_id, question, answer, image_url) VALUES
+    (6, 4, 'What is the name of this famous landmark?', 'Eiffel Tower', 'http://example.com/images/eiffel_tower.jpg');
+
 -- ---------------------------------------------------------------
+INSERT INTO Challenge(from_id, to_id, quiz_id, notification) VALUES
+                                                                 (3,1,1,1),
+                                                                 (2,1,1,1),
+                                                                 (4,1,1,1),
+                                                                 (5,1,1,1);
+-- --------------------------

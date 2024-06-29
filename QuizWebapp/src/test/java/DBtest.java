@@ -1,8 +1,5 @@
 import DBpackage.*;
-import DBpackage.Questions.Question;
-import DBpackage.Questions.QuestionFillBlank;
-import DBpackage.Questions.QuestionMultipleChoice;
-import DBpackage.Questions.QuestionTextbox;
+import DBpackage.Questions.*;
 import DBpackage.Quiz;
 import DBpackage.User;
 import junit.framework.TestCase;
@@ -54,7 +51,7 @@ public class DBtest extends TestCase{
     public void testGetNewestQuiz() throws SQLException{
         ArrayList<Quiz> ls;
         ls=dbCall.getNewestQuiz(0);
-        assertEquals(ls.size(),5);
+        assertEquals(ls.size(),6);
         ls=dbCall.getNewestQuiz(3);
         assertEquals(ls.size(),3);
         assertEquals(ls.get(0).getQuiz_id(),1);
@@ -65,7 +62,7 @@ public class DBtest extends TestCase{
         Quiz qz;
         qz= dbCall.getQuizInfo(1);
         assertEquals(qz.getName(),"General Knowledge");
-        qz= dbCall.getQuizInfo(6);
+        qz= dbCall.getQuizInfo(50);
         assertNull(qz);
         qz= dbCall.getQuizInfo(5);
         assertEquals(qz.getTimesTaken(),3);
@@ -128,11 +125,23 @@ public class DBtest extends TestCase{
                 case 3:
                     myQuestion = (QuestionMultipleChoice)q;
                     assertEquals(((QuestionMultipleChoice) myQuestion).getAnswerList().size(),4);
-
                     break;
             }
 
         }
+    }
+    public void testGetPictureQuestion(){
+        Question q;
+        Question Ques = new Question(4,6,4,4);
+        q=dbCall.getPictureQuestion(Ques);
+        QuestionPicture q2 = (QuestionPicture)q;
+        assertEquals(q2.getAnswer(),"Eiffel Tower");
+        assertEquals(q2.getQuizID(),6);
+        assertEquals(q2.getSubID(),4);
+
+        Ques = new Question(4,6,3,4);
+        q=dbCall.getPictureQuestion(Ques);
+        assertNull(q);
     }
 
     public void testGetUsername(){

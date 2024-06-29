@@ -1,8 +1,5 @@
 package DBpackage;
-import DBpackage.Questions.Question;
-import DBpackage.Questions.QuestionFillBlank;
-import DBpackage.Questions.QuestionMultipleChoice;
-import DBpackage.Questions.QuestionTextbox;
+import DBpackage.Questions.*;
 
 import java.security.NoSuchAlgorithmException;
 import java.sql.*;
@@ -363,6 +360,32 @@ public class DatabaseAccess {
 
         return q;
     }
+
+    public Question getPictureQuestion(Question ques){
+        int quizId=ques.getQuizID(); int subId=ques.getSubID();
+
+        String query = "select * from picture_questions where quiz_id = " + quizId + " and sub_id = " + subId + " ;";
+        QuestionPicture q=null;
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()) {
+                q = new QuestionPicture(
+                        resultSet.getInt("answer_id"),
+                        resultSet.getInt("quiz_id"),
+                        resultSet.getInt("sub_id"),
+                        ques.getType(),
+                        resultSet.getString("question"),
+                        resultSet.getString("answer"),
+                        resultSet.getString("image_url")
+                );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return q;
+
+    }
+
     public boolean accountExists(String username){
         String query = "select username from Users where username = '" + username + "' ;";
         int len = 0;
@@ -376,6 +399,7 @@ public class DatabaseAccess {
         }
         return len != 0;
     }
+
 
     public HashMap<String, Integer> getTopScorers(int quizID, int numScorers){
 

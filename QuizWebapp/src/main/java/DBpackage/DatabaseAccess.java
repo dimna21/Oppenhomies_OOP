@@ -1,4 +1,6 @@
 package DBpackage;
+import DBpackage.Questions.Question;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -93,7 +95,7 @@ public class DatabaseAccess {
         ArrayList<FriendRequest> ls= new ArrayList<>();
         if(getUserInfo(currentUser)==null)return null;
         int userID = getUserInfo(currentUser).getUser_id();
-        String query = "select * from friend_request where from_id = '" + userID
+        String query = "select * from friend_requests where from_id = '" + userID
         + "';";
 
         try {
@@ -208,6 +210,33 @@ public class DatabaseAccess {
         }
         return ls;
     }
+    public ArrayList<Question> getQuizQuestions(int quizId){
+        ArrayList<Question> questions = new ArrayList<>();
+        ArrayList<Question> qList1 = new ArrayList<>();
+        String query;
+        query = "select * from quiz_questions where quiz_id = " + quizId + " order by sub_id ASC;";
 
+        try {
+            Question q;
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()){
+                q =  new Question(
+                        resultSet.getInt("question_id"),
+                        resultSet.getInt("quiz_id"),
+                        resultSet.getInt("sub_id"),
+                        resultSet.getInt("type")
+
+                );
+                qList1.add(q);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        for(Question q : qList1){
+
+        }
+        return questions;
+
+    }
 
 }

@@ -1,14 +1,12 @@
-package DBpackage;
-
-import DBpackage.DatabaseAccess;
+import DBpackage.*;
+import DBpackage.Quiz;
+import DBpackage.User;
 import junit.framework.TestCase;
 
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 
-//first, run metropolisesTest, then run this!!!
 public class DBtest extends TestCase{
     DatabaseAccess dbCall;
     protected void setUp() throws Exception {

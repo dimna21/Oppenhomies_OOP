@@ -30,6 +30,13 @@ Create table Challenge(
                           quiz_id int(6),
                           notification INT(1)
 );
+
+INSERT INTO Challenge(from_id, to_id, quiz_id, notification) VALUES
+(3,1,1,1),
+(2,1,1,1),
+(4,1,1,1),
+(5,1,1,1);
+
 CREATE TABLE Users (
                        user_id INT(10) AUTO_INCREMENT PRIMARY KEY,
                        username VARCHAR(150),

@@ -1,7 +1,8 @@
 <%@ page import="javax.xml.crypto.Data" %>
 <%@ page import="DBpackage.DatabaseAccess" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="DBpackage.Announcement" %><%--
+<%@ page import="DBpackage.Announcement" %>
+<%@ page import="DBpackage.Quiz" %><%--
   Created by IntelliJ IDEA.
   User: Nicolas
   Date: 6/30/2024
@@ -16,6 +17,7 @@
     String username = (String) session.getAttribute("username");
 
     ArrayList<Announcement> announcements = dbAccess.getLatestAnnouncements(0);
+    ArrayList<Quiz> recentlyCreatedQuizzes = dbAccess.getNewestQuiz(0);
 %>
 <html>
 <head>
@@ -53,7 +55,21 @@
             </div>
         </div>
 
-        <!-- Add other tab content here -->
+        <div id="tab2" class="tab-content">
+            <h2>Recently Created Quizzes</h2>
+            <div>
+                <% for(Quiz quiz: recentlyCreatedQuizzes) {%>
+                <div class="announcement">
+                    <h3><%=announcement.getTitle()%></h3>
+                    <p><%=announcement.getText()%></p>
+                    <p><%=quiz.getCreationDate() + " " + quiz.getCreatorUsername() %></p>
+                </div>
+                <%}%>
+            </div>
+        </div>
+
+        <!-- todo-->
+
     </div>
 </div>
 

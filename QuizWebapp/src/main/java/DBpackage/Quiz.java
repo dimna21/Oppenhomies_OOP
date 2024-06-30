@@ -8,6 +8,7 @@ public class Quiz {
     private String quiz_name;
     private String quiz_description;
     private int quiz_creator_id;
+    private String creatorUsername;
     private int random_question;
     private int one_page;
     private int immediate;
@@ -15,13 +16,14 @@ public class Quiz {
     private java.sql.Timestamp creation_date;
     private int times_taken;
 
-    public Quiz(int quiz_id, String name, String description, int creatorID, int randomQuestion,
+    public Quiz(int quiz_id, String name, String description, int creatorID, String creatorUsername, int randomQuestion,
                 int onePage, int immediate, int practice, java.sql.Timestamp creationDate,
                 int timesTaken){
         this.quiz_id = quiz_id;
         this.quiz_name = name;
         this.quiz_description = description;
         this.quiz_creator_id = creatorID;
+        this.creatorUsername = creatorUsername;
         this.random_question = randomQuestion;
         this.one_page = onePage;
         this.immediate = immediate;
@@ -66,6 +68,7 @@ public class Quiz {
     public void setCreatorID(int creatorID) {
         this.quiz_creator_id = creatorID;
     }
+    public void setCreatorUsername(String creatorUsername) {this.creatorUsername = creatorUsername; }
 
     public void setDescription(String description) {
         this.quiz_description = description;
@@ -185,25 +188,8 @@ public class Quiz {
     }
 
 
-    public String getCreatorUsername() throws SQLException, ClassNotFoundException {
-        Class.forName("com.mysql.cj.jdbc.Driver");
-
-        Connection con = DriverManager.getConnection("jdbc:mysql://" +
-                        DatabaseInfo.server + "/" + DatabaseInfo.database,
-                DatabaseInfo.username, DatabaseInfo.password);
-
-        Statement stmt = con.createStatement();
-        String query = "SELECT username FROM users WHERE user_id = '" + this.quiz_creator_id + "';";
-        String username = null;
-        try {
-            ResultSet resultSet = stmt.executeQuery(query);
-            if (resultSet.next()){
-                username = resultSet.getString("username");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return username;
+    public String getCreatorUsername() {
+        return this.creatorUsername;
     }
 
     // Additional functionality

@@ -165,7 +165,9 @@ public class DatabaseAccess {
 
 
     public Quiz getQuizInfo(int quiz_id){
-        String query = "select * from quizzes where quiz_id = '" + quiz_id +"' ;";
+        String query = "SELECT quizzes.*, users.user_id, users.username FROM quizzes" +
+                " LEFT JOIN users ON quizzes.quiz_creator_id = users.user_id" +
+                " WHERE quizzes.quiz_id = " + quiz_id +" ;";
         Quiz q = null;
         try {
 
@@ -176,6 +178,7 @@ public class DatabaseAccess {
                         resultSet.getString("quiz_name"),
                         resultSet.getString("quiz_description"),
                         resultSet.getInt("quiz_creator_id"),
+                        resultSet.getString("username"),
                         resultSet.getInt("random_question"),
                         resultSet.getInt("one_page"),
                         resultSet.getInt("immediate"),
@@ -197,10 +200,14 @@ public class DatabaseAccess {
         ArrayList<Quiz> ls= new ArrayList<>();
         String query;
         if(amountToGet>0){
-            query = "SELECT * FROM quizzes ORDER BY creation_date desc LIMIT " + amountToGet
+            query = "SELECT quizzes.*, users.user_id, users.username FROM quizzes " +
+                    "LEFT JOIN users ON quizzes.quiz_creator_id = users.user_id " +
+                    "ORDER BY quizzes.creation_date DESC LIMIT" + amountToGet
                     + ";";
         }else{
-            query = "select * from quizdatabase.quizzes ORDER BY creation_date desc;";
+            query = "SELECT quizzes.*, users.user_id, users.username FROM quizzes" +
+                    " LEFT JOIN users ON quizzes.quiz_creator_id = users.user_id " +
+                    "ORDER BY quizzes.creation_date DESC;";
         }
 
 
@@ -214,6 +221,7 @@ public class DatabaseAccess {
                         resultSet.getString("quiz_name"),
                         resultSet.getString("quiz_description"),
                         resultSet.getInt("quiz_creator_id"),
+                        resultSet.getString("username"),
                         resultSet.getInt("random_question"),
                         resultSet.getInt("one_page"),
                         resultSet.getInt("immediate"),
@@ -423,10 +431,14 @@ public class DatabaseAccess {
         ArrayList<Quiz> quizzes= new ArrayList<>();
         String query;
         if(amountToGet>0){
-            query = "SELECT * FROM quizzes ORDER BY times_taken desc LIMIT " + amountToGet
+            query = "SELECT quizzes.*, users.user_id, users.username FROM quizzes L" +
+                    "EFT JOIN users ON quizzes.quiz_creator_id = users.user_id " +
+                    "ORDER BY quizzes.times_taken DESC LIMIT" + amountToGet
                     + ";";
         }else{
-            query = "select * from quizdatabase.quizzes ORDER BY times_taken desc;";
+            query = "SELECT quizzes.*, users.user_id, users.username FROM quizzes " +
+                    "LEFT JOIN users ON quizzes.quiz_creator_id = users.user_id " +
+                    "ORDER BY quizzes.times_taken DESC;";
         }
 
         try {
@@ -438,6 +450,7 @@ public class DatabaseAccess {
                         resultSet.getString("quiz_name"),
                         resultSet.getString("quiz_description"),
                         resultSet.getInt("quiz_creator_id"),
+                        resultSet.getString("username"),
                         resultSet.getInt("random_question"),
                         resultSet.getInt("one_page"),
                         resultSet.getInt("immediate"),
@@ -492,7 +505,9 @@ public class DatabaseAccess {
 
     }
     public ArrayList<Announcement> getLatestAnnouncements(int num) {
-        String query = "SELECT * FROM Announcements ORDER BY announcement_date DESC";
+        String query = "SELECT Announcements.*, users.user_id, users.username FROM Announcements " +
+                "LEFT JOIN users ON Announcements.announcer_id = users.user_id " +
+                "ORDER BY Announcements.announcement_date DESC;\n";
         if (num > 0) {
             query += " LIMIT ?";
         }
@@ -514,6 +529,7 @@ public class DatabaseAccess {
                         resultSet.getString("announcement_title"),
                         resultSet.getString("announcement_text"),
                         resultSet.getInt("announcer_id"),
+                        resultSet.getString("username"),
                         resultSet.getTimestamp("announcement_date")
                 );
                 ans.add(newAnnouncement);

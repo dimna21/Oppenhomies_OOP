@@ -10,7 +10,9 @@ body, html {
     height: 100%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start; /* Align items to the top */
+    padding-top: 10px; /* Add space at the top of the page */
+    padding-bottom: 10px;
 }
 
 .container {
@@ -48,6 +50,7 @@ ul.tabs li.active {
 .tab-content {
     display: none;
     padding: 20px;
+    margin-top: 10px; /* Increase margin from the top */
     overflow-y: auto; /* Enable vertical scroll if content exceeds height */
     border: 1px solid #ccc;
     border-top: none;
@@ -65,4 +68,10 @@ ul.tabs li.active {
     background-color: #f9f9f9;
     border: 1px solid #ddd;
     border-radius: 5px;
+}
+
+/* Adjust heading position */
+.tab-content.active > h2 {
+    margin-top: 0; /* Reset default margin */
+    margin-bottom: 10px; /* Add margin below the heading */
 }

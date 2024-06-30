@@ -11,11 +11,12 @@ public class Announcement {
     private String text;
     private int announcerID;
     private String username;
-    public Announcement(String title, String text, int announcerID,  java.sql.Timestamp creationDate){
-        this.username = DatabaseAccess.getUsername(announcerID);
+    public Announcement(String title, String text, int announcerID,  String announcerUsername, java.sql.Timestamp creationDate){
+        this.username = announcerUsername;
         this.announcerID = announcerID;
         this.text = text;
         this.title = title;
+        this.creationDate = creationDate;
     }
 
     public Timestamp getCreationDate() {

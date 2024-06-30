@@ -504,7 +504,7 @@ public class DatabaseAccess {
     public void helpMe(){
 
     }
-    public ArrayList<Announcement> getLatestAnnouncements(int num) {
+    public ArrayList<Announcement> getLatestAnnouncements(int num) throws SQLException {
         String query = "SELECT Announcements.*, users.user_id, users.username FROM Announcements " +
                 "LEFT JOIN users ON Announcements.announcer_id = users.user_id " +
                 "ORDER BY Announcements.announcement_date DESC;\n";
@@ -513,10 +513,8 @@ public class DatabaseAccess {
         }
 
         ArrayList<Announcement> ans = new ArrayList<>();
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://" +
-                        DatabaseInfo.server + "/" + DatabaseInfo.database,
-                DatabaseInfo.username, DatabaseInfo.password);
-             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+             PreparedStatement stmt = con.prepareStatement(query);
 
             if (num > 0) {
                 stmt.setInt(1, num);
@@ -534,9 +532,6 @@ public class DatabaseAccess {
                 );
                 ans.add(newAnnouncement);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
         return ans;
     }
 

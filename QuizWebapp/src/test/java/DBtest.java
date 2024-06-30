@@ -183,7 +183,7 @@ public class DBtest extends TestCase{
         assertFalse(dbCall.createNote("john_do","jane_smith","i love you"));
 
     }
-    public void testGetAnnouncements(){
+    public void testGetAnnouncements() throws SQLException {
         ArrayList<Announcement> l = dbCall.getLatestAnnouncements(2);
         assertEquals(l.size(), 2);
         assertEquals(l.get(0).getTitle(), "Announcement 2");

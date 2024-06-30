@@ -31,6 +31,7 @@ public class NewAccServlet extends HttpServlet {
             dbAccess.addUser(username,password, 0);
             int userID = dbAccess.getUserInfo(username).getUser_id();
             HttpSession session = request.getSession();
+            session.setAttribute("loginStatus", 1);
             session.setAttribute("userID", userID);
             session.setAttribute("username", username);
             dispatcher = request.getRequestDispatcher("UserHomePage.jsp");

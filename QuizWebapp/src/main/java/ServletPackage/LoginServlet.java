@@ -28,6 +28,7 @@ public class LoginServlet extends HttpServlet {
             //goodLogin.jsp will be replaced by the UserPage :3
             int userID = dbAccess.getUserInfo(username).getUser_id();
             HttpSession session = req.getSession();
+            session.setAttribute("loginStatus", 1);
             session.setAttribute("userID", userID);
             session.setAttribute("username", username);
             dispatcher = req.getRequestDispatcher("UserHomePage.jsp");

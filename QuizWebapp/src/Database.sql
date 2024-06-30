@@ -1,3 +1,5 @@
+
+
 USE QuizDatabase;
 
 -- Drop tables if they exist
@@ -185,7 +187,7 @@ CREATE TABLE Scores (
                         user_id INT(6) not null, -- Foreign Key
                         score INT(6),
                         time INT(10),
-                        date_scored timestamp
+                        date_scored timestamp default current_timestamp
 );
 
 CREATE TABLE Multi_fill_Blank_questions(
@@ -236,13 +238,13 @@ Create table Announcements (
                                announcement_title VARCHAR(300),
                                announcement_text VARCHAR(300),
                                announcer_id INT(6),
-                               announcement_date TIMESTAMP
+                               announcement_date TIMESTAMP default current_timestamp
 );
 
 INSERT INTO Announcements(announcement_id, announcement_title, announcement_text, announcer_id, announcement_date)
 VALUES
-    (1401, 'Announcement 1', 'This is announcement 1', 1, CURRENT_TIMESTAMP),
-    (1402, 'Announcement 2', 'This is announcement 2', 5, CURRENT_TIMESTAMP);
+    (1401, 'Announcement 1', 'This is announcement 1', 1, '2022-06-25 00:00:00'),
+    (1402, 'Announcement 2', 'This is announcement 2', 5, '2022-07-25 00:00:00');
 
 -- -------------------------------------------------------------
 -- Add a new quiz
@@ -292,11 +294,11 @@ INSERT INTO Challenge(from_id, to_id, quiz_id, notification) VALUES
                                                                  (5,1,1,1);
 -- --------------------------
 INSERT INTO Messages (from_id, to_id, text, notification)
-SELECT
-    (SELECT user_id FROM Users WHERE username = 'john_doe' LIMIT 1),
-    (SELECT user_id FROM Users WHERE username = 'jane_smith' LIMIT 1),
-    'hi',
-    1
-WHERE EXISTS (SELECT 1 FROM Users WHERE username = 'john_doe')
-  AND EXISTS (SELECT 1 FROM Users WHERE username = 'jane_smith');
+VALUES
+    (1, 2, 'Hello, how are you?', 1),
+    (2, 1, 'Great, what about you?', 0),
+    (1, 2, 'i am fine!!', 1),
+    (2, 1, 'are you done writin oop?', 0),
+    (1, 2, 'not yet :( wby', 1),
+    (2, 1, 'same', 0);
 select * from messages;

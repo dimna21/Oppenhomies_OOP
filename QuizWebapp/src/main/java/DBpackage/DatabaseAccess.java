@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 
 public class DatabaseAccess {
-    private Statement stmt;
+    private static Statement stmt;
     private Connection con;
 
     public DatabaseAccess() throws ClassNotFoundException, SQLException {
@@ -22,7 +22,7 @@ public class DatabaseAccess {
 
         stmt = con.createStatement();
     }
-    public String getUsername(int userID) {
+    public static String getUsername(int userID) {
         String query = "SELECT username FROM users WHERE user_id = '" + userID + "';";
         String username = null;
         try {
@@ -180,7 +180,7 @@ public class DatabaseAccess {
                         resultSet.getInt("one_page"),
                         resultSet.getInt("immediate"),
                         resultSet.getInt("practice"),
-                        resultSet.getDate("creation_date"),
+                        resultSet.getTimestamp("creation_date"),
                         resultSet.getInt("times_taken")
                 );
             }
@@ -218,7 +218,7 @@ public class DatabaseAccess {
                         resultSet.getInt("one_page"),
                         resultSet.getInt("immediate"),
                         resultSet.getInt("practice"),
-                        resultSet.getDate("creation_date"),
+                        resultSet.getTimestamp("creation_date"),
                         resultSet.getInt("times_taken")
                 );
                 ls.add(q);
@@ -419,7 +419,33 @@ public class DatabaseAccess {
         return ans;
     }
 
-    public void test1(){
+
+    public boolean createNote(String fromUsername, String toUsername, String messageText) {
+        String query = "INSERT INTO Messages (from_id, to_id, text, notification) " +
+                "SELECT " +
+                "(SELECT user_id FROM Users WHERE username = ? LIMIT 1), " +
+                "(SELECT user_id FROM Users WHERE username = ? LIMIT 1), " +
+                "?, " +
+                "1 " +
+                "WHERE EXISTS (SELECT 1 FROM Users WHERE username = ?) " +
+                "AND EXISTS (SELECT 1 FROM Users WHERE username = ?)";
+
+        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+            // Set parameters for PreparedStatement
+            pstmt.setString(1, fromUsername);
+            pstmt.setString(2, toUsername);
+            pstmt.setString(3, messageText);
+            pstmt.setString(4, fromUsername);
+            pstmt.setString(5, toUsername);
+
+            int rowsAffected = pstmt.executeUpdate();
+
+            // Check if the insert was successful (1 row affected)
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false; // Return false on exception
+        }
 
     }
 
@@ -429,6 +455,31 @@ public class DatabaseAccess {
 
     public void helpMe(){
 
+    }
+    public ArrayList<Announcement> getLatestAnnouncements(int num) {
+        String query = "SELECT * FROM Announcements ORDER BY announcement_date DESC LIMIT ?";
+        ArrayList<Announcement> ans = new ArrayList<>();
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://" +
+                        DatabaseInfo.server + "/" + DatabaseInfo.database,
+                DatabaseInfo.username, DatabaseInfo.password);
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, num);
+            ResultSet resultSet = stmt.executeQuery();
+
+            while (resultSet.next()) {
+                Announcement newAnnouncement = new Announcement(
+                        resultSet.getString("announcement_title"),
+                        resultSet.getString("announcement_text"),
+                        resultSet.getInt("announcer_id"),
+                        resultSet.getTimestamp("announcement_date")
+                );
+                ans.add(newAnnouncement);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return ans;
     }
 
 

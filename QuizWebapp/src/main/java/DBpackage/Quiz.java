@@ -12,11 +12,11 @@ public class Quiz {
     private int one_page;
     private int immediate;
     private int practice;
-    private java.sql.Date creation_date;
+    private java.sql.Timestamp creation_date;
     private int times_taken;
 
     public Quiz(int quiz_id, String name, String description, int creatorID, int randomQuestion,
-                int onePage, int immediate, int practice, java.sql.Date creationDate,
+                int onePage, int immediate, int practice, java.sql.Timestamp creationDate,
                 int timesTaken){
         this.quiz_id = quiz_id;
         this.quiz_name = name;
@@ -55,7 +55,7 @@ public class Quiz {
     }
 
     //Setters
-    public void setCreationDate(java.sql.Date creationDate) {
+    public void setCreationDate(java.sql.Timestamp creationDate) {
         this.creation_date = creationDate;
     }
 
@@ -99,7 +99,7 @@ public class Quiz {
         this.quiz_creator_id = quiz_creator_id;
     }
 
-    public void setCreation_date(java.sql.Date creation_date) {
+    public void setCreation_date(java.sql.Timestamp creation_date) {
         this.creation_date = creation_date;
     }
 
@@ -140,7 +140,7 @@ public class Quiz {
         return quiz_name;
     }
 
-    public java.sql.Date getCreation_date() {
+    public java.sql.Timestamp getCreation_date() {
         return creation_date;
     }
 

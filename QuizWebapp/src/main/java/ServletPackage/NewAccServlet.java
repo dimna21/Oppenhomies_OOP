@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class NewAccServlet extends HttpServlet {
@@ -28,7 +29,11 @@ public class NewAccServlet extends HttpServlet {
             // Account creation successful, create new Account
             // Redirects to userPage when created
             dbAccess.addUser(username,password, 0);
-            dispatcher = request.getRequestDispatcher("UserAuthentication/goodLogin.jsp");
+            int userID = dbAccess.getUserInfo(username).getUser_id();
+            HttpSession session = request.getSession();
+            session.setAttribute("userID", userID);
+            session.setAttribute("username", username);
+            dispatcher = request.getRequestDispatcher("UserHomePage.jsp");
         }
         dispatcher.forward(request, response);
     }

@@ -25,10 +25,10 @@ drop table if exists Matching_answers;
 drop table if exists Quiz_ratings;
 drop table if exists Announcements;
 Create table Quiz_ratings(
-    rating_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-    rating INT(2),
-    quiz_id int(6)not null,
-    user_id INT(10) not null
+                             rating_id INT(6) AUTO_INCREMENT PRIMARY KEY,
+                             rating INT(2),
+                             quiz_id int(6)not null,
+                             user_id INT(10) not null
 );
 
 Create table Challenge(
@@ -40,10 +40,10 @@ Create table Challenge(
 );
 
 INSERT INTO Challenge(from_id, to_id, quiz_id, notification) VALUES
-(3,1,1,1),
-(2,1,1,1),
-(4,1,1,1),
-(5,1,1,1);
+                                                                 (3,1,1,1),
+                                                                 (2,1,1,1),
+                                                                 (4,1,1,1),
+                                                                 (5,1,1,1);
 -- Create Users table
 CREATE TABLE Users (
                        user_id INT(10) AUTO_INCREMENT PRIMARY KEY,
@@ -59,12 +59,12 @@ CREATE TABLE Users (
 );
 
 INSERT INTO Users ( username, password, admin_status, quizzes_taken,
-                   quizzes_created, highest_scorer, practice_mode, profile_pic_url) VALUES
-('john_doe', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 1, 10, 5, 1, 0, 'http://example.com/images/john.jpg'),
-('jane_smith', 'aa6ae8c005b9048b03f6059224c858650d9e52d5', 0, 8, 3, 0, 1, 'http://example.com/images/jane.jpg'),
-('alice_jones', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 0, 15, 7, 0, 0, 'http://example.com/images/alice.jpg'),
-('bob_brown', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 0, 5, 2, 1, 1, 'http://example.com/images/bob.jpg'),
-('charlie_black', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 1, 20, 10, 1, 1, 'http://example.com/images/charlie.jpg');
+                    quizzes_created, highest_scorer, practice_mode, profile_pic_url) VALUES
+                                                                                         ('john_doe', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 1, 10, 5, 1, 0, 'http://example.com/images/john.jpg'),
+                                                                                         ('jane_smith', 'aa6ae8c005b9048b03f6059224c858650d9e52d5', 0, 8, 3, 0, 1, 'http://example.com/images/jane.jpg'),
+                                                                                         ('alice_jones', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 0, 15, 7, 0, 0, 'http://example.com/images/alice.jpg'),
+                                                                                         ('bob_brown', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 0, 5, 2, 1, 1, 'http://example.com/images/bob.jpg'),
+                                                                                         ('charlie_black', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 1, 20, 10, 1, 1, 'http://example.com/images/charlie.jpg');
 -- password123
 -- password234
 -- password123
@@ -97,10 +97,10 @@ CREATE TABLE Friend_requests (
 );
 
 INSERT INTO Friend_requests(from_id, to_id, notification) VALUES
-    (1,3,1),
-    (1,2,1),
-    (1,4,1),
-    (1,5,1);
+                                                              (1,3,1),
+                                                              (1,2,1),
+                                                              (1,4,1),
+                                                              (1,5,1);
 -- Create Quizzes table
 CREATE TABLE Quizzes (
                          quiz_id INT(6) AUTO_INCREMENT PRIMARY KEY,
@@ -191,46 +191,45 @@ CREATE TABLE Scores (
 );
 
 CREATE TABLE Multi_fill_Blank_questions(
-    question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-    quiz_id INT(6) not null, -- Foreign Key with Quizzes
-    sub_id INT(3) not null, -- Numeric order of the question in the quiz
-    question VARCHAR(300)
+                                           question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
+                                           quiz_id INT(6) not null, -- Foreign Key with Quizzes
+                                           sub_id INT(3) not null, -- Numeric order of the question in the quiz
+                                           question VARCHAR(300)
 );
 
 CREATE TABLE Multi_fill_Blank_answers(
-    answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-    multifill_id INT(6) not null, -- foreign key with question_id of questions
-    answer VARCHAR(300)
+                                         answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
+                                         multifill_id INT(6) not null, -- foreign key with question_id of questions
+                                         answer VARCHAR(300)
 );
 
 CREATE TABLE Multi_multiple_choice_questions(
-      question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-      quiz_id INT(6) not null, -- Foreign Key with Quizzes
-      sub_id INT(3) not null, -- Numeric order of the question in the quiz
-      question VARCHAR(300)
-
+                                                question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
+                                                quiz_id INT(6) not null, -- Foreign Key with Quizzes
+                                                sub_id INT(3) not null, -- Numeric order of the question in the quiz
+                                                question VARCHAR(300)
 );
 
 CREATE TABLE Multi_multiple_choice_answers(
-     answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-     multichoice_id INT(6)not null, -- foreign key with question_id of questions
-     answer VARCHAR(300),
-     correct INT(1) default 0-- Boolean: 0 or 1
+                                              answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
+                                              multichoice_id INT(6)not null, -- foreign key with question_id of questions
+                                              answer VARCHAR(300),
+                                              correct INT(1) default 0-- Boolean: 0 or 1
 );
 
 CREATE TABLE Matching_questions(
-     question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-     quiz_id INT(6) not null, -- Foreign Key with Quizzes
-     sub_id INT(3) not null, -- Numeric order of the question in the quiz
-     question VARCHAR(300)
+                                   question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
+                                   quiz_id INT(6) not null, -- Foreign Key with Quizzes
+                                   sub_id INT(3) not null, -- Numeric order of the question in the quiz
+                                   question VARCHAR(300)
 
 );
 
 CREATE TABLE Matching_answers(
-     answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-     match_id INT(6) not null, -- foreign key with question_id of questions
-     word VARCHAR(300),
-     matching_word VARCHAR(300)
+                                 answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
+                                 match_id INT(6) not null, -- foreign key with question_id of questions
+                                 word VARCHAR(300),
+                                 matching_word VARCHAR(300)
 );
 
 Create table Announcements (
@@ -294,11 +293,11 @@ INSERT INTO Challenge(from_id, to_id, quiz_id, notification) VALUES
                                                                  (5,1,1,1);
 -- --------------------------
 INSERT INTO Messages (from_id, to_id, text, notification)
-SELECT
-    (SELECT user_id FROM Users WHERE username = 'john_doe' LIMIT 1),
-    (SELECT user_id FROM Users WHERE username = 'jane_smith' LIMIT 1),
-    'hi',
-    1
-WHERE EXISTS (SELECT 1 FROM Users WHERE username = 'john_doe')
-  AND EXISTS (SELECT 1 FROM Users WHERE username = 'jane_smith');
+VALUES
+    (1, 2, 'Hello, how are you?', 1),
+    (2, 1, 'Great, what about you?', 0),
+    (1, 2, 'i am fine!!', 1),
+    (2, 1, 'are you done writin oop?', 0),
+    (1, 2, 'not yet :( wby', 1),
+    (2, 1, 'same', 0);
 select * from messages;

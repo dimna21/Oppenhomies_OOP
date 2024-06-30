@@ -442,7 +442,7 @@ public class DatabaseAccess {
                         resultSet.getInt("one_page"),
                         resultSet.getInt("immediate"),
                         resultSet.getInt("practice"),
-                        resultSet.getDate("creation_date"),
+                        resultSet.getTimestamp("creation_date"),
                         resultSet.getInt("times_taken")
                 );
                 quizzes.add(q);
@@ -492,14 +492,21 @@ public class DatabaseAccess {
 
     }
     public ArrayList<Announcement> getLatestAnnouncements(int num) {
-        String query = "SELECT * FROM Announcements ORDER BY announcement_date DESC LIMIT ?";
+        String query = "SELECT * FROM Announcements ORDER BY announcement_date DESC";
+        if (num > 0) {
+            query += " LIMIT ?";
+        }
+
         ArrayList<Announcement> ans = new ArrayList<>();
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://" +
                         DatabaseInfo.server + "/" + DatabaseInfo.database,
                 DatabaseInfo.username, DatabaseInfo.password);
              PreparedStatement stmt = conn.prepareStatement(query)) {
 
-            stmt.setInt(1, num);
+            if (num > 0) {
+                stmt.setInt(1, num);
+            }
+
             ResultSet resultSet = stmt.executeQuery();
 
             while (resultSet.next()) {

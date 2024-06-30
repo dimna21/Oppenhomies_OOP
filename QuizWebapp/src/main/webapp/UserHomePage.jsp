@@ -1,6 +1,7 @@
 <%@ page import="javax.xml.crypto.Data" %>
 <%@ page import="DBpackage.DatabaseAccess" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="DBpackage.Announcement" %><%--
   Created by IntelliJ IDEA.
   User: Nicolas
   Date: 6/30/2024
@@ -14,7 +15,7 @@
     int userID = (int) session.getAttribute("userID");
     String username = (String) session.getAttribute("username");
 
-    ArrayList<Announcement> announcements = new ArrayList<>;
+    ArrayList<Announcement> announcements = dbAccess.getLatestAnnouncements();
 %>
 <html>
 <head>

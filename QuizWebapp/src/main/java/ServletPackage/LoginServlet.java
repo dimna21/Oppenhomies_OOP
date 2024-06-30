@@ -25,7 +25,7 @@ public class LoginServlet extends HttpServlet {
         RequestDispatcher dispatcher;
         if(isValid){
             //goodLogin.jsp will be replaced by the UserPage :3
-            dispatcher = req.getRequestDispatcher("goodLogin.jsp");
+            dispatcher = req.getRequestDispatcher("UserAuthentication/goodLogin.jsp");
         }else{
             dispatcher = req.getRequestDispatcher("UserAuthentication/badLogin.jsp");
         }

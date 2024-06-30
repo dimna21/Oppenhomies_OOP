@@ -28,7 +28,7 @@ public class NewAccServlet extends HttpServlet {
             // Account creation successful, create new Account
             // Redirects to userPage when created
             dbAccess.addUser(username,password, 0);
-            dispatcher = request.getRequestDispatcher("homePage.jsp");
+            dispatcher = request.getRequestDispatcher("UserAuthentication/goodLogin.jsp");
         }
         dispatcher.forward(request, response);
     }

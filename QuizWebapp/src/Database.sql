@@ -208,7 +208,6 @@ CREATE TABLE Multi_multiple_choice_questions(
                                                 quiz_id INT(6) not null, -- Foreign Key with Quizzes
                                                 sub_id INT(3) not null, -- Numeric order of the question in the quiz
                                                 question VARCHAR(300)
-
 );
 
 CREATE TABLE Multi_multiple_choice_answers(

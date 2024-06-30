@@ -178,6 +178,17 @@ public class DBtest extends TestCase{
             assertEquals(list.get(i).getNotification(), 1);
         }
     }
+    public void testCreateNote(){
+        assertTrue(dbCall.createNote("john_doe","jane_smith","i love you"));
+        assertFalse(dbCall.createNote("john_do","jane_smith","i love you"));
+
+    }
+    public void testGetAnnouncements(){
+        ArrayList<Announcement> l = dbCall.getLatestAnnouncements(2);
+        assertEquals(l.size(), 2);
+        assertEquals(l.get(0).getTitle(), "Announcement 2");
+        assertEquals(l.get(1).getTitle(), "Announcement 1");
+    }
 
 
 

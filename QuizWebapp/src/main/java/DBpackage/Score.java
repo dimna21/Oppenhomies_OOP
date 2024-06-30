@@ -1,6 +1,7 @@
 package DBpackage;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class Score {
     private int quiz_id;
@@ -8,9 +9,9 @@ public class Score {
     private int user_id;
     private int score;
     private int time;
-    private java.sql.Date date_scored;
+    private java.sql.Timestamp date_scored;
 
-    public Score(int score_id,int quiz_id,int user_id, int score, int time, java.sql.Date date_scored){
+    public Score(int score_id,int quiz_id,int user_id, int score, int time, java.sql.Timestamp date_scored){
         this.score_id = score_id;
         this.quiz_id=quiz_id;
         this.date_scored=date_scored;
@@ -27,7 +28,7 @@ public class Score {
         return score_id;
     }
 
-    public Date getDate_scored() {
+    public Timestamp getDate_scored() {
         return date_scored;
     }
 
@@ -51,7 +52,7 @@ public class Score {
         return quiz_id;
     }
 
-    public void setDate_scored(Date date_scored) {
+    public void setDate_scored(Timestamp date_scored) {
         this.date_scored = date_scored;
     }
 

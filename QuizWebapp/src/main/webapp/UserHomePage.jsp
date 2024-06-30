@@ -59,9 +59,9 @@
             <h2>Recently Created Quizzes</h2>
             <div>
                 <% for(Quiz quiz: recentlyCreatedQuizzes) {%>
-                <div class="announcement">
-                    <h3><%=announcement.getTitle()%></h3>
-                    <p><%=announcement.getText()%></p>
+                <div class="recently created quizzes">
+                    <h3><%=quiz.getName()%></h3>
+                    <p><%=quiz.getDescription()%></p>
                     <p><%=quiz.getCreationDate() + " " + quiz.getCreatorUsername() %></p>
                 </div>
                 <%}%>

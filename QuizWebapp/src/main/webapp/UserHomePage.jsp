@@ -15,55 +15,63 @@
     int userID = (int) session.getAttribute("userID");
     String username = (String) session.getAttribute("username");
 
-    ArrayList<Announcement> announcements = dbAccess.getLatestAnnouncements();
+    ArrayList<Announcement> announcements = dbAccess.getLatestAnnouncements(0);
 %>
 <html>
 <head>
     <title>User Home Page</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="UserHomePage.css">
 </head>
 <body>
+<div class="container">
     <h1 align="center"><%=username%></h1>
 
-    <ul class = "tabs">
-        <li class = "tab-link" data-tab="tab1">Announcements</li>
-        <li class = "tab-link" data-tab="tab2">Popular Quizzes</li>
-        <li class = "tab-link" data-tab="tab3">Recently Created Quizzes</li>
-        <li class = "tab-link" data-tab="tab4">Your Quiz Record</li>
-        <li class = "tab-link" data-tab="tab5">Quizzes Created by You</li>
-        <li class = "tab-link" data-tab="tab6">Your Quiz Record</li>
-        <li class = "tab-link" data-tab="tab7">Your Achievements</li>
-        <li class = "tab-link" data-tab="tab8">Messages</li>
-        <li class = "tab-link" data-tab="tab9">Activities of Your Friends</li>
-    </ul>
+    <div class="tabs-container">
+        <ul class="tabs">
+            <li class="tab-link active" data-tab="tab1">Announcements</li>
+            <li class="tab-link" data-tab="tab2">Popular Quizzes</li>
+            <li class="tab-link" data-tab="tab3">Recently Created Quizzes</li>
+            <li class="tab-link" data-tab="tab4">Your Quiz Record</li>
+            <li class="tab-link" data-tab="tab5">Quizzes Created by You</li>
+            <li class="tab-link" data-tab="tab6">Your Quiz Record</li>
+            <li class="tab-link" data-tab="tab7">Your Achievements</li>
+            <li class="tab-link" data-tab="tab8">Messages</li>
+            <li class="tab-link" data-tab="tab9">Activities of Your Friends</li>
+        </ul>
 
-    <div id = "tab1" class="tab-content active">
-        <h2>Announcements by Administration</h2>
+        <div id="tab1" class="tab-content active">
+            <h2>Announcements by Administration</h2>
             <div>
                 <% for(Announcement announcement : announcements) {%>
-                <div>
+                <div class="announcement">
                     <h3><%=announcement.getTitle()%></h3>
                     <p><%=announcement.getText()%></p>
-                    <p><%=announcement.getDate() announcement.getAuthor()%></p>
+                    <p><%=announcement.getCreationDate() + " " + announcement.getUsername() %></p>
                 </div>
                 <%}%>
             </div>
+        </div>
+
+        <!-- Add other tab content here -->
     </div>
+</div>
 
+<script>
+    $(document).ready(function(){
+        $(".tab-link").click(function(){
+            var tabId = $(this).attr("data-tab");
 
-    <script>
-        $(document).ready(function(){
-            $(".tab-link").click(function(){
-                var tabId = $(this).attr("data-tab");
+            // Remove active class from all tabs
+            $(".tab-link").removeClass("active");
+            $(".tab-content").removeClass("active");
 
-                // Hide all tab contents
-                $(".tab-content").hide();
-
-                // Show the clicked tab content
-                $("#" + tabId).show();
-            });
+            // Add active class to the clicked tab
+            $(this).addClass("active");
+            $("#" + tabId).addClass("active");
         });
-    </script>
+    });
+</script>
 
 </body>
 </html>

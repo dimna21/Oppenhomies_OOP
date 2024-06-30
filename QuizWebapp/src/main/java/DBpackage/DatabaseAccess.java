@@ -540,5 +540,16 @@ public class DatabaseAccess {
         return ans;
     }
 
+    /*
+    public void recentQuizTakingActivitiesForUser(int userID, ArrayList<Quiz> quizzes, ArrayList<Score> scores) {
+        String query = ;
+        SELECT s.*, u.user_id, u.username, q.*, u1.user_id, u1.username
+        FROM scores s
+        LEFT JOIN users u ON s.user_id = u.user_id
+        LEFT JOIN quizzes q ON s.quiz_id = q.quiz_id
+        LEFT JOIN users u1 ON q.quiz_creator_id = u1.user_id
+        WHERE s.user_id = 2;
+    }
+    */
 
 }

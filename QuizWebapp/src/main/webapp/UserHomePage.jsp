@@ -17,6 +17,7 @@
     String username = (String) session.getAttribute("username");
 
     ArrayList<Announcement> announcements = dbAccess.getLatestAnnouncements(0);
+    ArrayList<Quiz> popularQuizzes = dbAccess.getQuizzesByPopularity(0);
     ArrayList<Quiz> recentlyCreatedQuizzes = dbAccess.getNewestQuiz(0);
 %>
 <html>
@@ -56,17 +57,36 @@
         </div>
 
         <div id="tab2" class="tab-content">
-            <h2>Recently Created Quizzes</h2>
+            <h2>Popular Quizzes</h2>
             <div>
-                <% for(Quiz quiz: recentlyCreatedQuizzes) {%>
-                <div class="recently created quizzes">
-                    <h3><%=quiz.getName()%></h3>
-                    <p><%=quiz.getDescription()%></p>
-                    <p><%=quiz.getCreationDate() + " " + quiz.getCreatorUsername() %></p>
-                </div>
+                <% for(Quiz quiz: popularQuizzes) {%>
+                <a href="QuizSummeryPage.jsp?quizId=<%=quiz.getQuiz_id()%>" class="quiz-link">
+                    <div class="popular-quizzes">
+                        <h3><%=quiz.getName()%></h3>
+                        <p><%=quiz.getDescription()%></p>
+                        <p><%=quiz.getCreationDate() + " " + quiz.getCreatorUsername() %></p>
+                    </div>
+                </a>
                 <%}%>
             </div>
         </div>
+
+        <div id="tab3" class="tab-content">
+            <h2>Recently Created Quizzes</h2>
+            <div>
+                <% for(Quiz quiz: recentlyCreatedQuizzes) {%>
+                <a href="QuizSummeryPage.jsp?quizId=<%=quiz.getQuiz_id()%>" class="quiz-link">
+                    <div class="recently-created-quizzes">
+                        <h3><%=quiz.getName()%></h3>
+                        <p><%=quiz.getDescription()%></p>
+                        <p><%=quiz.getCreationDate() + " " + quiz.getCreatorUsername() %></p>
+                    </div>
+                </a>
+                <%}%>
+            </div>
+        </div>
+
+
 
         <!-- todo-->
 

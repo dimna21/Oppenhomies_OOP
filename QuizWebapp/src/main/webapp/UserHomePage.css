@@ -75,3 +75,48 @@ ul.tabs li.active {
     margin-top: 0; /* Reset default margin */
     margin-bottom: 10px; /* Add margin below the heading */
 }
+
+/* Style for tab2 content */
+#tab2.tab-content {
+    display: none;
+    padding: 20px;
+    margin-top: 10px; /* Increase margin from the top */
+    overflow-y: auto; /* Enable vertical scroll if content exceeds height */
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 5px 5px 5px;
+}
+
+#tab2.tab-content.active {
+    display: block;
+}
+
+/* Style for individual quizzes in tab2 */
+.recently-created-quizzes .popular-quizzes{
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+/* Style for quiz links */
+.quiz-link {
+    text-decoration: none; /* Remove underline from links */
+    color: inherit; /* Inherit text color from parent */
+    display: block; /* Make entire div clickable */
+}
+
+.quiz-link:hover .recently-created-quizzes .popular-quizzes {
+    background-color: #e0e0e0; /* Darken background on hover */
+}
+
+/* Style for individual quizzes */
+.recently-created-quizzes .popular-quizzes {
+    margin-bottom: 20px;
+    padding: 10px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    transition: background-color 0.3s ease; /* Smooth transition for background color */
+}

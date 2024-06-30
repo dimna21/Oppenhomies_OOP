@@ -419,5 +419,40 @@ public class DatabaseAccess {
         return ans;
     }
 
+    public ArrayList<Quiz> getQuizzesByPopularity(int amountToGet) {
+        ArrayList<Quiz> quizzes= new ArrayList<>();
+        String query;
+        if(amountToGet>0){
+            query = "SELECT * FROM quizzes ORDER BY times_taken desc LIMIT " + amountToGet
+                    + ";";
+        }else{
+            query = "select * from quizdatabase.quizzes ORDER BY times_taken desc;";
+        }
+
+        try {
+            Quiz q;
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()){
+                q =  new Quiz(
+                        resultSet.getInt("quiz_id"),
+                        resultSet.getString("quiz_name"),
+                        resultSet.getString("quiz_description"),
+                        resultSet.getInt("quiz_creator_id"),
+                        resultSet.getInt("random_question"),
+                        resultSet.getInt("one_page"),
+                        resultSet.getInt("immediate"),
+                        resultSet.getInt("practice"),
+                        resultSet.getDate("creation_date"),
+                        resultSet.getInt("times_taken")
+                );
+                quizzes.add(q);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return quizzes;
+    }
+
+
 
 }

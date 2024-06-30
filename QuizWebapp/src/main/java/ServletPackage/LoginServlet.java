@@ -5,6 +5,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 import DBpackage.DatabaseAccess;
@@ -25,7 +26,11 @@ public class LoginServlet extends HttpServlet {
         RequestDispatcher dispatcher;
         if(isValid){
             //goodLogin.jsp will be replaced by the UserPage :3
-            dispatcher = req.getRequestDispatcher("UserAuthentication/goodLogin.jsp");
+            int userID = dbAccess.getUserInfo(username).getUser_id();
+            HttpSession session = req.getSession();
+            session.setAttribute("userID", userID);
+            session.setAttribute("username", username);
+            dispatcher = req.getRequestDispatcher("UserHomePage.jsp");
         }else{
             dispatcher = req.getRequestDispatcher("UserAuthentication/badLogin.jsp");
         }

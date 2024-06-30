@@ -1,5 +1,3 @@
-
-
 USE QuizDatabase;
 
 -- Drop tables if they exist
@@ -23,48 +21,48 @@ drop table if exists Multi_multiple_choice_answers;
 drop table if exists Matching_questions;
 drop table if exists Matching_answers;
 drop table if exists Quiz_ratings;
-
+drop table if exists Announcements;
 Create table Quiz_ratings(
-    rating_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-    rating INT(2),
-    quiz_id int(6),
-    user_id INT(10)
+                             rating_id INT(6) AUTO_INCREMENT PRIMARY KEY,
+                             rating INT(2),
+                             quiz_id int(6)not null,
+                             user_id INT(10) not null
 );
 
 Create table Challenge(
                           challenge_id INT(6) AUTO_INCREMENT PRIMARY KEY, -- Primary and Foreign Key with Friends table
-                          from_id INT(6),
-                          to_id INT(6),
-                          quiz_id int(6),
+                          from_id INT(6) not null,
+                          to_id INT(6)not null,
+                          quiz_id int(6)not null,
                           notification INT(1) Default 0 -- 0- not seen, 1-accepted, 2 - declined
 );
 
 INSERT INTO Challenge(from_id, to_id, quiz_id, notification) VALUES
-(3,1,1,1),
-(2,1,1,1),
-(4,1,1,1),
-(5,1,1,1);
+                                                                 (3,1,1,1),
+                                                                 (2,1,1,1),
+                                                                 (4,1,1,1),
+                                                                 (5,1,1,1);
 -- Create Users table
 CREATE TABLE Users (
                        user_id INT(10) AUTO_INCREMENT PRIMARY KEY,
-                       username VARCHAR(150),
-                       password VARCHAR(130),
-                       admin_status INT(1), -- Boolean: 0 or 1
-                       quizzes_taken INT(5),
-                       quizzes_created INT(5),
-                       highest_scorer INT(1), -- Boolean: 0 or 1
-                       practice_mode INT(1), -- Boolean: 0 or 1
+                       username VARCHAR(150)not null,
+                       password VARCHAR(130)not null,
+                       admin_status INT(1)not null, -- Boolean: 0 or 1
+                       quizzes_taken INT(5) default 0,
+                       quizzes_created INT(5)default 0,
+                       highest_scorer INT(1)default 0, -- Boolean: 0 or 1
+                       practice_mode INT(1)default 0, -- Boolean: 0 or 1
                        profile_pic_url VARCHAR(300),
                        activeAccount INT(1) DEFAULT 1
 );
 
 INSERT INTO Users ( username, password, admin_status, quizzes_taken,
-                   quizzes_created, highest_scorer, practice_mode, profile_pic_url) VALUES
-('john_doe', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 1, 10, 5, 1, 0, 'http://example.com/images/john.jpg'),
-('jane_smith', 'aa6ae8c005b9048b03f6059224c858650d9e52d5', 0, 8, 3, 0, 1, 'http://example.com/images/jane.jpg'),
-('alice_jones', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 0, 15, 7, 0, 0, 'http://example.com/images/alice.jpg'),
-('bob_brown', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 0, 5, 2, 1, 1, 'http://example.com/images/bob.jpg'),
-('charlie_black', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 1, 20, 10, 1, 1, 'http://example.com/images/charlie.jpg');
+                    quizzes_created, highest_scorer, practice_mode, profile_pic_url) VALUES
+                                                                                         ('john_doe', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 1, 10, 5, 1, 0, 'http://example.com/images/john.jpg'),
+                                                                                         ('jane_smith', 'aa6ae8c005b9048b03f6059224c858650d9e52d5', 0, 8, 3, 0, 1, 'http://example.com/images/jane.jpg'),
+                                                                                         ('alice_jones', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 0, 15, 7, 0, 0, 'http://example.com/images/alice.jpg'),
+                                                                                         ('bob_brown', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 0, 5, 2, 1, 1, 'http://example.com/images/bob.jpg'),
+                                                                                         ('charlie_black', 'cbfdac6008f9cab4083784cbd1874f76618d2a97', 1, 20, 10, 1, 1, 'http://example.com/images/charlie.jpg');
 -- password123
 -- password234
 -- password123
@@ -74,67 +72,69 @@ INSERT INTO Users ( username, password, admin_status, quizzes_taken,
 -- Create Friends table
 CREATE TABLE Friends (
                          friendship_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-                         friendOne_id INT(6),
-                         friendTwo_id INT(6),
+                         friendOne_id INT(6)not null,
+                         friendTwo_id INT(6)not null,
                          friendship_status INT(1) -- Boolean: 0 or 1
 );
 
 -- Create Messages table
 CREATE TABLE Messages (
                           message_id INT(6) AUTO_INCREMENT PRIMARY KEY, -- Primary and Foreign Key with Friends table
-                          from_id INT(6),
-                          to_id INT(6),
+                          from_id INT(6) not null,
+                          to_id INT(6) not null,
                           text VARCHAR(300), -- text message
-                          notification INT(1) -- Boolean: 0 or 1
+                          notification INT(1)default 0 -- Boolean: 0 or 1
 );
 
 -- Create Friend_Requests table
 CREATE TABLE Friend_requests (
                                  request_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-                                 from_id INT(6),
-                                 to_id INT(6),
+                                 from_id INT(6)not null,
+                                 to_id INT(6)not null,
                                  notification INT(1) Default 0 -- 0 - not seen, 1-accepted, 2 - declined
 );
 
 INSERT INTO Friend_requests(from_id, to_id, notification) VALUES
-    (1,3,1),
-    (1,2,1),
-    (1,4,1),
-    (1,5,1);
+                                                              (1,3,1),
+                                                              (1,2,1),
+                                                              (1,4,1),
+                                                              (1,5,1);
 -- Create Quizzes table
 CREATE TABLE Quizzes (
                          quiz_id INT(6) AUTO_INCREMENT PRIMARY KEY,
                          quiz_name VARCHAR(300),
                          quiz_description VARCHAR(300),
-                         quiz_creator_id INT(6), -- Foreign Key
-                         random_question INT(1), -- Boolean: 0 or 1
-                         one_page INT(1), -- Boolean: 0 or 1
-                         immediate INT(1), -- Boolean: 0 or 1
-                         practice INT(1), -- Boolean: 0 or 1
-                         creation_date DATE,
+                         quiz_creator_id INT(6)not null, -- Foreign Key
+                         random_question INT(1)default 0, -- Boolean: 0 or 1
+                         one_page INT(1)default 0, -- Boolean: 0 or 1
+                         immediate INT(1)default 1, -- Boolean: 0 or 1
+                         practice INT(1)default 0, -- Boolean: 0 or 1
+                         creation_date timestamp default current_timestamp,
                          times_taken INT(6)
 );
+-- Insert data into Quizzes table with creation_date as TIMESTAMP
 INSERT INTO Quizzes (quiz_name, quiz_description, quiz_creator_id, random_question, one_page, immediate, practice, creation_date, times_taken)
 VALUES
-    ('General Knowledge', 'A basic general knowledge quiz.', 1, 0, 1, 1, 0, '2024-06-25', 10),
-    ('Science Quiz', 'Test your science knowledge.', 2, 1, 0, 0, 1, '2024-06-20', 5),
-    ('Math Quiz', 'Challenge yourself with math problems.', 3, 0, 0, 1, 0, '2024-06-18', 8),
-    ('History Quiz', 'How well do you know history?', 4, 1, 1, 1, 1, '2024-06-22', 12),
-    ('Literature Quiz', 'Test your literature knowledge.', 5, 0, 0, 0, 0, '2024-06-24', 3);
+    ('General Knowledge', 'A basic general knowledge quiz.', 1, 0, 1, 1, 0, '2024-06-25 00:00:00', 10),
+    ('Science Quiz', 'Test your science knowledge.', 2, 1, 0, 0, 1, '2024-06-20 00:00:00', 5),
+    ('Math Quiz', 'Challenge yourself with math problems.', 3, 0, 0, 1, 0, '2024-06-18 00:00:00', 8),
+    ('History Quiz', 'How well do you know history?', 4, 1, 1, 1, 1, '2024-06-22 00:00:00', 12),
+    ('Literature Quiz', 'Test your literature knowledge.', 5, 0, 0, 0, 0, '2024-06-24 00:00:00', 3);
+
 
 -- Create questions table
 CREATE TABLE Quiz_questions(
                                question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-                               quiz_id INT(6),
-                               sub_id INT(3),
-                               type INT(2)
+                               quiz_id INT(6) not null,
+                               sub_id INT(3) not null,
+                               type INT(2) not null
 );
 
 -- Create textbox question table
 CREATE TABLE Textbox_questions(
                                   question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-                                  quiz_id INT(6),
-                                  sub_id INT(3),
+                                  quiz_id INT(6)not null,
+                                  sub_id INT(3)not null,
                                   question VARCHAR(300),
                                   answer VARCHAR(300)
 );
@@ -142,8 +142,8 @@ CREATE TABLE Textbox_questions(
 -- Create Fill_blank_questions table
 CREATE TABLE Fill_blank_questions (
                                       question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-                                      quiz_id INT(6), -- Foreign Key with Quizzes
-                                      sub_id INT(3), -- Numeric order of the question in the quiz
+                                      quiz_id INT(6)not null, -- Foreign Key with Quizzes
+                                      sub_id INT(3)not null, -- Numeric order of the question in the quiz
                                       text_before VARCHAR(300),
                                       text_after VARCHAR(300),
                                       answer VARCHAR(300)
@@ -152,27 +152,27 @@ CREATE TABLE Fill_blank_questions (
 -- Create Multiple_choice_questions table
 CREATE TABLE Multiple_choice_questions (
                                            question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-                                           quiz_id INT(6), -- Foreign Key with Quizzes
-                                           sub_id INT(3), -- Numeric order of the question in the quiz
+                                           quiz_id INT(6)not null, -- Foreign Key with Quizzes
+                                           sub_id INT(3)not null, -- Numeric order of the question in the quiz
                                            question VARCHAR(300),
-                                           ordered int(1)
+                                           ordered int(1) default 0
 );
 
 -- Create Multiple_choice_answers table
 CREATE TABLE Multiple_choice_answers (
                                          answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-                                         quiz_id INT(6), -- Foreign Key with Quizzes
-                                         sub_id INT(3), -- Numeric order of the question in the quiz
-                                         order_number int(3),
+                                         quiz_id INT(6)not null, -- Foreign Key with Quizzes
+                                         sub_id INT(3)not null, -- Numeric order of the question in the quiz
+                                         order_number int(3) not null,
                                          answer VARCHAR(300),
-                                         correct INT(1) -- Boolean: 0 or 1
+                                         correct INT(1) default 0-- Boolean: 0 or 1
 );
 
 -- Create Picture_questions table
 CREATE TABLE Picture_questions (
                                    answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-                                   quiz_id INT(6), -- Foreign Key with Quizzes
-                                   sub_id INT(3), -- Numeric order of the question in the quiz
+                                   quiz_id INT(6) not null, -- Foreign Key with Quizzes
+                                   sub_id INT(3) not null, -- Numeric order of the question in the quiz
                                    question VARCHAR(300),
                                    answer VARCHAR(300),
                                    image_url VARCHAR(300)
@@ -181,64 +181,75 @@ CREATE TABLE Picture_questions (
 -- Create Scores table
 CREATE TABLE Scores (
                         score_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-                        quiz_id int(6),
-                        user_id INT(6), -- Foreign Key
+                        quiz_id int(6) not null,
+                        user_id INT(6) not null, -- Foreign Key
                         score INT(6),
                         time INT(10),
-                        date_scored DATE
+                        date_scored timestamp
 );
 
 CREATE TABLE Multi_fill_Blank_questions(
-    question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-    quiz_id INT(6), -- Foreign Key with Quizzes
-    sub_id INT(3), -- Numeric order of the question in the quiz
-    question VARCHAR(300)
+                                           question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
+                                           quiz_id INT(6) not null, -- Foreign Key with Quizzes
+                                           sub_id INT(3) not null, -- Numeric order of the question in the quiz
+                                           question VARCHAR(300)
 );
 
 CREATE TABLE Multi_fill_Blank_answers(
-    answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-    multifill_id INT(6), -- foreign key with question_id of questions
-    answer VARCHAR(300)
+                                         answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
+                                         multifill_id INT(6) not null, -- foreign key with question_id of questions
+                                         answer VARCHAR(300)
 );
 
 CREATE TABLE Multi_multiple_choice_questions(
-      question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-      quiz_id INT(6), -- Foreign Key with Quizzes
-      sub_id INT(3), -- Numeric order of the question in the quiz
-      question VARCHAR(300)
+                                                question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
+                                                quiz_id INT(6) not null, -- Foreign Key with Quizzes
+                                                sub_id INT(3) not null, -- Numeric order of the question in the quiz
+                                                question VARCHAR(300)
 
 );
 
 CREATE TABLE Multi_multiple_choice_answers(
-     answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-     multichoice_id INT(6), -- foreign key with question_id of questions
-     answer VARCHAR(300),
-     correct INT(1) -- Boolean: 0 or 1
+                                              answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
+                                              multichoice_id INT(6)not null, -- foreign key with question_id of questions
+                                              answer VARCHAR(300),
+                                              correct INT(1) default 0-- Boolean: 0 or 1
 );
 
 CREATE TABLE Matching_questions(
-     question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-     quiz_id INT(6), -- Foreign Key with Quizzes
-     sub_id INT(3), -- Numeric order of the question in the quiz
-     question VARCHAR(300)
+                                   question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
+                                   quiz_id INT(6) not null, -- Foreign Key with Quizzes
+                                   sub_id INT(3) not null, -- Numeric order of the question in the quiz
+                                   question VARCHAR(300)
 
 );
 
 CREATE TABLE Matching_answers(
-     answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-     match_id INT(6), -- foreign key with question_id of questions
-     word VARCHAR(300),
-     matching_word VARCHAR(300)
+                                 answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
+                                 match_id INT(6) not null, -- foreign key with question_id of questions
+                                 word VARCHAR(300),
+                                 matching_word VARCHAR(300)
 );
 
+Create table Announcements (
+                               announcement_id INT(6)AUTO_INCREMENT PRIMARY KEY,
+                               announcement_title VARCHAR(300),
+                               announcement_text VARCHAR(300),
+                               announcer_id INT(6),
+                               announcement_date TIMESTAMP
+);
 
+INSERT INTO Announcements(announcement_id, announcement_title, announcement_text, announcer_id, announcement_date)
+VALUES
+    (1401, 'Announcement 1', 'This is announcement 1', 1, CURRENT_TIMESTAMP),
+    (1402, 'Announcement 2', 'This is announcement 2', 5, CURRENT_TIMESTAMP);
 
 -- -------------------------------------------------------------
 -- Add a new quiz
 -- Add a new quiz
 INSERT INTO Quizzes (quiz_name, quiz_description, quiz_creator_id, random_question, one_page, immediate, practice, creation_date, times_taken)
 VALUES
-    ('Sample Quiz', 'This is a sample quiz to demonstrate table relationships.', 1, 0, 1, 1, 0, '2023-06-18', 0);
+    ('Sample Quiz', 'This is a sample quiz to demonstrate table relationships.', 1, 0, 1, 1, 0, '2023-06-18 00:00:00', 0);
 
 -- Retrieve the quiz ID for the new quiz (Assume the quiz_id is 6 for the following inserts)
 SELECT quiz_id FROM Quizzes WHERE quiz_name = 'Sample Quiz';
@@ -280,3 +291,12 @@ INSERT INTO Challenge(from_id, to_id, quiz_id, notification) VALUES
                                                                  (4,1,1,1),
                                                                  (5,1,1,1);
 -- --------------------------
+INSERT INTO Messages (from_id, to_id, text, notification)
+SELECT
+    (SELECT user_id FROM Users WHERE username = 'john_doe' LIMIT 1),
+    (SELECT user_id FROM Users WHERE username = 'jane_smith' LIMIT 1),
+    'hi',
+    1
+WHERE EXISTS (SELECT 1 FROM Users WHERE username = 'john_doe')
+  AND EXISTS (SELECT 1 FROM Users WHERE username = 'jane_smith');
+select * from messages;

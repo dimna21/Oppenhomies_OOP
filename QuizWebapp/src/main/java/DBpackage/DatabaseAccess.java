@@ -442,7 +442,7 @@ public class DatabaseAccess {
                         resultSet.getInt("one_page"),
                         resultSet.getInt("immediate"),
                         resultSet.getInt("practice"),
-                        resultSet.getTimestamp("creation_date"),
+                        resultSet.getDate("creation_date"),
                         resultSet.getInt("times_taken")
                 );
                 quizzes.add(q);

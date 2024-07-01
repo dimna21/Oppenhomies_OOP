@@ -1,9 +1,6 @@
 <%@ page import="javax.xml.crypto.Data" %>
-<%@ page import="DBpackage.DatabaseAccess" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="DBpackage.Announcement" %>
-<%@ page import="DBpackage.Quiz" %>
-<%@ page import="DBpackage.Score" %><%--
+<%@ page import="DBpackage.*" %><%--
   Created by IntelliJ IDEA.
   User: Nicolas
   Date: 6/30/2024
@@ -27,7 +24,12 @@
 
     ArrayList<Quiz> recentQuizzesByUser = dbAccess.recentCreationsByUser(username,0);
 
+    ArrayList<Challenge> challenges = new ArrayList<>();
+    ArrayList<Quiz> quizzesForChallenges = new ArrayList<>();
+    dbAccess.getChallengesForUser(userID, challenges, quizzesForChallenges);
 
+    ArrayList<FriendRequest> friendRequests = dbAccess.friendRequests(userID);
+    ArrayList<Note> notes = DatabaseAccess.getNotes(userID, 0);
 %>
 <html>
 <head>
@@ -129,6 +131,77 @@
                 }%>
             </div>
         </div>
+
+        <div id="tab7" class="tab-content">
+            <h2>Inbox</h2>
+            <div class="inbox-columns">
+                <div class="inbox-column">
+                    <h3>Challenges</h3>
+                    <% for (int i = 0; i < challenges.size(); i++) {
+                        Challenge challenge = challenges.get(i);
+                        Quiz quiz = quizzesForChallenges.get(i);
+                    %>
+                    <div class="challenge">
+                        <div class="challenge-details">
+                            <h4><%= quiz.getName() %></h4>
+                            <p><%= quiz.getDescription() %></p>
+                            <p>From: <%= challenge.getFrom_username() %></p>
+                            <a href="QuizSummeryPage.jsp?quizId=<%= quiz.getQuiz_id() %>">Quiz Details</a>
+                        </div>
+                        <div class="challenge-actions">
+                            <form action="AcceptChallengeServlet" method="post">
+                                <input type="hidden" name="challengeId" value="<%= challenge.getRequestId() %>">
+                                <button type="submit">Accept</button>
+                            </form>
+                            <form action="RejectChallengeServlet" method="post">
+                                <input type="hidden" name="challengeId" value="<%= challenge.getRequestId() %>">
+                                <button type="submit">Reject</button>
+                            </form>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+                <div class="inbox-column">
+                    <h3>Friend Requests</h3>
+                    <% for (FriendRequest friendRequest : friendRequests) { %>
+                    <div class="friend-request">
+                        <div class="friend-request-details">
+                            <p>From: <%= friendRequest.getFrom_username() %></p>
+                        </div>
+                        <div class="friend-request-actions">
+                            <form action="AcceptFriendRequestServlet" method="post">
+                                <input type="hidden" name="requestId" value="<%= friendRequest.getRequestId() %>">
+                                <button type="submit">Accept</button>
+                            </form>
+                            <form action="RejectFriendRequestServlet" method="post">
+                                <input type="hidden" name="requestId" value="<%= friendRequest.getRequestId() %>">
+                                <button type="submit">Reject</button>
+                            </form>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+                <div class="inbox-column">
+                    <h3>Notes</h3>
+                    <% for (Note note : notes) { %>
+                    <div class="note">
+                        <div class="note-details">
+                            <p>From: <%= note.getFromUsername() %></p>
+                            <p><%= note.getText() %></p>
+                        </div>
+                        <div class="note-actions">
+                            <form action="AcknowledgeNoteServlet" method="post">
+                                <input type="hidden" name="noteId" value="<%= note.getNoteId() %>">
+                                <button type="submit">Acknowledge</button>
+                            </form>
+                        </div>
+                    </div>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+
 
         <!-- todo-->
 

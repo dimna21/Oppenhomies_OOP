@@ -113,52 +113,75 @@ public class DatabaseAccess {
         }
         return true;
     }
-    public ArrayList<FriendRequest> friendRequests(String currentUser){
-        ArrayList<FriendRequest> ls= new ArrayList<>();
-        if(getUserInfo(currentUser)==null)return null;
-        int userID = getUserInfo(currentUser).getUser_id();
-        String query = "select * from friend_requests where to_id = '" + userID
-                + "';";
+    public ArrayList<FriendRequest> friendRequests(int userID){
+        ArrayList<FriendRequest> friendRequests= new ArrayList<>();
+
+        String query = "SELECT fr.*, fu.username as \"from_username\", tu.username as \"to_username\" " +
+                "FROM friend_requests fr " +
+                "LEFT JOIN users fu ON fr.from_id = fu.user_id " +
+                "LEFT JOIN users tu ON fr.to_id = tu.user_id " +
+                "WHERE fr.to_id = " + userID + " AND fr.notification = 1";
 
         try {
-            FriendRequest fr;
             ResultSet resultSet = stmt.executeQuery(query);
             while (resultSet.next()){
-                int req = resultSet.getInt("request_id");
-                int fromid =  resultSet.getInt("from_id");
-                int toid =  resultSet.getInt("to_id");
-                int notif =  resultSet.getInt("notification");
-                fr =  new FriendRequest(req, fromid, toid, notif, getUsername(fromid), getUsername(toid));
-                ls.add(fr);
+                FriendRequest friendRequest = new FriendRequest(
+                        resultSet.getInt("request_id"),
+                        resultSet.getInt("from_id"),
+                        resultSet.getInt("to_id"),
+                        resultSet.getInt("notification"),
+                        resultSet.getString("from_username"),
+                        resultSet.getString("to_username")
+                );
+                friendRequests.add(friendRequest);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return ls;
+        return friendRequests;
     }
-    public ArrayList<Challenge> challenges(String currentUser){
-        ArrayList<Challenge> ls= new ArrayList<>();
-        if(getUserInfo(currentUser)==null)return null;
-        int userID = getUserInfo(currentUser).getUser_id();
-        String query = "select * from Friend_requests where to_id = '" + userID
-                + "';";
+
+
+    public void getChallengesForUser(int userID, ArrayList<Challenge> challenges, ArrayList<Quiz> quizzes){
+        String query = "SELECT c.*, q.*, u.username as \"quiz_creator_username\", tu.username as \"to_username\", fu.username as \"from_username\" " +
+                "FROM challenge c " +
+                "LEFT JOIN quizzes q ON c.quiz_id = q.quiz_id " +
+                "LEFT JOIN users u ON q.quiz_creator_id = u.user_id " +
+                "LEFT JOIN users tu ON c.to_id = tu.user_id " +
+                "LEFT JOIN users fu ON c.from_id = fu.user_id " +
+                "WHERE c.to_id = " + userID + " AND c.notification = 1";
 
         try {
-            Challenge ch;
-            ResultSet resultSet = stmt.executeQuery(query);
-            while (resultSet.next()){
-                int req = resultSet.getInt("request_id");
-                int fromid = resultSet.getInt("from_id");
-                int toid = resultSet.getInt("to_id");
-                int quizid = resultSet.getInt("quiz_id");
-                int notif = resultSet.getInt("notification");
-                ch =  new Challenge(req,fromid,toid,quizid,notif, getUsername(fromid),getUsername(toid));
-                ls.add(ch);
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                Challenge challenge = new Challenge(
+                        rs.getInt("challenge_id"),
+                        rs.getInt("from_id"),
+                        rs.getInt("to_id"),
+                        rs.getInt("quiz_id"),
+                        rs.getInt("notification"),
+                        rs.getString("from_username"),
+                        rs.getString("to_username")
+                );
+
+                Quiz quiz = new Quiz(
+                        rs.getInt("quiz_id"),
+                        rs.getString("quiz_name"),
+                        rs.getString("quiz_description"),
+                        rs.getInt("quiz_creator_id"),
+                        rs.getString("quiz_creator_username"),
+                        rs.getInt("random_question"),
+                        rs.getInt("one_page"),
+                        rs.getInt("immediate"),
+                        rs.getInt("practice"),
+                        rs.getTimestamp("creation_date"),
+                        rs.getInt("times_taken")
+                );
+                challenges.add(challenge);
+                quizzes.add(quiz);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
-        return ls;
+        catch (SQLException e) {throw new RuntimeException(e);}
     }
 
 
@@ -753,11 +776,22 @@ public class DatabaseAccess {
 
         return ans;
     }
-    public static ArrayList<Note> getNotes(String toUsername, int maxAmount) {
-        String query = "SELECT message_id, from_id, to_id, text, notification " +
-                "FROM Messages " +
-                "WHERE to_id = (SELECT user_id FROM Users WHERE username = '" + toUsername + "') " +
-                (maxAmount > 0 ? "ORDER BY message_id desc LIMIT " + maxAmount : "ORDER BY message_id DESC");
+    public static ArrayList<Note> getNotes(int userID, int maxAmount) {
+        String query;
+        if(maxAmount > 0) {
+            query = "SELECT m.*, u.user_id, u.username " +
+                    "FROM messages m " +
+                    "LEFT JOIN users u ON m.from_id = u.user_id " +
+                    "WHERE m.to_id = " + userID + " " +
+                    "ORDER BY m.message_id DESC " +
+                    "LIMIT " + maxAmount;
+        } else {
+            query = "SELECT m.*, u.user_id, u.username " +
+                    "FROM messages m " +
+                    "LEFT JOIN users u ON m.from_id = u.user_id " +
+                    "WHERE m.to_id = " + userID + " " +
+                    "ORDER BY m.message_id DESC ";
+        }
 
         ArrayList<Note> notes = new ArrayList<>();
 
@@ -767,11 +801,12 @@ public class DatabaseAccess {
             while (resultSet.next()) {
                 int noteId = resultSet.getInt("message_id");
                 int fromId = resultSet.getInt("from_id");
+                String fromUsername = resultSet.getString("username");
                 int toId = resultSet.getInt("to_id");
                 String text = resultSet.getString("text");
                 int notification = resultSet.getInt("notification");
 
-                Note note = new Note(noteId, fromId, toId, text, notification);
+                Note note = new Note(noteId, fromId, fromUsername, toId, text, notification);
                 notes.add(note);
             }
         } catch (SQLException e) {

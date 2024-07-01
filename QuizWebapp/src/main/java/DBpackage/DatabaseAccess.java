@@ -483,6 +483,45 @@ public class DatabaseAccess {
         return q;
 
     }
+    public Question getQuestionMatching(Question ques){
+        int quizId=ques.getQuizID(); int subId=ques.getSubID();
+        int questionID = ques.getQuestionID();
+        ArrayList<String> words = new ArrayList<>();
+        ArrayList<String> matchingWords = new ArrayList<>();
+        QuestionMatching q = null;
+
+        String query1 = "select * from matching_answers where match_id = " + questionID + " ;";
+        try {
+            ResultSet resultSet = stmt.executeQuery(query1);
+            while (resultSet.next()) {
+                words.add(resultSet.getString("word"));
+                matchingWords.add(resultSet.getString("matching_word"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        String query = "select * from matching_questions where quiz_id = " + quizId + " and sub_id = " + subId + " ;";
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            if (resultSet.next()) {
+                q = new QuestionMatching(
+                        questionID,
+                        quizId,
+                        subId,
+                        QUESTION_MATCHING,
+                        resultSet.getString("question"),
+                        words,
+                        matchingWords
+                );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return q;
+    }
 
     public boolean accountExists(String username){
         String query = "select username from Users where username = '" + username + "' ;";
@@ -1466,6 +1505,7 @@ public class DatabaseAccess {
     public static final int QUESTION_MULTIANSWER = 5;
     public static final int QUESTION_CHECKBOX = 6;
     public static final int QUESTION_MATCHING = 7;
+
 
     public void createQuiz(ArrayList<Question> questions, String quizName, String quizDescription,
                            int creatorID, String creatorUsername, int randomQuestion,

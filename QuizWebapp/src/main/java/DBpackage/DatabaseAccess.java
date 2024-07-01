@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class DatabaseAccess {
     private static Statement stmt;
-    private Connection con;
+    private static Connection con;
 
     public DatabaseAccess() throws ClassNotFoundException, SQLException {
 
@@ -497,6 +497,221 @@ public class DatabaseAccess {
 
     }
 
+    /**Creates an announcement in the database*/
+    public boolean makeAnnouncement(String username, String title, String text, Timestamp date) throws SQLException {
+        if (!isAdmin(username)) {
+            return false;
+        }
+
+        String query = "INSERT INTO Announcements (announcement_title, announcement_text, announcer_id, announcement_date) " +
+                "VALUES (?, ?, ?, ?)";
+
+        PreparedStatement stmt = con.prepareStatement(query);{
+            stmt.setString(1, title);
+            stmt.setString(2, text);
+            stmt.setInt(3, getUserID(username)); // Assuming getUserId(username) retrieves the user ID
+            stmt.setTimestamp(4, date);
+
+            int rowsAffected = stmt.executeUpdate();
+
+            return rowsAffected > 0;  // Returns true if at least one row was inserted
+        }
+    }
+
+
+    /** Returns a user's ID based in their username*/
+    public static int getUserID(String username) {
+        String query = "SELECT user_id FROM users WHERE username = '" + username + "';";
+        int ans = 0;
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            if (resultSet.next()) {
+                ans = resultSet.getInt("user_id");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return ans;
+    }
+
+
+    /**
+     * Checks whether a user is admin or not
+     */
+    public boolean isAdmin(String username){
+        String query = "select * from Users where username = '" + username + "' ;";
+        int x = 0;
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()) {
+                x = resultSet.getInt("admin_status");
+                break;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return x == 1;
+    }
+
+    /** Promotes a user to admin and returns true if successful.
+     *  If the user is already an admin or the promoting user is not an admin,
+     *  operation returns false
+     */
+    public boolean promoteToAdmin(String admin, String user) {
+        if (!isAdmin(admin) || isAdmin(user)) {
+            return false;
+        }
+
+        String query = "UPDATE Users " +
+                "SET admin_status = 1 " +  // Assuming admin_status 1 indicates admin status
+                "WHERE username = ?";
+
+        try (Connection conn = DriverManager.getConnection("jdbc:mysql://" +
+                        DatabaseInfo.server + "/" + DatabaseInfo.database,
+                DatabaseInfo.username, DatabaseInfo.password);
+             PreparedStatement stmt = con.prepareStatement(query)) {
+
+            stmt.setString(1, user);
+            int rowsUpdated = stmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to promote user to admin: " + e.getMessage(), e);
+        }
+        return true;
+    }
+
+    /**
+     * Sends a friend request from one account to another
+     *
+     */
+    public void sendFriendRequest(String from, String to) throws SQLException {
+        String query = "INSERT INTO Friend_requests (from_id, to_id, notification) VALUES (?, ?, 0)";
+        PreparedStatement preparedStmt = con.prepareStatement(query);
+        int fromId = getUserID(from);
+        int toId = getUserID(to);
+        preparedStmt.setInt(1, fromId);
+        preparedStmt.setInt(2, toId);
+        int rowsUpdated = preparedStmt.executeUpdate();
+    }
+
+    /**
+     * Takes user IDs as parameters and answers a friend request.
+     *  Status = 1 accepted
+     *  Status = 2 rejected
+     */
+    public void updateFriendRequestStatus(int userAnswering, int answeringTo, int status) throws SQLException {
+        String query = "UPDATE Friend_requests " +
+                "SET notification = " + status +
+                " WHERE from_id = " + answeringTo + " AND to_id = " + userAnswering;
+        try (Statement stmt = con.createStatement()) {
+            int rowsUpdated = stmt.executeUpdate(query);
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    /** Returns a friendlist of specified username */
+    public ArrayList<User> getFriendlist(String username){
+        ArrayList<User> friendlist = new ArrayList<>();
+        String query = "SELECT * FROM Friend_requests WHERE (to_id = " + getUserID(username) + " OR from_id = " + getUserID(username) + ") AND notification = 1";
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
+            ResultSet resultSet = stmt.executeQuery(query);
+            while(resultSet.next()){
+                int ID = resultSet.getInt("to_id");
+                friendlist.add(getUserInfo(getUsername(ID)));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return friendlist;
+    }
+
+    /** Sends a pending challenge from one user to another */
+    public void sendChallenge(String from, String to, int quizID) {
+        String query = "INSERT INTO Challenge (from_id, to_id, quiz_id, notification) VALUES (?, ?, ?, 0)";
+        try (PreparedStatement stmt = con.prepareStatement(query)) {
+            stmt.setInt(1, getUserID(from));
+            stmt.setInt(2, getUserID(to));
+            stmt.setInt(3, quizID);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            throw new RuntimeException("Failed to send challenge", e);
+        }
+    }
+
+    /**
+     * Takes user IDs as parameters and answers a challenge.
+     *  Status = 1 accepted
+     *  Status = 2 rejected
+     */
+    public void answerChallenge(int userAnswering, int answeringTo, int status) throws SQLException {
+        String query = "UPDATE Challenge " +
+                "SET notification = " + status  +
+                " WHERE from_id = " + answeringTo + " AND to_id = " + userAnswering;
+        try (Statement stmt = con.createStatement()) {
+            int rowsUpdated = stmt.executeUpdate(query);
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    /** Deletes a user's account if the action is performed by an admin
+     * and returns a corresponding boolean
+     */
+    public boolean deleteAccount(int adminID, int userID){
+        if (!isAdmin(getUsername(adminID))) {
+            return false;
+        }
+        String query = "UPDATE Users " +
+                " SET activeAccount = " + 0 +
+                " WHERE user_id = " + userID;
+        try (Statement stmt = con.createStatement()) {
+            int rowsUpdated = stmt.executeUpdate(query);
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+        return true;
+    }
+
+    /** Deletes a quiz from the database */
+    public void deleteQuiz(int quizID){
+        String query = "DELETE from Quizzes where quiz_id = " + quizID;
+        try (Statement stmt = con.createStatement()) {
+            int rowsUpdated = stmt.executeUpdate(query);
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    /**
+     *  Returns the site statistics.
+     * The first entry of the ArrayList is total number of users.
+     * The second entry of the ArrayList is total number of quizzes taken
+     */
+    public ArrayList<Integer> getSiteStatistics(){
+        ArrayList<Integer> stats = new ArrayList<>(2);
+        String queryUsers = "SELECT COUNT(*) AS totalUsers FROM Users";
+        String queryQuizzesTaken = "SELECT COUNT(*) AS totalQuizzesTaken FROM Scores";
+        try (
+                PreparedStatement stmtUsers = con.prepareStatement(queryUsers);
+                PreparedStatement stmtQuizzesTaken = con.prepareStatement(queryQuizzesTaken);
+        ) {
+            ResultSet rsUsers = stmtUsers.executeQuery();
+            if (rsUsers.next()) {
+                int totalUsers = rsUsers.getInt("totalUsers");
+                stats.add(totalUsers);
+            }
+            ResultSet rsQuizzesTaken = stmtQuizzesTaken.executeQuery();
+            if (rsQuizzesTaken.next()) {
+                int totalQuizzesTaken = rsQuizzesTaken.getInt("totalQuizzesTaken");
+                stats.add(totalQuizzesTaken);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return stats;
+    }
+
     public void anotherTest(){
 
     }
@@ -518,7 +733,7 @@ public class DatabaseAccess {
             stmt = con.prepareStatement(query);
             if (num > 0) {
                 stmt.setInt(1, num);
-            }
+            }   
 
             ResultSet resultSet = stmt.executeQuery();
 
@@ -537,6 +752,261 @@ public class DatabaseAccess {
         }
 
         return ans;
+    }
+    public static ArrayList<Note> getNotes(String toUsername, int maxAmount) {
+        String query = "SELECT message_id, from_id, to_id, text, notification " +
+                "FROM Messages " +
+                "WHERE to_id = (SELECT user_id FROM Users WHERE username = '" + toUsername + "') " +
+                (maxAmount > 0 ? "ORDER BY message_id desc LIMIT " + maxAmount : "ORDER BY message_id DESC");
+
+        ArrayList<Note> notes = new ArrayList<>();
+
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+
+            while (resultSet.next()) {
+                int noteId = resultSet.getInt("message_id");
+                int fromId = resultSet.getInt("from_id");
+                int toId = resultSet.getInt("to_id");
+                String text = resultSet.getString("text");
+                int notification = resultSet.getInt("notification");
+
+                Note note = new Note(noteId, fromId, toId, text, notification);
+                notes.add(note);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving notes: " + e.getMessage());
+        }
+
+        return notes;
+    }
+
+    public static ArrayList<Score> getRecentPerformance(String username, int quizId, int amount) {
+        ArrayList<Score> scores = new ArrayList<>();
+        PreparedStatement pstmt = null;
+        ResultSet resultSet = null;
+
+        try {
+            // Step 1: Retrieve user_id from Users table using getUserID method
+            int userId = getUserID(username);
+
+            // Step 2: Construct the query to retrieve scores
+            String getScoresQuery;
+            if (quizId > 0 && amount > 0) {
+                getScoresQuery = "SELECT * FROM Scores WHERE user_id = ? AND quiz_id = ? ORDER BY date_scored DESC LIMIT ?";
+                pstmt = con.prepareStatement(getScoresQuery);
+                pstmt.setInt(1, userId);
+                pstmt.setInt(2, quizId);
+                pstmt.setInt(3, amount);
+            } else {
+                getScoresQuery = "SELECT * FROM Scores WHERE user_id = ? AND quiz_id = ? ORDER BY date_scored DESC";
+                pstmt = con.prepareStatement(getScoresQuery);
+                pstmt.setInt(1, userId);
+                pstmt.setInt(2, quizId);
+            }
+
+            // Step 3: Execute the query and process the ResultSet
+            resultSet = pstmt.executeQuery();
+
+            while (resultSet.next()) {
+                int scoreId = resultSet.getInt("score_id");
+                int retrievedQuizId = resultSet.getInt("quiz_id");
+                int retrievedUserId = resultSet.getInt("user_id");
+                int score = resultSet.getInt("score");
+                int time = resultSet.getInt("time");
+                Timestamp dateScored = resultSet.getTimestamp("date_scored");
+
+                Score scoreObject = new Score(scoreId, retrievedQuizId, retrievedUserId, score, time, dateScored);
+                scores.add(scoreObject);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving recent scores: " + e.getMessage());
+        } finally {
+            // Close ResultSet and PreparedStatement in a finally block
+            try {
+                if (resultSet != null) resultSet.close();
+                if (pstmt != null) pstmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace(); // Handle or log the exception as needed
+            }
+        }
+
+        return scores;
+    }
+
+    public ArrayList<Quiz> getPopularQuiz(int amountToGet){
+        ArrayList<Quiz> ls= new ArrayList<>();
+        String query;
+        if(amountToGet>0){
+            query = "SELECT * FROM quizzes ORDER BY times_taken desc LIMIT " + amountToGet
+                    + ";";
+        }else{
+            query = "select * from quizdatabase.quizzes ORDER BY times_taken desc;";
+        }
+
+
+
+        try {
+            Quiz q;
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()){
+                q =  new Quiz(
+                        resultSet.getInt("quiz_id"),
+                        resultSet.getString("quiz_name"),
+                        resultSet.getString("quiz_description"),
+                        resultSet.getInt("quiz_creator_id"),
+                        resultSet.getInt("random_question"),
+                        resultSet.getInt("one_page"),
+                        resultSet.getInt("immediate"),
+                        resultSet.getInt("practice"),
+                        resultSet.getTimestamp("creation_date"),
+                        resultSet.getInt("times_taken")
+                );
+                ls.add(q);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return ls;
+    }
+    public ArrayList<Quiz> recentCreationsByUser(String username, int maxAmount){
+        int userId = getUserID(username);
+        String query;
+        ArrayList<Quiz> A = new ArrayList<>();
+        if(maxAmount == 0){
+            query = "select * from quizzes where quiz_creator_id = " + userId +" order by creation_date desc;";
+        }else{
+            query = "select * from quizzes where quiz_creator_id = " + userId +" order by creation_date desc limit " + maxAmount+" ;";
+        }
+        try {
+            Quiz q;
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()){
+                q =  new Quiz(
+                        resultSet.getInt("quiz_id"),
+                        resultSet.getString("quiz_name"),
+                        resultSet.getString("quiz_description"),
+                        resultSet.getInt("quiz_creator_id"),
+                        resultSet.getInt("random_question"),
+                        resultSet.getInt("one_page"),
+                        resultSet.getInt("immediate"),
+                        resultSet.getInt("practice"),
+                        resultSet.getTimestamp("creation_date"),
+                        resultSet.getInt("times_taken")
+                );
+                A.add(q);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return A;
+    }
+    public ArrayList<Activity> getFriendsActivity(String user, int maxActivities){
+        ArrayList<Activity> actArr;
+        // ArrayList<User> allFriends =
+        return null;
+    }
+    public Score getLastAttemptOfUserOnQuiz(String username, int quizId){
+        String query = "select * from Scores where quiz_id = "+ quizId+" and user_id = " +
+                getUserID(username) + " order by date_scored desc limit 1;" ;
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()){
+                return  new Score(
+                        resultSet.getInt("score_id"),
+                        resultSet.getInt("quiz_id"),
+                        resultSet.getInt("user_id"),
+                        resultSet.getInt("score"),
+                        resultSet.getInt("time"),
+                        resultSet.getTimestamp("date_scored")
+
+                );
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return null;
+    }
+    public ArrayList<ScoreAndUser> getTopPerformersForLastDay(int quizID, int amount) {
+        String query;
+        if (amount == 0) {
+            query = "SELECT u.user_id, " +
+                    "u.username, " +
+                    "u.password, " +
+                    "u.admin_status, " +
+                    "u.quizzes_taken, " +
+                    "u.quizzes_created, " +
+                    "u.highest_scorer, " +
+                    "u.practice_mode, " +
+                    "u.profile_pic_url, " +
+                    "u.activeAccount, " +
+                    "s.score, " +
+                    "s.date_scored, " +
+                    "s.score_id, " +
+                    "s.quiz_id, " +
+                    "s.user_id, " +
+                    "s.time " +
+                    "FROM Users u " +
+                    "JOIN Scores s ON u.user_id = s.user_id " +
+                    "WHERE s.quiz_id = " + quizID + " " +
+                    "AND s.date_scored >= NOW() - INTERVAL 1 DAY " +
+                    "ORDER BY s.score DESC ;" ;
+        } else {
+            query = "SELECT u.user_id, " +
+                    "u.username, " +
+                    "u.password, " +
+                    "u.admin_status, " +
+                    "u.quizzes_taken, " +
+                    "u.quizzes_created, " +
+                    "u.highest_scorer, " +
+                    "u.practice_mode, " +
+                    "u.profile_pic_url, " +
+                    "u.activeAccount, " +
+                    "s.score, " +
+                    "s.date_scored, " +
+                    "s.score_id, " +
+                    "s.quiz_id, " +
+                    "s.user_id, " +
+                    "s.time " +
+                    "FROM Users u " +
+                    "JOIN Scores s ON u.user_id = s.user_id " +
+                    "WHERE s.quiz_id = " + quizID + " " +
+                    "AND s.date_scored >= NOW() - INTERVAL 1 DAY " +
+                    "ORDER BY s.score DESC " +
+                    "LIMIT " + amount;
+        }
+
+        ArrayList<ScoreAndUser> users = new ArrayList<>();
+
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+
+            while (resultSet.next()) {
+                int scoreId = resultSet.getInt("score_id");
+                int quizId = resultSet.getInt("quiz_id");
+                int userId = resultSet.getInt("user_id");
+                int score = resultSet.getInt("score");
+                int time = resultSet.getInt("time");
+                Timestamp dateScored = resultSet.getTimestamp("date_scored");
+                String username = resultSet.getString("username");
+                String password = resultSet.getString("password");
+                int adminStatus = resultSet.getInt("admin_status");
+                int quizzesTaken = resultSet.getInt("quizzes_taken");
+                int quizzesCreated = resultSet.getInt("quizzes_created");
+                int highestScorer = resultSet.getInt("highest_scorer");
+                int practiceMode = resultSet.getInt("practice_mode");
+                String profilePicUrl = resultSet.getString("profile_pic_url");
+                int activeAccount = resultSet.getInt("activeAccount");
+                Score myScore = new Score(scoreId,quizId,userId,score,time,dateScored);
+                User user = new User(userId, username, password, adminStatus, quizzesTaken, quizzesCreated, highestScorer, practiceMode, profilePicUrl, activeAccount);
+                users.add(new ScoreAndUser(myScore,user));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving top performers: " + e.getMessage());
+        }
+
+        return users;
     }
 
 

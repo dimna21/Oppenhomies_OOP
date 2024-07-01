@@ -183,13 +183,114 @@ public class DBtest extends TestCase{
         assertFalse(dbCall.createNote("john_do","jane_smith","i love you"));
 
     }
-    public void testGetAnnouncements() throws SQLException {
-        ArrayList<Announcement> l = dbCall.getLatestAnnouncements(2);
-        assertEquals(l.size(), 2);
-        assertEquals(l.get(0).getTitle(), "Announcement 2");
-        assertEquals(l.get(1).getTitle(), "Announcement 1");
+    public void testGetAnnouncements(){
+        ArrayList<Announcement> l = dbCall.getLatestAnnouncements(0);
+        assertEquals(l.size(), 3);
+        assertEquals(l.get(1).getTitle(), "Announcement 2");
+        assertEquals(l.get(2).getTitle(), "Announcement 1");
+
     }
 
+    public void testIsAdmin(){
+        assertTrue(dbCall.isAdmin("john_doe"));
+        assertTrue(dbCall.isAdmin("charlie_black"));
+        assertFalse(dbCall.isAdmin("jane_smith"));
+    }
+
+    public void testGetUserID(){
+        assertEquals(DatabaseAccess.getUserID("john_doe"),1);
+        assertEquals(DatabaseAccess.getUserID("jane_smith"),2);
+    }
+
+    public void testMakeAnnouncement() throws SQLException {
+        Timestamp announcementDate = Timestamp.valueOf("2025-06-24 00:00:00");
+        assertTrue(dbCall.makeAnnouncement("charlie_black", "Announcement 3", "This is announcement 3", announcementDate));
+        assertFalse(dbCall.makeAnnouncement("jane_smith", "Announcement 4", "This is announcement 4", announcementDate));
+    }
+
+    public void testPromoteToAdmin(){
+        assertFalse(dbCall.promoteToAdmin("john_doe", "charlie_black"));
+        assertFalse(dbCall.promoteToAdmin("jane_smith", "bob_brown"));
+        assertTrue(dbCall.promoteToAdmin("john_doe", "bob_brown"));
+    }
+
+    public void testFriendRequest() throws SQLException {
+        dbCall.sendFriendRequest("jane_smith","bob_brown");
+    }
+
+    public void testUpdateFriendRequest() throws SQLException {
+        dbCall.updateFriendRequestStatus(4,2,1);
+        dbCall.updateFriendRequestStatus(4,1,2);
+    }
+
+    public void testFriendlist(){
+        assertEquals(dbCall.getFriendlist("john_doe").size(), 4);
+    }
+    public void testSendChallenge(){
+        dbCall.sendChallenge("bob_brown","charlie_black",56131);
+    }
+
+    public void testAnswerChallenge() throws SQLException {
+        dbCall.answerChallenge(1,2,2);
+        dbCall.answerChallenge(1,3,0);
+        dbCall.answerChallenge(5,4,2);
+    }
+
+    public void testDeleteAccount() throws SQLException{
+        assertFalse(dbCall.deleteAccount(2,1));
+        assertTrue(dbCall.deleteAccount(1,2));
+        assertTrue(dbCall.deleteAccount(5,1));
+    }
+
+    public void testDeleteQuiz() throws SQLException{
+        dbCall.deleteQuiz(1);
+        dbCall.deleteQuiz(2);
+    }
+
+    public void testSiteStatistics(){
+        ArrayList<Integer> l = dbCall.getSiteStatistics();
+        assertEquals(5, (int) l.get(0));
+        assertEquals(4, (int) l.get(1));
+    }
+    public void testGetRecentPerformance(){
+        ArrayList<Score> s = DatabaseAccess.getRecentPerformance("john_doe",1,0);
+        assertEquals(s.size(),3);
+        assertEquals(s.get(0).getScore(),80);
+        assertEquals(s.get(2).getScore(),70);
+    }
+    public void testGetPopularQuiz(){
+        ArrayList<Quiz> A = dbCall.getPopularQuiz(2);
+        assertEquals(A.get(0).getTimesTaken(),12);
+        assertEquals(A.get(1).getTimesTaken(),10);
+        A = dbCall.getPopularQuiz(0);
+        assertEquals(A.get(A.size()-1).getTimesTaken(),0);
+    }
+    public void testRecentCreationsByUser(){
+        ArrayList<Quiz> A = dbCall.recentCreationsByUser("charlie_black",4);
+        assertEquals(A.get(0).getTimesTaken(),3);
+        assertEquals(A.get(1).getTimesTaken(),5);
+        assertEquals(A.size(),3);
+    }
+    public void testGetLastAttemptOfUserOnQuiz(){
+        Score s = dbCall.getLastAttemptOfUserOnQuiz("john_doe",1);
+        assertEquals(s.getScore(),80);
+        s = dbCall.getLastAttemptOfUserOnQuiz("john_doe",12);
+        assertNull(s);
+        s = dbCall.getLastAttemptOfUserOnQuiz("jane_smith",3);
+        assertEquals(s.getScore(),95);
+    }
+    public void testGetTopPerformersForLastDay() {
+
+        ArrayList<ScoreAndUser> A = dbCall.getTopPerformersForLastDay(4, 0);
+        assertEquals(A.size(), 4);
+        assertEquals(A.get(0).getScore().getScore(), 95);
+    }
+    public void testGetNotes(){
+        ArrayList<Note> notes= DatabaseAccess.getNotes("john_doe",100);
+        assertEquals(notes.size(),3);
+        assertEquals(notes.get(0).getText(),"same");
+        assertEquals(notes.get(2).getText(),"Great, what about you?");
+    }
 
 
 }

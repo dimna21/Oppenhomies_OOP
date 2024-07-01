@@ -1,5 +1,3 @@
-
-
 USE QuizDatabase;
 
 -- Drop tables if they exist
@@ -121,7 +119,10 @@ VALUES
     ('Science Quiz', 'Test your science knowledge.', 2, 1, 0, 0, 1, '2024-06-20 00:00:00', 5),
     ('Math Quiz', 'Challenge yourself with math problems.', 3, 0, 0, 1, 0, '2024-06-18 00:00:00', 8),
     ('History Quiz', 'How well do you know history?', 4, 1, 1, 1, 1, '2024-06-22 00:00:00', 12),
-    ('Literature Quiz', 'Test your literature knowledge.', 5, 0, 0, 0, 0, '2024-06-24 00:00:00', 3);
+    ('q1', 'Test your literature knowledge.', 5, 0, 0, 0, 0, '2024-06-24 00:00:00', 3),
+    ('q2', 'test you skills', 5, 0, 0, 0, 0, '2023-05-24 00:00:00', 4),
+    ('q3', 'do you really care', 5, 0, 0, 0, 0, '2023-06-24 00:00:00', 5);
+
 
 
 -- Create questions table
@@ -189,6 +190,21 @@ CREATE TABLE Scores (
                         time INT(10),
                         date_scored timestamp default current_timestamp
 );
+INSERT INTO Scores (quiz_id, user_id, score, time, date_scored)
+VALUES
+    (1, 1, 80, 1200, '2024-06-30 10:15:00'),
+    (1, 1, 60, 1100, '2024-06-29 10:15:00'),
+    (1, 1, 70, 1000, '2024-06-28 10:15:00'),
+    (1, 2, 85, 1100, '2024-06-29 14:30:00'),
+    (2, 1, 75, 1500, '2024-06-28 09:45:00'),
+    (2, 3, 90, 1000, '2024-06-27 11:20:00'),
+    (1, 4, 70, 1300, '2024-06-26 16:00:00'),
+    (3, 2, 95, 800, '2024-06-25 18:10:00'),
+    (3, 4, 65, 1700, '2024-06-24 12:45:00'),
+    (2, 3, 82, 1250, '2024-06-22 15:30:00'),
+    (3, 2, 78, 1400, '2024-06-21 08:20:00');
+
+
 
 CREATE TABLE Multi_fill_Blank_questions(
                                            question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
@@ -208,6 +224,7 @@ CREATE TABLE Multi_multiple_choice_questions(
                                                 quiz_id INT(6) not null, -- Foreign Key with Quizzes
                                                 sub_id INT(3) not null, -- Numeric order of the question in the quiz
                                                 question VARCHAR(300)
+
 );
 
 CREATE TABLE Multi_multiple_choice_answers(
@@ -298,6 +315,41 @@ VALUES
     (2, 1, 'Great, what about you?', 0),
     (1, 2, 'i am fine!!', 1),
     (2, 1, 'are you done writin oop?', 0),
-    (1, 2, 'not yet :( wby', 1),
+    (1, 2, 'not yet 😞 wby', 1),
     (2, 1, 'same', 0);
+
+-- ---------------------
+
+INSERT INTO Scores (quiz_id, user_id, score, time, date_scored)
+VALUES
+    (4, (SELECT user_id FROM Users WHERE username = 'bob_brown'), 80, 1200, CURRENT_TIMESTAMP - INTERVAL 8 HOUR),
+    (4, (SELECT user_id FROM Users WHERE username = 'bob_brown'), 85, 1100, CURRENT_TIMESTAMP - INTERVAL 7 HOUR),
+    (4, (SELECT user_id FROM Users WHERE username = 'bob_brown'), 95, 1000, CURRENT_TIMESTAMP - INTERVAL 6 HOUR),
+    (4, (SELECT user_id FROM Users WHERE username = 'bob_brown'), 70, 1300, CURRENT_TIMESTAMP - INTERVAL 5 HOUR);
+-- ----------------
+SELECT u.user_id,
+       u.username,
+       u.password,
+       u.admin_status,
+       u.quizzes_taken,
+       u.quizzes_created,
+       u.highest_scorer,
+       u.practice_mode,
+       u.profile_pic_url,
+       u.activeAccount,
+       s.score,
+       s.date_scored,
+       s.score_id,
+       s.quiz_id,
+       s.user_id,
+       s.time
+
+FROM Users u
+         JOIN Scores s ON u.user_id = s.user_id
+WHERE s.quiz_id = 4
+  AND s.date_scored >= NOW() - INTERVAL 1 DAY
+ORDER BY s.score DESC
+    LIMIT 2;
+-- ------------
 select * from messages;
+SELECT * FROM Announcements ORDER BY announcement_date DESC LIMIT 2;

@@ -1457,12 +1457,14 @@ public class DatabaseAccess {
     }
 
 
+
+
     public static final int QUESTION_TEXTBOX = 1;
     public static final int QUESTION_FILL_BLANK = 2;
     public static final int QUESTION_MULTIPLE_CHOICE = 3;
     public static final int QUESTION_PICTURE = 4;
     public static final int QUESTION_MULTITEXTBOX = 5;
-    public static final int QUESTION_MULTI_MULTIPLE_CHOICE = 6;
+    public static final int QUESTION_CHECKBOX = 6;
     public static final int QUESTION_MATCHING = 7;
 
     public void createQuiz(ArrayList<Question> questions, String quizName, String quizDescription,
@@ -1586,11 +1588,48 @@ public class DatabaseAccess {
                 case QUESTION_MULTITEXTBOX:
                     break;
 
-                case QUESTION_MULTI_MULTIPLE_CHOICE:
+                case QUESTION_CHECKBOX:
+                    q = (QuestionCheckbox) q;
+                    ArrayList<String> allCheckboxAnswers;
+                    ArrayList<Integer> correctCheckboxAnswers;
+                    // insert question
+                    String executable6 = "INSERT INTO checkbox_questions (quiz_id, sub_id, question, ordered)" +
+                            " VALUES (?, ?, ?, ?)";
+                    try (PreparedStatement pstmt = con.prepareStatement(executable6)) {
+                        pstmt.setInt(1,q.getQuizID());
+                        pstmt.setInt(2,q.getSubID());
+                        pstmt.setString(3, ((QuestionCheckbox) q).getQuestion());
+                        pstmt.setInt(4, ((QuestionCheckbox) q).getOrdered());
+                        allCheckboxAnswers = ((QuestionCheckbox) q).getAnswerList();
+                        correctCheckboxAnswers = ((QuestionCheckbox) q).getCorrectList();
+                        int rowsUpdated = pstmt.executeUpdate();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        throw new RuntimeException("Error executing SQL query", e);
+                    }
 
+                    // insert all answers
+                    for(int i = 0; i < allCheckboxAnswers.size(); i++){
+                        String answer = allCheckboxAnswers.get(i);
+                        String executable6_1 = "INSERT INTO checkbox_answers (quiz_id, sub_id, answer, correct, order_num)" +
+                                " VALUES (?, ?, ?, ?, ?)";
+                        try (PreparedStatement pstmt = con.prepareStatement(executable6_1)) {
+                            pstmt.setInt(1,q.getQuizID());
+                            pstmt.setInt(2,q.getSubID());
+                            pstmt.setString(3, answer);
+                            pstmt.setInt(4, correctCheckboxAnswers.get(i));
+                            pstmt.setInt(5,i+1);
+                            int rowsUpdated = pstmt.executeUpdate();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                            throw new RuntimeException("Error executing SQL query", e);
+                        }
+                    }
                     break;
 
+
                 case QUESTION_MATCHING:
+
                     break;
 
                 default:
@@ -1598,6 +1637,7 @@ public class DatabaseAccess {
             }
         }
     }
+
 
 
 

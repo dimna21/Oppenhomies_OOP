@@ -376,6 +376,47 @@ public class DatabaseAccess {
         return q;
     }
 
+    public QuestionMultiAnswer getMultiAnswer(Question ques) {
+        int quizId = ques.getQuizID();
+        int subId = ques.getSubID();
+
+        String query = "SELECT * FROM multi_answer_questions WHERE quiz_id = " + quizId + " AND sub_id = " + subId + ";";
+        QuestionMultiAnswer q = null;
+
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            if (resultSet.next()) {
+                q = new QuestionMultiAnswer(
+                        resultSet.getInt("question_id"),
+                        resultSet.getInt("quiz_id"),
+                        resultSet.getInt("sub_id"),
+                        ques.getType(),  // Assuming getType() exists in Question class
+                        resultSet.getString("question"),
+                        resultSet.getInt("ordered"),
+                        new ArrayList<String>()
+                );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        query = "SELECT * FROM multi_answer_answers WHERE quiz_id = " + q.getQuizID() +
+                " and sub_id = "+q.getSubID()+" ORDER BY order_num ASC;";
+        ArrayList<String> answers = new ArrayList<>();
+
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()) {
+                answers.add(resultSet.getString("answer"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        q.setAnswerList(answers);
+
+        return q;
+    }
 
     public Question getMultipleChoice(Question ques){
         int quizId=ques.getQuizID(); int subId=ques.getSubID();
@@ -1450,21 +1491,103 @@ public class DatabaseAccess {
             int type = q.getType();
             switch (type) {
                 case QUESTION_TEXTBOX:
+                    q = (QuestionTextbox) q;
+                    String executable1 = "INSERT INTO Textbox_questions (quiz_id, sub_id, question, answer)" +
+                            " VALUES (?, ?, ?, ?)";
+                    try (PreparedStatement pstmt = con.prepareStatement(executable1)) {
+                        pstmt.setInt(1,q.getQuizID());
+                        pstmt.setInt(2,q.getSubID());
+                        pstmt.setString(3, ((QuestionTextbox) q).getQuestion());
+                        pstmt.setString(4, ((QuestionTextbox) q).getAnswer());
+                        int rowsUpdated = pstmt.executeUpdate();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        throw new RuntimeException("Error executing SQL query", e);
+                    }
                     break;
 
                 case QUESTION_FILL_BLANK:
+                    q = (QuestionFillBlank) q;
+                    String executable2 = "INSERT INTO Fill_blank_questions (quiz_id, sub_id, text_before, text_after, answer)" +
+                            " VALUES (?, ?, ?, ?, ?)";
+                    try (PreparedStatement pstmt = con.prepareStatement(executable2)) {
+                        pstmt.setInt(1,q.getQuizID());
+                        pstmt.setInt(2,q.getSubID());
+                        pstmt.setString(3, ((QuestionFillBlank) q).getTextBefore());
+                        pstmt.setString(4, ((QuestionFillBlank) q).getTextAfter());
+                        pstmt.setString(5,((QuestionFillBlank) q).getAnswer());
+                        int rowsUpdated = pstmt.executeUpdate();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        throw new RuntimeException("Error executing SQL query", e);
+                    }
                     break;
 
                 case QUESTION_MULTIPLE_CHOICE:
+                    q = (QuestionMultipleChoice) q;
+                    String correctAnswer = "";
+                    ArrayList<String> allAnswers;
+                    // insert question
+                    String executable3 = "INSERT INTO Multiple_choice_questions (quiz_id, sub_id, question, ordered)" +
+                            " VALUES (?, ?, ?, ?)";
+                    try (PreparedStatement pstmt = con.prepareStatement(executable3)) {
+                        pstmt.setInt(1,q.getQuizID());
+                        pstmt.setInt(2,q.getSubID());
+                        pstmt.setString(3, ((QuestionMultipleChoice) q).getQuestion());
+                        correctAnswer = ((QuestionMultipleChoice) q).getCorrectAnswer();
+                        pstmt.setInt(4, ((QuestionMultipleChoice) q).getOrdered());
+                        allAnswers = ((QuestionMultipleChoice) q).getAnswerList();
+                        int rowsUpdated = pstmt.executeUpdate();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        throw new RuntimeException("Error executing SQL query", e);
+                    }
+
+                    // insert all answers
+                    for(int i = 0; i < allAnswers.size(); i++){
+                        String answer = allAnswers.get(i);
+                        String executable3_1 = "INSERT INTO Multiple_choice_answers (quiz_id, sub_id, order_number, answer, correct)" +
+                                " VALUES (?, ?, ?, ?, ?)";
+                        try (PreparedStatement pstmt = con.prepareStatement(executable3_1)) {
+                            pstmt.setInt(1,q.getQuizID());
+                            pstmt.setInt(2,q.getSubID());
+                            pstmt.setInt(3, i+1);
+                            pstmt.setString(4, answer);
+                            int correcto = 0;
+                            if(answer.equals(correctAnswer)){
+                                correcto = 1;
+                            }
+                            pstmt.setInt(5, correcto);
+                            int rowsUpdated = pstmt.executeUpdate();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                            throw new RuntimeException("Error executing SQL query", e);
+                        }
+                    }
                     break;
 
                 case QUESTION_PICTURE:
+                    q = (QuestionPicture) q;
+                    String executable4 = "INSERT INTO Picture_questions (quiz_id, sub_id, question, answer, image_url)" +
+                            " VALUES (?, ?, ?, ?, ?)";
+                    try (PreparedStatement pstmt = con.prepareStatement(executable4)) {
+                        pstmt.setInt(1,q.getQuizID());
+                        pstmt.setInt(2,q.getSubID());
+                        pstmt.setString(3, ((QuestionPicture) q).getQuestion());
+                        pstmt.setString(4, ((QuestionPicture) q).getAnswer());
+                        pstmt.setString(5, ((QuestionPicture) q).getImageURL());
+                        int rowsUpdated = pstmt.executeUpdate();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        throw new RuntimeException("Error executing SQL query", e);
+                    }
                     break;
 
                 case QUESTION_MULTITEXTBOX:
                     break;
 
                 case QUESTION_MULTI_MULTIPLE_CHOICE:
+
                     break;
 
                 case QUESTION_MATCHING:
@@ -1475,7 +1598,6 @@ public class DatabaseAccess {
             }
         }
     }
-
 
 
 

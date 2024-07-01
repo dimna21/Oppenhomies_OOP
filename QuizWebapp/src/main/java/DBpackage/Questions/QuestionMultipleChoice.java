@@ -11,11 +11,20 @@ public class QuestionMultipleChoice extends Question{
     private int ordered;
     private ArrayList<String> answerList;
 
-    public QuestionMultipleChoice( int questionID, int quizID,int subID, int type, String question, int ordered)  {
+    public QuestionMultipleChoice(int questionID, int quizID,int subID, int type, String question, int ordered)  {
         super(questionID, quizID, subID, type);
         this.question = question;
         this.ordered = ordered;
-        this.answerList=new ArrayList<>();
+    }
+
+    /** Use this constructor only*/
+    public QuestionMultipleChoice( int questionID, int quizID,int subID, int type,
+                                   String question, int ordered, ArrayList<String> answerList, String correctAnswer)  {
+        super(questionID, quizID, subID, type);
+        this.question = question;
+        this.ordered = ordered;
+        this.answerList = answerList;
+        this.correctAnswer = correctAnswer;
     }
 
     public void setQuestion(String question) {

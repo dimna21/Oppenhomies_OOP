@@ -125,6 +125,27 @@ public class DBtest extends TestCase{
 
 
     }
+    public void testGetMultiAnswer(){
+        Question q;
+        Question Ques = new Question(8,6,8,7);
+        q=dbCall.getMultiAnswer(Ques);
+        QuestionMultiAnswer q2 = (QuestionMultiAnswer)q;
+        assertEquals(q2.getOrdered(),1);
+        assertEquals(q2.getQuestion(),"What are the planets in the Solar System in order?");
+        assertEquals(q2.getAnswerList(),new ArrayList<>(Arrays.asList
+                ("Mercury", "Venus", "Earth", "Mars","Jupiter", "Saturn", "Uranus", "Neptune")));
+
+
+         Ques = new Question(9,6,9,7);
+        q=dbCall.getMultiAnswer(Ques);
+         q2 = (QuestionMultiAnswer)q;
+        assertEquals(q2.getOrdered(),0);
+        assertEquals(q2.getQuestion(),"What are the components of a computer?");
+        assertEquals(q2.getAnswerList(),new ArrayList<>(Arrays.asList
+                ("CPU", "RAM", "Motherboard", "Power Supply", "Storage")));
+
+    }
+
     public void testGetQuizQuestions(){
         Quiz quiz = dbCall.getQuizInfo(6);
         ArrayList<Question> myQuestions= dbCall.getQuizQuestions(6);

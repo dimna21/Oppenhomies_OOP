@@ -7,24 +7,28 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-    <head>
-        <title>QuizWebapp - Create Account</title>
-    </head>
-    <body>
-        <h1>Create New Account</h1>
-        <p>Please enter proposed name and password.</p>
+<head>
+    <title>QuizWebapp - Create Account</title>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/UserAuthentication/authen.css">
+</head>
+<body>
+<div class="container">
+    <h1>Welcome to exQuizIt</h1>
+    <hr>
 
-        <form action="<%= request.getContextPath() %>/NewAccServlet" method="post">
-            <div>
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username">
-            </div>
-            <div>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password">
-                <button type="submit">Login</button>
-            </div>
-        </form>
-
-    </body>
+    <form action="<%= request.getContextPath() %>/NewAccServlet" method="post" class="mainFormDiv">
+        <div>
+            <div class="main-text"><strong>Create Your Account</strong></div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username">
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            <br>
+            <button type="submit" class="button">Create Account</button>
+        </div>
+    </form>
+</div>
+</body>
 </html>

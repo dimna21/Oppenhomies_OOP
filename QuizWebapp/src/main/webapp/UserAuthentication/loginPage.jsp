@@ -7,12 +7,16 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-  <head>
-    <title>Welcome</title>
-  </head>
-  <body>
-    <h1>QuizWebapp - Log in</h1>
-    <p>Please log in.</p>
+<head>
+  <title>Welcome</title>
+  <link rel="stylesheet" href="<%= request.getContextPath() %>/UserAuthentication/authen.css">
+</head>
+<body>
+<div class="container">
+  <h1>Welcome to exQuizIt</h1>
+  <hr> <!-- Horizontal line beneath the heading -->
+  <div class="mainFormDiv">
+    <div class="main-text"><strong>Hello, Please Log In</strong></div>
 
     <form action="<%= request.getContextPath() %>/LoginServlet" method="post">
       <div>
@@ -22,10 +26,12 @@
       <div>
         <label for="password">Password:</label>
         <input type="password" id="password" name="password">
-        <button type="submit">Login</button>
+        <br>
+        <button type="submit" class="button">Log In</button>
+        <a href="<%= request.getContextPath() %>/UserAuthentication/newAccount.jsp" class="button">Sign Up</a>
       </div>
     </form>
-
-    <p><a href="UserAuthentication/newAccount.jsp">Create New Account</a></p>
-  </body>
+  </div>
+</div>
+</body>
 </html>

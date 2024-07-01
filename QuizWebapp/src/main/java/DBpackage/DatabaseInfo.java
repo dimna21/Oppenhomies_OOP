@@ -5,5 +5,5 @@ public class DatabaseInfo {
 
     public static final String database = "QuizDatabase";
     public static final String username = "root";
-    public static final String password = "sandro2003";
+    public static final String password = "shakuna2003";
 }

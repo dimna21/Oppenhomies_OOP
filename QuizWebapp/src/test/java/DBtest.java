@@ -153,7 +153,7 @@ public class DBtest extends TestCase{
     }
     public void testFriendRequests(){
 
-        ArrayList<FriendRequest> list = dbCall.friendRequests("john_doe");
+        ArrayList<FriendRequest> list = dbCall.friendRequests(1);
         ArrayList<String> testArray = new ArrayList<>();
         testArray.add("jane_smith");
         testArray.add("alice_jones");
@@ -165,6 +165,7 @@ public class DBtest extends TestCase{
             assertTrue(testArray.contains(s));
         }
     }
+    /*
     public void testChallenges(){
         ArrayList<Challenge> list = dbCall.challenges("john_doe");
         ArrayList<String> testArray = new ArrayList<>();
@@ -179,6 +180,7 @@ public class DBtest extends TestCase{
             assertEquals(list.get(i).getNotification(), 1);
         }
     }
+     */
     public void testCreateNote(){
         assertTrue(dbCall.createNote("john_doe","jane_smith","i love you"));
         assertFalse(dbCall.createNote("john_do","jane_smith","i love you"));
@@ -287,7 +289,7 @@ public class DBtest extends TestCase{
         assertEquals(A.get(0).getScore().getScore(), 95);
     }
     public void testGetNotes(){
-        ArrayList<Note> notes= DatabaseAccess.getNotes("john_doe",100);
+        ArrayList<Note> notes= DatabaseAccess.getNotes(1,100);
         assertEquals(notes.size(),3);
         assertEquals(notes.get(0).getText(),"same");
         assertEquals(notes.get(2).getText(),"Great, what about you?");

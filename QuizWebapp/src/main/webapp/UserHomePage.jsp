@@ -35,7 +35,7 @@
 <head>
     <title>User Home Page</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="UserHomePage.css">
+    <link rel="stylesheet" type="text/css" href="UserHomePage.css?v=1.0">
 </head>
 <body>
 <div class="container">

@@ -9,7 +9,7 @@ import java.util.HashMap;
 
 public class DatabaseAccess {
     private static Statement stmt;
-    private Connection con;
+    private static Connection con;
 
     public DatabaseAccess() throws ClassNotFoundException, SQLException {
 
@@ -442,7 +442,7 @@ public class DatabaseAccess {
                         resultSet.getInt("one_page"),
                         resultSet.getInt("immediate"),
                         resultSet.getInt("practice"),
-                        resultSet.getDate("creation_date"),
+                        resultSet.getTimestamp("creation_date"),
                         resultSet.getInt("times_taken")
                 );
                 quizzes.add(q);
@@ -483,40 +483,6 @@ public class DatabaseAccess {
         }
 
     }
-    /** Returns the latest num announcements. If num = 0, all announcements are returned */
-    public ArrayList<Announcement> getLatestAnnouncements(int num) {
-        String query = "SELECT * FROM Announcements ORDER BY announcement_date DESC";
-        if (num > 0) {
-            query += " LIMIT ?";
-        }
-
-        ArrayList<Announcement> ans = new ArrayList<>();
-        try (Connection conn = DriverManager.getConnection("jdbc:mysql://" +
-                        DatabaseInfo.server + "/" + DatabaseInfo.database,
-                username, password);
-             PreparedStatement stmt = conn.prepareStatement(query)) {
-
-            if (num > 0) {
-                stmt.setInt(1, num);
-            }
-
-            ResultSet resultSet = stmt.executeQuery();
-
-            while (resultSet.next()) {
-                Announcement newAnnouncement = new Announcement(
-                        resultSet.getString("announcement_title"),
-                        resultSet.getString("announcement_text"),
-                        resultSet.getInt("announcer_id"),
-                        resultSet.getTimestamp("announcement_date")
-                );
-                ans.add(newAnnouncement);
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return ans;
-    }
-
 
     /**Creates an announcement in the database*/
     public boolean makeAnnouncement(String username, String title, String text, Timestamp date) throws SQLException {
@@ -589,7 +555,7 @@ public class DatabaseAccess {
 
         try (Connection conn = DriverManager.getConnection("jdbc:mysql://" +
                         DatabaseInfo.server + "/" + DatabaseInfo.database,
-                username, password);
+                DatabaseInfo.username, DatabaseInfo.password);
              PreparedStatement stmt = con.prepareStatement(query)) {
 
             stmt.setString(1, user);
@@ -733,54 +699,6 @@ public class DatabaseAccess {
         return stats;
     }
 
-    public HashMap<String, Integer> getTopScorers(int quizID, int numScorers){
-        String query =  "select user_id, score from Scores where quiz_id = " + quizID + " order by score DESC;";
-        HashMap<String, Integer> ans = new HashMap<>();
-        try {
-            ResultSet resultSet = stmt.executeQuery(query);
-            while (resultSet.next()) {
-                if(numScorers == 0)break;
-                String user = resultSet.getString("user_id");
-                int score = resultSet.getInt("score");
-                ans.put(user, score);
-                numScorers--;
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return ans;
-    }
-
-
-    public boolean createNote(String fromUsername, String toUsername, String messageText) {
-        String query = "INSERT INTO Messages (from_id, to_id, text, notification) " +
-                "SELECT " +
-                "(SELECT user_id FROM Users WHERE username = ? LIMIT 1), " +
-                "(SELECT user_id FROM Users WHERE username = ? LIMIT 1), " +
-                "?, " +
-                "1 " +
-                "WHERE EXISTS (SELECT 1 FROM Users WHERE username = ?) " +
-                "AND EXISTS (SELECT 1 FROM Users WHERE username = ?)";
-
-        try (PreparedStatement pstmt = con.prepareStatement(query)) {
-            // Set parameters for PreparedStatement
-            pstmt.setString(1, fromUsername);
-            pstmt.setString(2, toUsername);
-            pstmt.setString(3, messageText);
-            pstmt.setString(4, fromUsername);
-            pstmt.setString(5, toUsername);
-
-            int rowsAffected = pstmt.executeUpdate();
-
-            // Check if the insert was successful (1 row affected)
-            return rowsAffected > 0;
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false; // Return false on exception
-        }
-
-    }
-
     public void anotherTest(){
 
     }
@@ -839,19 +757,7 @@ public class DatabaseAccess {
 
         return notes;
     }
-    public static int getUserID(String username) {
-        String query = "SELECT user_id FROM users WHERE username = '" + username + "';";
-        int ans = 0;
-        try {
-            ResultSet resultSet = stmt.executeQuery(query);
-            if (resultSet.next()) {
-                ans = resultSet.getInt("user_id");
-            }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
-        }
-        return ans;
-    }
+
     public static ArrayList<Score> getRecentPerformance(String username, int quizId, int amount) {
         ArrayList<Score> scores = new ArrayList<>();
         PreparedStatement pstmt = null;

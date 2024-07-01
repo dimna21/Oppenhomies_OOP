@@ -1,4 +1,5 @@
 DBpackage\Questions\QuestionTypeConstants.class
+DBpackage\Activity.class
 DBpackage\DatabaseAccess.class
 DBpackage\hasher.class
 DBpackage\Questions\Question.class
@@ -11,7 +12,9 @@ DBpackage\Questions\QuestionTextbox.class
 ServletPackage\NewAccServlet.class
 DBpackage\FriendRequest.class
 DBpackage\Questions\QuestionPicture.class
+DBpackage\ScoreAndUser.class
 DBpackage\Challenge.class
 DBpackage\Score.class
 ServletPackage\LoginServlet.class
 DBpackage\Announcement.class
+DBpackage\Note.class

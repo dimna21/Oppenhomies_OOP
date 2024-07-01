@@ -7,6 +7,7 @@ import junit.framework.TestCase;
 import javax.validation.constraints.AssertTrue;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 

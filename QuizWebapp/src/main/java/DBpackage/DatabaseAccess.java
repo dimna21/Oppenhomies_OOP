@@ -838,10 +838,16 @@ public class DatabaseAccess {
         ArrayList<Quiz> ls= new ArrayList<>();
         String query;
         if(amountToGet>0){
-            query = "SELECT * FROM quizzes ORDER BY times_taken desc LIMIT " + amountToGet
+            query = "select quizzes.*, users.user_id, users.username " +
+                    "from quizzes " +
+                    "LEFT JOIN users ON quizzes.quiz_creator_id = users.user_id " +
+                    "order by times_taken desc LIMIT " + amountToGet
                     + ";";
         }else{
-            query = "select * from quizdatabase.quizzes ORDER BY times_taken desc;";
+            query = "select quizzes.*, users.user_id, users.username " +
+                    "from quizzes " +
+                    "LEFT JOIN users ON quizzes.quiz_creator_id = users.user_id " +
+                    "order by times_taken desc;";
         }
 
 
@@ -855,6 +861,7 @@ public class DatabaseAccess {
                         resultSet.getString("quiz_name"),
                         resultSet.getString("quiz_description"),
                         resultSet.getInt("quiz_creator_id"),
+                        resultSet.getString("username"), // quiz Creator username
                         resultSet.getInt("random_question"),
                         resultSet.getInt("one_page"),
                         resultSet.getInt("immediate"),
@@ -874,9 +881,17 @@ public class DatabaseAccess {
         String query;
         ArrayList<Quiz> A = new ArrayList<>();
         if(maxAmount == 0){
-            query = "select * from quizzes where quiz_creator_id = " + userId +" order by creation_date desc;";
+            query = "select quizzes.*, users.user_id, users.username " +
+                    "from quizzes " +
+                    "LEFT JOIN users ON quizzes.quiz_creator_id = users.user_id " +
+                    "WHERE quizzes.quiz_creator_id = " + userId + " " +
+                    "order by creation_date desc;";
         }else{
-            query = "select * from quizzes where quiz_creator_id = " + userId +" order by creation_date desc limit " + maxAmount+" ;";
+            query = "select quizzes.*, users.user_id, users.username " +
+                    "from quizzes " +
+                    "LEFT JOIN users ON quizzes.quiz_creator_id = users.user_id " +
+                    "WHERE quizzes.quiz_creator_id = " + userId + " " +
+                    "order by creation_date desc LIMIT " + maxAmount + ";";
         }
         try {
             Quiz q;
@@ -887,6 +902,7 @@ public class DatabaseAccess {
                         resultSet.getString("quiz_name"),
                         resultSet.getString("quiz_description"),
                         resultSet.getInt("quiz_creator_id"),
+                        resultSet.getString("username"), // Quiz creator username
                         resultSet.getInt("random_question"),
                         resultSet.getInt("one_page"),
                         resultSet.getInt("immediate"),

@@ -10,13 +10,16 @@
     <head>
         <title>Create Account</title>
     </head>
+
     <body>
-    <h1>
-        <%
-            String name = request.getParameter("username");
-        %>
-        The Name <%= name%> is Already In Use
-    </h1>
+
+        <h1>
+            <%
+                String name = request.getParameter("username");
+            %>
+            The Name <%= name%> is Already In Use
+        </h1>
+
         <p>Please enter another name and password.</p>
 
         <form action="<%= request.getContextPath() %>/NewAccServlet" method="post">
@@ -30,5 +33,6 @@
                 <button type="submit">Login</button>
             </div>
         </form>
+
     </body>
 </html>

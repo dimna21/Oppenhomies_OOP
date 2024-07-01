@@ -7,25 +7,31 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-    <head>
-        <title>Information Incorrect</title>
-    </head>
-    <body>
-        <h1>Please Try Again</h1>
-        <p>Either your name or password is incorrect, Please try again.</p>
+<head>
+    <title>Information Incorrect</title>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/UserAuthentication/authen.css">
+</head>
+<body>
+<div class="container">
+    <h1>Oops! Please Try Again</h1>
+    <hr>
 
-        <form action="LoginServlet" method="post">
-            <div>
-                <label for="username">Username:</label>
-                <input type="text" id="username" name="username">
-            </div>
-            <div>
-                <label for="password">Password:</label>
-                <input type="password" id="password" name="password">
-                <button type="submit">Login</button>
-            </div>
-        </form>
-
-        <p><a href="UserAuthentication/newAccount.jsp">Create New Account</a></p>
-    </body>
+    <form action="<%= request.getContextPath() %>/LoginServlet" method="post" class="mainFormDiv">
+        <div>
+            <div class="main-text condensed-text"><strong>Incorrect username or password.<br>Please try again.</strong></div>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username">
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            <br>
+            <button type="submit" class="button">Login</button>
+        </div>
+        <div>
+            <p class="condensed-text">Don't have an account? <a href="<%= request.getContextPath() %>/UserAuthentication/newAccount.jsp">Create New Account</a></p>
+        </div>
+    </form>
+</div>
+</body>
 </html>

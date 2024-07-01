@@ -25,7 +25,6 @@ public class LoginServlet extends HttpServlet {
 
         RequestDispatcher dispatcher;
         if(isValid){
-            //goodLogin.jsp will be replaced by the UserPage :3
             int userID = dbAccess.getUserInfo(username).getUser_id();
             HttpSession session = req.getSession();
             session.setAttribute("loginStatus", 1);

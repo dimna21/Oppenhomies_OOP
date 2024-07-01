@@ -504,7 +504,7 @@ public class DatabaseAccess {
     public void helpMe(){
 
     }
-    public ArrayList<Announcement> getLatestAnnouncements(int num) throws SQLException {
+    public ArrayList<Announcement> getLatestAnnouncements(int num)  {
         String query = "SELECT Announcements.*, users.user_id, users.username FROM Announcements " +
                 "LEFT JOIN users ON Announcements.announcer_id = users.user_id " +
                 "ORDER BY Announcements.announcement_date DESC;\n";
@@ -513,9 +513,9 @@ public class DatabaseAccess {
         }
 
         ArrayList<Announcement> ans = new ArrayList<>();
-
-             PreparedStatement stmt = con.prepareStatement(query);
-
+        PreparedStatement stmt = null;
+        try {
+            stmt = con.prepareStatement(query);
             if (num > 0) {
                 stmt.setInt(1, num);
             }
@@ -532,19 +532,53 @@ public class DatabaseAccess {
                 );
                 ans.add(newAnnouncement);
             }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
         return ans;
     }
 
-    /*
-    public void recentQuizTakingActivitiesForUser(int userID, ArrayList<Quiz> quizzes, ArrayList<Score> scores) {
-        String query = ;
-        SELECT s.*, u.user_id, u.username, q.*, u1.user_id, u1.username
-        FROM scores s
-        LEFT JOIN users u ON s.user_id = u.user_id
-        LEFT JOIN quizzes q ON s.quiz_id = q.quiz_id
-        LEFT JOIN users u1 ON q.quiz_creator_id = u1.user_id
-        WHERE s.user_id = 2;
+
+    public void recentQuizTakingActivitiesForUser(int userID, ArrayList<Score> scores,  ArrayList<Quiz> quizzes) {
+        String query = "SELECT s.*, q.*, u1.username " +
+                "FROM scores s " +
+                "LEFT JOIN quizzes q ON s.quiz_id = q.quiz_id " +
+                "LEFT JOIN users u1 ON q.quiz_creator_id = u1.user_id " +
+                "WHERE s.user_id =" + userID + ";";
+
+        try {
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                Score score = new Score(
+                        rs.getInt("score_id"),
+                        rs.getInt("quiz_id"),
+                        rs.getInt("user_id"),
+                        rs.getInt("score"),
+                        rs.getInt("time"),
+                        rs.getTimestamp("date_scored")
+                );
+                Quiz quiz = new Quiz(
+                        rs.getInt("quiz_id"),
+                        rs.getString("quiz_name"),
+                        rs.getString("quiz_description"),
+                        rs.getInt("quiz_creator_id"), // Creator UserId
+                        rs.getString("username"), // Creator Username
+                        rs.getInt("random_question"),
+                        rs.getInt("one_page"),
+                        rs.getInt("immediate"),
+                        rs.getInt("practice"),
+                        rs.getTimestamp("creation_date"),
+                        rs.getInt("times_taken")
+                );
+                scores.add(score);
+                quizzes.add(quiz);
+            }
+
+        }
+        catch (SQLException e) { throw new RuntimeException(e); }
+
     }
-    */
+
 
 }

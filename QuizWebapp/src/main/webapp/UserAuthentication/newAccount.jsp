@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="container">
-    <h1>Welcome to exQuizIt</h1>
+    <h1>Welcome to QUIZZLER</h1>
     <hr>
 
     <form action="<%= request.getContextPath() %>/NewAccServlet" method="post" class="mainFormDiv">

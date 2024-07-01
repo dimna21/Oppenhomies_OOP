@@ -1,3 +1,4 @@
+DBpackage\Achievement.class
 DBpackage\Questions\QuestionTypeConstants.class
 DBpackage\Activity.class
 DBpackage\DatabaseAccess.class

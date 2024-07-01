@@ -13,7 +13,7 @@
 </head>
 <body>
 <div class="container">
-  <h1>Welcome to exQuizIt</h1>
+  <h1>Welcome to QUIZZLER</h1>
   <hr> <!-- Horizontal line beneath the heading -->
   <div class="mainFormDiv">
     <div class="main-text"><strong>Hello, Please Log In</strong></div>

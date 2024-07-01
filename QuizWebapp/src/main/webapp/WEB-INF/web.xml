@@ -29,6 +29,6 @@
   </servlet-mapping>
 
   <welcome-file-list>
-    <welcome-file>UserAuthentication/loginPage.jsp</welcome-file>
+    <welcome-file>Homepage/Wellcome.jsp</welcome-file>
   </welcome-file-list>
 </web-app>

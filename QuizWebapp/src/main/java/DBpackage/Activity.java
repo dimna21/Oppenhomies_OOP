@@ -6,10 +6,21 @@ public class Activity {
     private String username;
     private ArrayList<Score> scoreList;
     private ArrayList<Quiz> quizList;
-    public Activity(String username, ArrayList<Score> scoreList,ArrayList<Quiz> quizList){
+    private ArrayList<Achievement> achievementList;
+    public Activity(String username, ArrayList<Score> scoreList,ArrayList<Quiz> quizList,
+                    ArrayList<Achievement> achievementList){
         this.username=username;
         this.scoreList=scoreList;
         this.quizList=quizList;
+        this.achievementList=achievementList;
+    }
+
+    public void setAchievementList(ArrayList<Achievement> achievementList) {
+        this.achievementList = achievementList;
+    }
+
+    public ArrayList<Achievement> getAchievementList() {
+        return achievementList;
     }
 
     public ArrayList<Quiz> getQuizList() {

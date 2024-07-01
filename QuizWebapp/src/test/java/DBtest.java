@@ -9,6 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class DBtest extends TestCase{
@@ -42,7 +43,7 @@ public class DBtest extends TestCase{
         assertFalse(added);
 
     }
-    public void test4() throws SQLException{
+    public void testUpdatePicture() throws SQLException{
         boolean added;
         added = dbCall.updatePicture("asddf","picture.jpg");
         assertFalse(added);
@@ -71,11 +72,11 @@ public class DBtest extends TestCase{
     }
     public void testHasher() throws NoSuchAlgorithmException {
 
-        System.out.println( hasher.getHash("password123"));
-        System.out.println( hasher.getHash("password234"));
-        System.out.println( hasher.getHash("molly"));
-        System.out.println( hasher.getHash("b"));
-        System.out.println( hasher.getHash("d"));
+        System.out.println(hasher.getHash("password123"));
+        System.out.println(hasher.getHash("password234"));
+        System.out.println(hasher.getHash("molly"));
+        System.out.println(hasher.getHash("b"));
+        System.out.println(hasher.getHash("d"));
 
     }
     public void testTextBox(){
@@ -105,7 +106,25 @@ public class DBtest extends TestCase{
         assertEquals(q2.getAnswerList().size(),4);
         assertEquals(q2.getSubID(),3);
     }
+    public void testGetCheckbox(){
+        Question q;
+        Question Ques = new Question(5,6,5,6);
+        q=dbCall.getCheckbox(Ques);
+        QuestionCheckbox q2 = (QuestionCheckbox)q;
+        assertEquals(q2.getOrdered(),1);
+        assertEquals(q2.getQuestion(),"What are the primary colors?");
+        assertEquals(q2.getAnswerList(),new ArrayList<>(Arrays.asList("Red", "Blue", "Green", "Yellow")));
 
+
+         Ques = new Question(6,6,6,6);
+         q=dbCall.getCheckbox(Ques);
+         q2 = (QuestionCheckbox)q;
+        assertEquals(q2.getOrdered(),1);
+        assertEquals(q2.getQuestion(),"Select the programming languages.");
+        assertEquals(q2.getAnswerList(),new ArrayList<>(Arrays.asList("Java", "Python", "C++", "HTML")));
+
+
+    }
     public void testGetQuizQuestions(){
         Quiz quiz = dbCall.getQuizInfo(6);
         ArrayList<Question> myQuestions= dbCall.getQuizQuestions(6);
@@ -275,12 +294,12 @@ public class DBtest extends TestCase{
         assertEquals(A.size(),3);
     }
     public void testGetLastAttemptOfUserOnQuiz(){
-        Score s = dbCall.getLastAttemptOfUserOnQuiz("john_doe",1);
-        assertEquals(s.getScore(),80);
-        s = dbCall.getLastAttemptOfUserOnQuiz("john_doe",12);
-        assertNull(s);
-        s = dbCall.getLastAttemptOfUserOnQuiz("jane_smith",3);
-        assertEquals(s.getScore(),95);
+        ArrayList<Score> s = dbCall.getLastAttemptsOfUserOnQuiz("john_doe",1,3);
+        assertEquals(s.get(0).getScore(),80);
+        s = dbCall.getLastAttemptsOfUserOnQuiz("john_doe",12,3);
+        assertEquals(s.size(),0);
+        s = dbCall.getLastAttemptsOfUserOnQuiz("jane_smith",3,3);
+        assertEquals(s.get(0).getScore(),95);
     }
     public void testGetTopPerformersForLastDay() {
 
@@ -294,6 +313,47 @@ public class DBtest extends TestCase{
         assertEquals(notes.get(0).getText(),"same");
         assertEquals(notes.get(2).getText(),"Great, what about you?");
     }
+    public void testGetAverageTime(){
+        double averageTime = dbCall.getAverageTime(4);
+        assertEquals(averageTime,1150.0);
+
+    }
+    public void testGetAverageScore(){
+        double avgScore = dbCall.getAverageScore(4);
+        assertEquals(avgScore,82.5);
+    }
+    public void testGetLastAttemptsOfUser(){
+        ArrayList<Score> s = dbCall.getLastAttemptsOfUser("bob_brown",3);
+        assertEquals(s.get(0).getScore(),70);
+        assertEquals(s.get(1).getScore(),95);
+        assertEquals(s.get(0).getQuiz_id(),4);
+    }
+    public void testGetRecentAchievements(){
+        ArrayList<Achievement> a =dbCall.getRecentAchievements("bob_brown",2);
+        assertEquals(a.size(),2);
+        assertEquals(a.get(0).getAchievementTitle(),"Practice makes perfect");
+        a =dbCall.getRecentAchievements("john_doe",3);
+        assertEquals(a.size(),2);
+        assertEquals(a.get(1).getAchievementTitle(),"Quiz machine");
+
+        a =dbCall.getRecentAchievements("jane_smith",3);
+        assertEquals(a.size(),1);
+        assertEquals(a.get(0).getAchievementTitle(),"Amateur author");
+
+    }
+    public void testGetFriendlist(){
+        ArrayList<User>users = dbCall.getFriendlist("john_doe");
+        assertEquals(users.size(),4);
+        users = dbCall.getFriendlist("charlie_black");
+        assertEquals(users.size(),1);
 
 
+    }
+    public void testGetFriendsActivity(){
+        ArrayList<Activity> act= dbCall.getFriendsActivity("john_doe",2);
+        assertEquals(act.size(),4);
+        assertEquals(act.get(1).getUsername(),"jane_smith");
+        assertEquals(act.get(1).getAchievementList().size(),1);
+        assertEquals(act.get(1).getAchievementList().get(0).getAchievementTitle(),"Amateur author");
+    }
 }

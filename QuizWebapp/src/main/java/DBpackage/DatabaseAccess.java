@@ -297,6 +297,8 @@ public class DatabaseAccess {
                     q2=getMultipleChoice(q);
                     questions2.add(q2);
                 case 4:    //picture
+                    q2=getPictureQuestion(q);
+                    questions2.add(q2);
                 case 5:     //multitextbox
                 case 6:      //multi-multi-choice
                 case 7:      //match
@@ -306,6 +308,7 @@ public class DatabaseAccess {
         return questions2;
 
     }
+
     public Question getTextBox(Question ques) {
         int quizId=ques.getQuizID(); int subId=ques.getSubID();
         String query = "select * from textbox_questions where quiz_id = " + quizId + " and sub_id = " + subId + " ;";
@@ -350,6 +353,52 @@ public class DatabaseAccess {
         }
         return q;
     }
+    public QuestionCheckbox getCheckbox(Question ques) {
+        int quizId = ques.getQuizID();
+        int subId = ques.getSubID();
+
+        String query = "SELECT * FROM checkbox_questions WHERE quiz_id = " + quizId + " AND sub_id = " + subId + ";";
+        QuestionCheckbox q = null;
+
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            if (resultSet.next()) {
+                q = new QuestionCheckbox(
+                        resultSet.getInt("question_id"),
+                        resultSet.getInt("quiz_id"),
+                        resultSet.getInt("sub_id"),
+                        ques.getType(),  // Assuming getType() exists in Question class
+                        resultSet.getString("question"),
+                        resultSet.getInt("ordered"),
+                        new ArrayList<String>(),
+                        new ArrayList<Integer>()
+                );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        query = "SELECT * FROM checkbox_answers WHERE quiz_id = " + q.getQuizID() +
+                " and sub_id = "+q.getSubID()+" ORDER BY order_num ASC;";
+        ArrayList<String> answers = new ArrayList<>();
+        ArrayList<Integer> correct = new ArrayList<>();
+
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()) {
+                answers.add(resultSet.getString("answer"));
+                correct.add(resultSet.getInt("correct"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        q.setAnswerList(answers);
+        q.setCorrectList(correct);
+
+        return q;
+    }
+
 
     public Question getMultipleChoice(Question ques){
         int quizId=ques.getQuizID(); int subId=ques.getSubID();
@@ -952,18 +1001,66 @@ public class DatabaseAccess {
         }
         return A;
     }
-    public ArrayList<Activity> getFriendsActivity(String user, int maxActivities){
-        ArrayList<Activity> actArr;
-        // ArrayList<User> allFriends =
-        return null;
+    public ArrayList<Achievement> getRecentAchievements(String username, int maxAmount) {
+        String query = "SELECT a.achievement_id, a.achievement_title, a.user_id, a.achievement_date " +
+                "FROM Achievements a " +
+                "JOIN Users u ON a.user_id = u.user_id " +
+                "WHERE u.username = '" + username + "' ";
+        if(maxAmount>0){
+            query+="ORDER BY a.achievement_date DESC LIMIT " + maxAmount + " ;";
+        }else{
+            query+="ORDER BY a.achievement_date DESC ;";
+        }
+        ArrayList<Achievement> ac = new ArrayList<>();
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            Achievement achievement;
+            while (resultSet.next()) {
+                int achievementId = resultSet.getInt("achievement_id");
+                String achievementTitle = resultSet.getString("achievement_title");
+                int userId = resultSet.getInt("user_id");
+                Timestamp achievementDate = resultSet.getTimestamp("achievement_date");
+
+                achievement = new Achievement(achievementId, achievementTitle, userId, achievementDate);
+                ac.add(achievement);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving achievements: " + e.getMessage());
+        }
+
+        return ac;
     }
-    public Score getLastAttemptOfUserOnQuiz(String username, int quizId){
-        String query = "select * from Scores where quiz_id = "+ quizId+" and user_id = " +
-                getUserID(username) + " order by date_scored desc limit 1;" ;
+
+    public ArrayList<Activity> getFriendsActivity(String user, int maxActivities){
+        ArrayList<Activity> actArr = new ArrayList<>();
+        ArrayList<User> allFriends = getFriendlist(user);
+        ArrayList<Score> taken;
+        ArrayList<Quiz> made;
+        ArrayList<Achievement> ach;
+        String name;
+        for(User f : allFriends ){
+            taken = getLastAttemptsOfUser(f.getUsername(),maxActivities);
+            made = recentCreationsByUser(f.getUsername(),maxActivities);
+            ach=getRecentAchievements(f.getUsername(),maxActivities);
+            name = f.getUsername();
+            actArr.add(new Activity(
+                    name,
+                    taken,
+                    made,
+                    ach
+            ));
+
+        }
+        return actArr;
+    }
+    public ArrayList<Score> getLastAttemptsOfUser(String username, int amount){
+        String query = "select * from Scores where  user_id = " +
+                getUserID(username) + " order by date_scored desc limit "+amount+" ;" ;
+        ArrayList<Score>s=new ArrayList<>();
         try {
             ResultSet resultSet = stmt.executeQuery(query);
             while (resultSet.next()){
-                return  new Score(
+                s.add(new Score(
                         resultSet.getInt("score_id"),
                         resultSet.getInt("quiz_id"),
                         resultSet.getInt("user_id"),
@@ -971,13 +1068,36 @@ public class DatabaseAccess {
                         resultSet.getInt("time"),
                         resultSet.getTimestamp("date_scored")
 
-                );
+                ));
 
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return null;
+        return s;
+    }
+    public ArrayList<Score> getLastAttemptsOfUserOnQuiz(String username, int quizId, int amount){
+        String query = "select * from Scores where quiz_id = "+ quizId+" and user_id = " +
+                getUserID(username) + " order by date_scored desc limit "+amount+" ;" ;
+        ArrayList<Score>s=new ArrayList<>();
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()){
+                s.add(new Score(
+                        resultSet.getInt("score_id"),
+                        resultSet.getInt("quiz_id"),
+                        resultSet.getInt("user_id"),
+                        resultSet.getInt("score"),
+                        resultSet.getInt("time"),
+                        resultSet.getTimestamp("date_scored")
+
+                ));
+
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return s;
     }
     public ArrayList<ScoreAndUser> getTopPerformersForLastDay(int quizID, int amount) {
         String query;
@@ -1100,6 +1220,299 @@ public class DatabaseAccess {
         catch (SQLException e) { throw new RuntimeException(e); }
 
     }
+    public double getAverageTime(int quizID) {
+        String query = "SELECT AVG(time) AS average_time FROM Scores WHERE quiz_id = " + quizID;
+        double averageTime = 0.0;
+
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            if (resultSet.next()) {
+                averageTime = resultSet.getDouble("average_time");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving average time: " + e.getMessage());
+        }
+
+        return averageTime;
+    }
+    public double getAverageScore(int quizID) {
+        String query = "SELECT AVG(score) AS average_score FROM Scores WHERE quiz_id = " + quizID;
+        double averageScore = 0.0;
+
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            if (resultSet.next()) {
+                averageScore = resultSet.getDouble("average_score");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving average score: " + e.getMessage());
+        }
+
+        return averageScore;
+    }
+
+
+
+
+
+
+
+    /** Returns the achievements of a user in an arrayList format of strings */
+    public ArrayList<String> getUserAchievements(String username){
+        ArrayList<String> list = new ArrayList<>();
+        User user = getUserInfo(username);
+        int quizzesTaken = user.getQuizzes_taken();
+        int quizzesCreated = user.getQuizzes_created();
+        int highestScorer = user.getHighest_scorer();
+        int practiceMode = user.getPractice_mode();
+
+        String amateurAuthor = "Amateur author";
+        String prolificAuthor = "Prolific author";
+        String prodigiousAuthor = "Prodigious author";
+        String quizMachine = "Quiz machine";
+        String greatest = "I am the greatest";
+        String practice = "Practice makes perfect";
+
+        if(quizzesCreated > 0){
+            list.add(amateurAuthor);
+        }
+        if(quizzesCreated > 4){
+            list.add(prolificAuthor);
+        }
+        if(quizzesCreated > 9){
+            list.add(prodigiousAuthor);
+        }
+        if(quizzesTaken > 9){
+            list.add(quizMachine);
+        }
+        if(highestScorer == 1){
+            list.add(greatest);
+        }
+        if(practiceMode == 1){
+            list.add(practice);
+        }
+        return list;
+    }
+
+    /** This method must be called after a user takes a quiz. It takes in specified parameters
+     *  and updates the database accordingly */
+    public void quizFinished(int userID, int quizID, int score,
+                             Timestamp date, int secondsTaken, boolean practiceMode, int quizRating){
+
+        // Update practice mode achievement
+        User user = getUserInfo(getUsername(userID));
+        if(practiceMode && user.getPractice_mode() == 1) return;
+        if(practiceMode && user.getPractice_mode() == 0){
+            String query = "UPDATE Users " +
+                    " SET practice_mode = " + 1 +
+                    " WHERE user_id = " + userID;
+            try (Statement stmt = con.createStatement()) {
+                int rowsUpdated = stmt.executeUpdate(query);
+            } catch (SQLException e) {
+                throw new RuntimeException();
+            }
+
+            String achievementTitle = "Practice makes perfect";
+            String qq = "INSERT INTO achievements (achievement_title, user_id, achievement_date) VALUES (?, ?, ?)";
+            try (PreparedStatement pstmt = con.prepareStatement(qq)) {
+                pstmt.setString(1, achievementTitle);
+                pstmt.setInt(2, userID);
+                pstmt.setTimestamp(3, date);
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new RuntimeException("Error executing SQL query", e);
+            }
+            return;
+        }
+
+        //  Update top scorer achievement
+        HashMap<String, Integer> scores = getTopScorers(quizID, 1);
+        int greatest = 0;
+        if(scores.size() != 0){
+            int oldScore = scores.values().iterator().next();
+            if(score>oldScore){
+                String query = "UPDATE Users " +
+                        " SET highest_scorer = " + 1 +
+                        " WHERE user_id = " + userID;
+                try (Statement stmt = con.createStatement()) {
+                    int rowsUpdated = stmt.executeUpdate(query);
+                } catch (SQLException e) {
+                    throw new RuntimeException();
+                }
+
+                String achievementTitle = "I am the greatest";
+                String q2 = "INSERT INTO achievements (achievement_title, user_id, achievement_date) VALUES (?, ?, ?)";
+                try (PreparedStatement pstmt = con.prepareStatement(q2)) {
+                    pstmt.setString(1, achievementTitle);
+                    pstmt.setInt(2, userID);
+                    pstmt.setTimestamp(3, date);
+                    pstmt.executeUpdate();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                    throw new RuntimeException("Error executing SQL query", e);
+                }
+            }
+        }
+
+        // Update quizzes taken
+        int taken = user.getQuizzes_taken();
+        taken++;
+        String query = "UPDATE Users " +
+                " SET quizzes_taken = " + taken +
+                " WHERE user_id = " + userID;
+        try (Statement stmt = con.createStatement()) {
+            int rowsUpdated = stmt.executeUpdate(query);
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+
+        if(taken == 10){
+            String achievementTitle = "Quiz machine";
+            String qqq = "INSERT INTO achievements (achievement_title, user_id, achievement_date) VALUES (?, ?, ?)";
+            try (PreparedStatement pstmt = con.prepareStatement(qqq)) {
+                pstmt.setString(1, achievementTitle);
+                pstmt.setInt(2, userID);
+                pstmt.setTimestamp(3, date);
+                pstmt.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new RuntimeException("Error executing SQL query", e);
+            }
+        }
+
+        //update scores table
+        String query2 = "INSERT INTO Scores (quiz_id, user_id, score, time, date_scored) VALUES (?, ?, ?, ?, ?)";
+        try (PreparedStatement pstmt = con.prepareStatement(query2)) {
+            pstmt.setInt(1, quizID);
+            pstmt.setInt(2, userID);
+            pstmt.setInt(3, score);
+            pstmt.setInt(4, secondsTaken);
+            pstmt.setTimestamp(5, date);
+            int rowsUpdated = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException();
+        }
+
+
+        //update quiz rating
+        String query3 = "Select * from Quiz_ratings where quiz_id = " + quizID;
+        int totalRating = 0;
+        try {
+            ResultSet resultSet = stmt.executeQuery(query3);
+            while (resultSet.next()) {
+                totalRating = resultSet.getInt("rating");
+                break;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        totalRating += quizRating;
+        String query4 = "UPDATE quiz_ratings " +
+                " SET rating = " + totalRating +
+                " WHERE quiz_id = " + quizID;
+        try (Statement stmt = con.createStatement()) {
+            int rowsUpdated = stmt.executeUpdate(query4);
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    /** Returns quiz rating on a scale from 0 to 10 as a double*/
+    public double getQuizRating(int quizID){
+        String query = "Select * from Quiz_ratings where quiz_id = " + quizID;
+        int totalRating = 0;
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()) {
+                totalRating = resultSet.getInt("rating");
+                break;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        String query2 = "Select * from Quizzes where quiz_id = " + quizID;
+        int taken = 0;
+        try {
+            ResultSet resultSet = stmt.executeQuery(query2);
+            while (resultSet.next()) {
+                taken = resultSet.getInt("times_taken");
+                break;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        if(taken == 0)taken = 1;
+
+        double rating = (double)totalRating;
+        double t = (double)taken;
+        return rating/t;
+    }
+
+
+    public static final int QUESTION_TEXTBOX = 1;
+    public static final int QUESTION_FILL_BLANK = 2;
+    public static final int QUESTION_MULTIPLE_CHOICE = 3;
+    public static final int QUESTION_PICTURE = 4;
+    public static final int QUESTION_MULTITEXTBOX = 5;
+    public static final int QUESTION_MULTI_MULTIPLE_CHOICE = 6;
+    public static final int QUESTION_MATCHING = 7;
+
+    public void createQuiz(ArrayList<Question> questions, String quizName, String quizDescription,
+                           int creatorID, String creatorUsername, int randomQuestion,
+                           int immediate, int practice, int onePage, Timestamp creationDate){
+        String query = "INSERT INTO Quizzes (quiz_name, quiz_description, quiz_creator_id, " +
+                "random_question, one_page, immediate, practice, creation_date, times_taken) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setString(1, quizName); // quiz_name
+            pstmt.setString(2, quizDescription); // quiz_description
+            pstmt.setInt(3, creatorID); // quiz_creator_id
+            pstmt.setInt(4, randomQuestion); // random_question
+            pstmt.setInt(5, onePage); // one_page
+            pstmt.setInt(6, immediate); // immediate
+            pstmt.setInt(7, practice); // practice
+            pstmt.setTimestamp(8, creationDate); // creation_date (assuming it's a Timestamp object)
+            pstmt.setInt(9, 0); // times_taken
+            int rowsUpdated = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error executing SQL query", e);
+        }
+
+        for (Question q : questions) {
+            int type = q.getType();
+            switch (type) {
+                case QUESTION_TEXTBOX:
+                    break;
+
+                case QUESTION_FILL_BLANK:
+                    break;
+
+                case QUESTION_MULTIPLE_CHOICE:
+                    break;
+
+                case QUESTION_PICTURE:
+                    break;
+
+                case QUESTION_MULTITEXTBOX:
+                    break;
+
+                case QUESTION_MULTI_MULTIPLE_CHOICE:
+                    break;
+
+                case QUESTION_MATCHING:
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
+
+
+
 
 
 }

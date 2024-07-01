@@ -32,6 +32,21 @@ public class Quiz {
         this.times_taken = timesTaken;
     }
 
+    public Quiz(int quiz_id, String name, String description, int creatorID, int randomQuestion,
+                int onePage, int immediate, int practice, java.sql.Timestamp creationDate,
+                int timesTaken){
+        this.quiz_id = quiz_id;
+        this.quiz_name = name;
+        this.quiz_description = description;
+        this.quiz_creator_id = creatorID;
+        this.random_question = randomQuestion;
+        this.one_page = onePage;
+        this.immediate = immediate;
+        this.practice = practice;
+        this.creation_date = creationDate;
+        this.times_taken = timesTaken;
+    }
+
     public int getQuiz_id() {
         return quiz_id;
     }

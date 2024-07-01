@@ -5,6 +5,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.text.SimpleDateFormat;
 
 
 public class DatabaseAccess {
@@ -1065,6 +1066,166 @@ public class DatabaseAccess {
         catch (SQLException e) { throw new RuntimeException(e); }
 
     }
+
+
+
+
+
+
+    /** Returns the achievements of a user in an arrayList format of strings */
+    public ArrayList<String> getUserAchievements(String username){
+        ArrayList<String> list = new ArrayList<>();
+        User user = getUserInfo(username);
+        int quizzesTaken = user.getQuizzes_taken();
+        int quizzesCreated = user.getQuizzes_created();
+        int highestScorer = user.getHighest_scorer();
+        int practiceMode = user.getPractice_mode();
+
+        String amateurAuthor = "Amateur author";
+        String prolificAuthor = "Prolific author";
+        String prodigiousAuthor = "Prodigious author";
+        String quizMachine = "Quiz machine";
+        String greatest = "I am the greatest";
+        String practice = "Practice makes perfect";
+
+        if(quizzesCreated > 0){
+            list.add(amateurAuthor);
+        }
+        if(quizzesCreated > 4){
+            list.add(prolificAuthor);
+        }
+        if(quizzesCreated > 9){
+            list.add(prodigiousAuthor);
+        }
+        if(quizzesTaken > 9){
+            list.add(quizMachine);
+        }
+        if(highestScorer == 1){
+            list.add(greatest);
+        }
+        if(practiceMode == 1){
+            list.add(practice);
+        }
+        return list;
+    }
+
+    /** This method must be called after a user takes a quiz. It takes in specified parameters
+     *  and updates the database accordingly */
+    public void quizFinished(int userID, int quizID, int score,
+                             Timestamp date, int secondsTaken, boolean practiceMode, int quizRating){
+
+        // Update practice mode achievement
+        User user = getUserInfo(getUsername(userID));
+        if(practiceMode && user.getPractice_mode() == 1) return;
+        if(practiceMode && user.getPractice_mode() == 0){
+            String query = "UPDATE Users " +
+                    " SET practice_mode = " + 1 +
+                    " WHERE user_id = " + userID;
+            try (Statement stmt = con.createStatement()) {
+                int rowsUpdated = stmt.executeUpdate(query);
+            } catch (SQLException e) {
+                throw new RuntimeException();
+            }
+            return;
+        }
+        //  Update top scorer achievement
+        HashMap<String, Integer> scores = getTopScorers(quizID, 1);
+        int greatest = 0;
+        if(scores.size() != 0){
+            int oldScore = scores.values().iterator().next();
+            if(score>oldScore){
+                String query = "UPDATE Users " +
+                        " SET highest_scorer = " + 1 +
+                        " WHERE user_id = " + userID;
+                try (Statement stmt = con.createStatement()) {
+                    int rowsUpdated = stmt.executeUpdate(query);
+                } catch (SQLException e) {
+                    throw new RuntimeException();
+                }
+            }
+        }
+
+        // Update quizzes taken
+        int taken = user.getQuizzes_taken();
+        taken++;
+        String query = "UPDATE Users " +
+                " SET quizzes_taken = " + taken +
+                " WHERE user_id = " + userID;
+        try (Statement stmt = con.createStatement()) {
+            int rowsUpdated = stmt.executeUpdate(query);
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+
+        //update scores table
+        String formattedDate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(date);
+        String query2 = "INSERT INTO Scores (quiz_id, user_id, score, time, date_scored) VALUES ("
+                + quizID + ", "
+                + userID + ", "
+                + score + ", "
+                + secondsTaken + ", '"
+                + formattedDate + "')";
+        try (Statement stmt = con.createStatement()) {
+            int rowsUpdated = stmt.executeUpdate(query2);
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+
+        //update quiz rating
+        String query3 = "Select * from Quiz_ratings where quiz_id = " + quizID;
+        int totalRating = 0;
+        try {
+            ResultSet resultSet = stmt.executeQuery(query3);
+            while (resultSet.next()) {
+                totalRating = resultSet.getInt("rating");
+                break;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        totalRating += quizRating;
+        String query4 = "UPDATE quiz_ratings " +
+                " SET rating = " + totalRating +
+                " WHERE quiz_id = " + quizID;
+        try (Statement stmt = con.createStatement()) {
+            int rowsUpdated = stmt.executeUpdate(query4);
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    /** Returns quiz rating on a scale from 0 to 10 as a double*/
+    public double getQuizRating(int quizID){
+        String query = "Select * from Quiz_ratings where quiz_id = " + quizID;
+        int totalRating = 0;
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()) {
+                totalRating = resultSet.getInt("rating");
+                break;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        String query2 = "Select * from Quizzes where quiz_id = " + quizID;
+        int taken = 0;
+        try {
+            ResultSet resultSet = stmt.executeQuery(query2);
+            while (resultSet.next()) {
+                taken = resultSet.getInt("times_taken");
+                break;
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        if(taken == 0)taken = 1;
+
+        double rating = (double)totalRating;
+        double t = (double)taken;
+        return rating/t;
+    }
+
+
 
 
 }

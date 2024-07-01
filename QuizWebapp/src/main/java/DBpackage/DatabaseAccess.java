@@ -1066,6 +1066,37 @@ public class DatabaseAccess {
         catch (SQLException e) { throw new RuntimeException(e); }
 
     }
+    public double getAverageTime(int quizID) {
+        String query = "SELECT AVG(time) AS average_time FROM Scores WHERE quiz_id = " + quizID;
+        double averageTime = 0.0;
+
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            if (resultSet.next()) {
+                averageTime = resultSet.getDouble("average_time");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving average time: " + e.getMessage());
+        }
+
+        return averageTime;
+    }
+    public double getAverageScore(int quizID) {
+        String query = "SELECT AVG(score) AS average_score FROM Scores WHERE quiz_id = " + quizID;
+        double averageScore = 0.0;
+
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            if (resultSet.next()) {
+                averageScore = resultSet.getDouble("average_score");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving average score: " + e.getMessage());
+        }
+
+        return averageScore;
+    }
+
 
 
 
@@ -1224,6 +1255,8 @@ public class DatabaseAccess {
         double t = (double)taken;
         return rating/t;
     }
+
+
 
 
 

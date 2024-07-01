@@ -292,6 +292,14 @@ public class DBtest extends TestCase{
         assertEquals(notes.get(0).getText(),"same");
         assertEquals(notes.get(2).getText(),"Great, what about you?");
     }
+    public void testGetAverageTime(){
+        double averageTime = dbCall.getAverageTime(4);
+        assertEquals(averageTime,1150.0);
 
+    }
+    public void testGetAverageScore(){
+        double avgScore = dbCall.getAverageScore(4);
+        assertEquals(avgScore,82.5);
+    }
 
 }

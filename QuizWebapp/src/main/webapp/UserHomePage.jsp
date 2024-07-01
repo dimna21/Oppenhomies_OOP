@@ -24,6 +24,10 @@
     ArrayList<Score> recentScores = new ArrayList<>();
     ArrayList<Quiz> corrQuizzes = new ArrayList<>(); // Corresponding quizzes to recent Scores
     dbAccess.recentQuizTakingActivitiesForUser(userID, recentScores, corrQuizzes);
+
+    ArrayList<Quiz> recentQuizzesByUser = dbAccess.recentCreationsByUser(username,0);
+
+
 %>
 <html>
 <head>
@@ -42,9 +46,9 @@
             <li class="tab-link" data-tab="tab3">Recently Created Quizzes</li>
             <li class="tab-link" data-tab="tab4">Your Quiz Taking Record</li>
             <li class="tab-link" data-tab="tab5">Quizzes Created by You</li>
-            <li class="tab-link" data-tab="tab7">Your Achievements</li>
-            <li class="tab-link" data-tab="tab8">Messages</li>
-            <li class="tab-link" data-tab="tab9">Activities of Your Friends</li>
+            <li class="tab-link" data-tab="tab6">Your Achievements</li>
+            <li class="tab-link" data-tab="tab7">Inbox</li>
+            <li class="tab-link" data-tab="tab8">Activities of Your Friends</li>
         </ul>
 
         <div id="tab1" class="tab-content active">
@@ -106,6 +110,23 @@
                     </div>
                 </a>
                 <%}%>
+            </div>
+        </div>
+
+        <div id="tab5" class="tab-content">
+            <h2>Quizzes Created By You</h2>
+            <div>
+                <% if(recentQuizzesByUser.size() > 0) {
+                    for(Quiz quiz : recentQuizzesByUser) {%>
+                    <a href="QuizSummeryPage.jsp?quizId=<%=quiz.getQuiz_id()%>" class="quiz-link">
+                        <div class="recently-created-quizzes-by-user">
+                            <h3><%=quiz.getName()%></h3>
+                            <p><%=quiz.getDescription()%></p>
+                            <p><%=quiz.getCreationDate() + " " + quiz.getCreatorUsername() %></p>
+                        </div>
+                    </a>
+                    <%}
+                }%>
             </div>
         </div>
 

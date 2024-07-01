@@ -1368,6 +1368,66 @@ public class DatabaseAccess {
     }
 
 
+    public static final int QUESTION_TEXTBOX = 1;
+    public static final int QUESTION_FILL_BLANK = 2;
+    public static final int QUESTION_MULTIPLE_CHOICE = 3;
+    public static final int QUESTION_PICTURE = 4;
+    public static final int QUESTION_MULTITEXTBOX = 5;
+    public static final int QUESTION_MULTI_MULTIPLE_CHOICE = 6;
+    public static final int QUESTION_MATCHING = 7;
+
+    public void createQuiz(ArrayList<Question> questions, String quizName, String quizDescription,
+                           int creatorID, String creatorUsername, int randomQuestion,
+                           int immediate, int practice, int onePage, Timestamp creationDate){
+        String query = "INSERT INTO Quizzes (quiz_name, quiz_description, quiz_creator_id, " +
+                "random_question, one_page, immediate, practice, creation_date, times_taken) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+            pstmt.setString(1, quizName); // quiz_name
+            pstmt.setString(2, quizDescription); // quiz_description
+            pstmt.setInt(3, creatorID); // quiz_creator_id
+            pstmt.setInt(4, randomQuestion); // random_question
+            pstmt.setInt(5, onePage); // one_page
+            pstmt.setInt(6, immediate); // immediate
+            pstmt.setInt(7, practice); // practice
+            pstmt.setTimestamp(8, creationDate); // creation_date (assuming it's a Timestamp object)
+            pstmt.setInt(9, 0); // times_taken
+            int rowsUpdated = pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error executing SQL query", e);
+        }
+
+        for (Question q : questions) {
+            int type = q.getType();
+            switch (type) {
+                case QUESTION_TEXTBOX:
+                    break;
+
+                case QUESTION_FILL_BLANK:
+                    break;
+
+                case QUESTION_MULTIPLE_CHOICE:
+                    break;
+
+                case QUESTION_PICTURE:
+                    break;
+
+                case QUESTION_MULTITEXTBOX:
+                    break;
+
+                case QUESTION_MULTI_MULTIPLE_CHOICE:
+                    break;
+
+                case QUESTION_MATCHING:
+                    break;
+
+                default:
+                    break;
+            }
+        }
+    }
+
 
 
 

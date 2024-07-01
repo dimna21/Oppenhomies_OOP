@@ -188,6 +188,7 @@ public class DBtest extends TestCase{
         assertEquals(l.size(), 3);
         assertEquals(l.get(1).getTitle(), "Announcement 2");
         assertEquals(l.get(2).getTitle(), "Announcement 1");
+
     }
 
     public void testIsAdmin(){

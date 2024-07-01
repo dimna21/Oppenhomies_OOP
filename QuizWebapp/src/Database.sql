@@ -256,6 +256,11 @@ Create table Announcements (
                                announcer_id INT(6),
                                announcement_date TIMESTAMP default current_timestamp
 );
+CREATE TABLE Achievements ( achievement_id INT(6)AUTO_INCREMENT PRIMARY KEY,
+                            achievement_title VARCHAR(300),
+                            user_id INT(6),
+                            achievement_date TIMESTAMP default current_timestamp
+);
 
 INSERT INTO Announcements(announcement_id, announcement_title, announcement_text, announcer_id, announcement_date)
 VALUES

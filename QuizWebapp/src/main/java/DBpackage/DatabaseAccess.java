@@ -5,7 +5,6 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.text.SimpleDateFormat;
 
 
 public class DatabaseAccess {
@@ -275,6 +274,8 @@ public class DatabaseAccess {
                     q2=getMultipleChoice(q);
                     questions2.add(q2);
                 case 4:    //picture
+                    q2=getPictureQuestion(q);
+                    questions2.add(q2);
                 case 5:     //multitextbox
                 case 6:      //multi-multi-choice
                 case 7:      //match
@@ -284,6 +285,7 @@ public class DatabaseAccess {
         return questions2;
 
     }
+
     public Question getTextBox(Question ques) {
         int quizId=ques.getQuizID(); int subId=ques.getSubID();
         String query = "select * from textbox_questions where quiz_id = " + quizId + " and sub_id = " + subId + " ;";
@@ -328,6 +330,52 @@ public class DatabaseAccess {
         }
         return q;
     }
+    public QuestionCheckbox getCheckbox(Question ques) {
+        int quizId = ques.getQuizID();
+        int subId = ques.getSubID();
+
+        String query = "SELECT * FROM checkbox_questions WHERE quiz_id = " + quizId + " AND sub_id = " + subId + ";";
+        QuestionCheckbox q = null;
+
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            if (resultSet.next()) {
+                q = new QuestionCheckbox(
+                        resultSet.getInt("question_id"),
+                        resultSet.getInt("quiz_id"),
+                        resultSet.getInt("sub_id"),
+                        ques.getType(),  // Assuming getType() exists in Question class
+                        resultSet.getString("question"),
+                        resultSet.getInt("ordered"),
+                        new ArrayList<String>(),
+                        new ArrayList<Integer>()
+                );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        query = "SELECT * FROM checkbox_answers WHERE quiz_id = " + q.getQuizID() +
+                " and sub_id = "+q.getSubID()+" ORDER BY order_num ASC;";
+        ArrayList<String> answers = new ArrayList<>();
+        ArrayList<Integer> correct = new ArrayList<>();
+
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()) {
+                answers.add(resultSet.getString("answer"));
+                correct.add(resultSet.getInt("correct"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        q.setAnswerList(answers);
+        q.setCorrectList(correct);
+
+        return q;
+    }
+
 
     public Question getMultipleChoice(Question ques){
         int quizId=ques.getQuizID(); int subId=ques.getSubID();

@@ -9,6 +9,7 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 
 public class DBtest extends TestCase{
@@ -42,7 +43,7 @@ public class DBtest extends TestCase{
         assertFalse(added);
 
     }
-    public void test4() throws SQLException{
+    public void testUpdatePicture() throws SQLException{
         boolean added;
         added = dbCall.updatePicture("asddf","picture.jpg");
         assertFalse(added);
@@ -71,11 +72,11 @@ public class DBtest extends TestCase{
     }
     public void testHasher() throws NoSuchAlgorithmException {
 
-        System.out.println( hasher.getHash("password123"));
-        System.out.println( hasher.getHash("password234"));
-        System.out.println( hasher.getHash("molly"));
-        System.out.println( hasher.getHash("b"));
-        System.out.println( hasher.getHash("d"));
+        System.out.println(hasher.getHash("password123"));
+        System.out.println(hasher.getHash("password234"));
+        System.out.println(hasher.getHash("molly"));
+        System.out.println(hasher.getHash("b"));
+        System.out.println(hasher.getHash("d"));
 
     }
     public void testTextBox(){
@@ -105,7 +106,25 @@ public class DBtest extends TestCase{
         assertEquals(q2.getAnswerList().size(),4);
         assertEquals(q2.getSubID(),3);
     }
+    public void testGetCheckbox(){
+        Question q;
+        Question Ques = new Question(5,6,5,6);
+        q=dbCall.getCheckbox(Ques);
+        QuestionCheckbox q2 = (QuestionCheckbox)q;
+        assertEquals(q2.getOrdered(),1);
+        assertEquals(q2.getQuestion(),"What are the primary colors?");
+        assertEquals(q2.getAnswerList(),new ArrayList<>(Arrays.asList("Red", "Blue", "Green", "Yellow")));
 
+
+         Ques = new Question(6,6,6,6);
+         q=dbCall.getCheckbox(Ques);
+         q2 = (QuestionCheckbox)q;
+        assertEquals(q2.getOrdered(),1);
+        assertEquals(q2.getQuestion(),"Select the programming languages.");
+        assertEquals(q2.getAnswerList(),new ArrayList<>(Arrays.asList("Java", "Python", "C++", "HTML")));
+
+
+    }
     public void testGetQuizQuestions(){
         Quiz quiz = dbCall.getQuizInfo(6);
         ArrayList<Question> myQuestions= dbCall.getQuizQuestions(6);

@@ -2,7 +2,6 @@ USE QuizDatabase;
 
 -- Drop tables if they exist
 DROP TABLE IF EXISTS Users;
-DROP TABLE IF EXISTS Friends;
 DROP TABLE IF EXISTS Messages;
 DROP TABLE IF EXISTS Friend_requests;
 DROP TABLE IF EXISTS Quizzes;
@@ -22,6 +21,7 @@ drop table if exists Matching_questions;
 drop table if exists Matching_answers;
 drop table if exists Quiz_ratings;
 drop table if exists Announcements;
+drop table if exists Achievements;
 Create table Quiz_ratings(
                              rating_id INT(6) AUTO_INCREMENT PRIMARY KEY,
                              rating INT(2),
@@ -69,13 +69,7 @@ INSERT INTO Users ( username, password, admin_status, quizzes_taken,
 -- password123
 -- password123
 
--- Create Friends table
-CREATE TABLE Friends (
-                         friendship_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-                         friendOne_id INT(6)not null,
-                         friendTwo_id INT(6)not null,
-                         friendship_status INT(1) -- Boolean: 0 or 1
-);
+
 
 -- Create Messages table
 CREATE TABLE Messages (
@@ -256,6 +250,11 @@ Create table Announcements (
                                announcer_id INT(6),
                                announcement_date TIMESTAMP default current_timestamp
 );
+CREATE TABLE Achievements ( achievement_id INT(6)AUTO_INCREMENT PRIMARY KEY,
+                            achievement_title VARCHAR(300),
+                            user_id INT(6),
+                            achievement_date TIMESTAMP default current_timestamp
+);
 
 INSERT INTO Announcements(announcement_id, announcement_title, announcement_text, announcer_id, announcement_date)
 VALUES
@@ -350,6 +349,16 @@ WHERE s.quiz_id = 4
   AND s.date_scored >= NOW() - INTERVAL 1 DAY
 ORDER BY s.score DESC
     LIMIT 2;
--- ------------
+-- -----------------------------------------------
+INSERT INTO Achievements (achievement_title, user_id, achievement_date) VALUES
+            ('Practice makes perfect', 1, NOW() - INTERVAL 1 DAY),
+            ('Quiz machine', 1, NOW() - INTERVAL 2 DAY),
+            ('Amateur author', 2, NOW() - INTERVAL 3 DAY),
+            ('I am the greatest', 4, NOW() - INTERVAL 4 DAY),
+            ('Practice makes perfect', 4, NOW() - INTERVAL 5 HOUR),
+            ('Quiz machine', 4, NOW() - INTERVAL 6 HOUR);
+
+
+-- -------------------------------------------
 select * from messages;
 SELECT * FROM Announcements ORDER BY announcement_date DESC LIMIT 2;

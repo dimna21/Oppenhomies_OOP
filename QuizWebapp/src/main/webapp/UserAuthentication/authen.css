@@ -1,7 +1,7 @@
 /* General body styling */
 body {
     background-color: #643B9F;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Changed font */
+    font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Changed font */
     display: flex;
     justify-content: center;
     align-items: center;

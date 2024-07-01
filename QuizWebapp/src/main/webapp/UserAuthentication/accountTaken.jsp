@@ -7,21 +7,21 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
-    <head>
-        <title>Create Account</title>
-    </head>
-
-    <body>
-
-        <h1>
-            <%
-                String name = request.getParameter("username");
-            %>
-            The Name <%= name%> is Already In Use
-        </h1>
-
-        <p>Please enter another name and password.</p>
-
+<head>
+    <title>Create Account</title>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/UserAuthentication/authen.css">
+</head>
+<body>
+<div class="container">
+    <h1>
+        <%
+            String name = request.getParameter("username");
+        %>
+        The Name <%= name %> is Already In Use
+    </h1>
+    <hr> <!-- Horizontal line beneath the heading -->
+    <div class="mainFormDiv">
+        <div class="main-text"><strong>Please enter another name and password.</strong></div>
         <form action="<%= request.getContextPath() %>/NewAccServlet" method="post">
             <div>
                 <label for="username">Username:</label>
@@ -30,9 +30,11 @@
             <div>
                 <label for="password">Password:</label>
                 <input type="password" id="password" name="password">
-                <button type="submit">Login</button>
+                <br>
+                <button type="submit" class="button">Create Account</button>
             </div>
         </form>
-
-    </body>
+    </div>
+</div>
+</body>
 </html>

@@ -273,12 +273,12 @@ public class DBtest extends TestCase{
         assertEquals(A.size(),3);
     }
     public void testGetLastAttemptOfUserOnQuiz(){
-        Score s = dbCall.getLastAttemptOfUserOnQuiz("john_doe",1);
-        assertEquals(s.getScore(),80);
-        s = dbCall.getLastAttemptOfUserOnQuiz("john_doe",12);
-        assertNull(s);
-        s = dbCall.getLastAttemptOfUserOnQuiz("jane_smith",3);
-        assertEquals(s.getScore(),95);
+        ArrayList<Score> s = dbCall.getLastAttemptsOfUserOnQuiz("john_doe",1,3);
+        assertEquals(s.get(0).getScore(),80);
+        s = dbCall.getLastAttemptsOfUserOnQuiz("john_doe",12,3);
+        assertEquals(s.size(),0);
+        s = dbCall.getLastAttemptsOfUserOnQuiz("jane_smith",3,3);
+        assertEquals(s.get(0).getScore(),95);
     }
     public void testGetTopPerformersForLastDay() {
 
@@ -292,6 +292,47 @@ public class DBtest extends TestCase{
         assertEquals(notes.get(0).getText(),"same");
         assertEquals(notes.get(2).getText(),"Great, what about you?");
     }
+    public void testGetAverageTime(){
+        double averageTime = dbCall.getAverageTime(4);
+        assertEquals(averageTime,1150.0);
+
+    }
+    public void testGetAverageScore(){
+        double avgScore = dbCall.getAverageScore(4);
+        assertEquals(avgScore,82.5);
+    }
+    public void testGetLastAttemptsOfUser(){
+        ArrayList<Score> s = dbCall.getLastAttemptsOfUser("bob_brown",3);
+        assertEquals(s.get(0).getScore(),70);
+        assertEquals(s.get(1).getScore(),95);
+        assertEquals(s.get(0).getQuiz_id(),4);
+    }
+    public void testGetRecentAchievements(){
+        ArrayList<Achievement> a =dbCall.getRecentAchievements("bob_brown",2);
+        assertEquals(a.size(),2);
+        assertEquals(a.get(0).getAchievementTitle(),"Practice makes perfect");
+        a =dbCall.getRecentAchievements("john_doe",3);
+        assertEquals(a.size(),2);
+        assertEquals(a.get(1).getAchievementTitle(),"Quiz machine");
+
+        a =dbCall.getRecentAchievements("jane_smith",3);
+        assertEquals(a.size(),1);
+        assertEquals(a.get(0).getAchievementTitle(),"Amateur author");
+
+    }
+    public void testGetFriendlist(){
+        ArrayList<User>users = dbCall.getFriendlist("john_doe");
+        assertEquals(users.size(),4);
+        users = dbCall.getFriendlist("charlie_black");
+        assertEquals(users.size(),1);
 
 
+    }
+    public void testGetFriendsActivity(){
+        ArrayList<Activity> act= dbCall.getFriendsActivity("john_doe",2);
+        assertEquals(act.size(),4);
+        assertEquals(act.get(1).getUsername(),"jane_smith");
+        assertEquals(act.get(1).getAchievementList().size(),1);
+        assertEquals(act.get(1).getAchievementList().get(0).getAchievementTitle(),"Amateur author");
+    }
 }

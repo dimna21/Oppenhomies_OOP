@@ -1463,7 +1463,7 @@ public class DatabaseAccess {
     public static final int QUESTION_FILL_BLANK = 2;
     public static final int QUESTION_MULTIPLE_CHOICE = 3;
     public static final int QUESTION_PICTURE = 4;
-    public static final int QUESTION_MULTITEXTBOX = 5;
+    public static final int QUESTION_MULTIANSWER = 5;
     public static final int QUESTION_CHECKBOX = 6;
     public static final int QUESTION_MATCHING = 7;
 
@@ -1585,7 +1585,37 @@ public class DatabaseAccess {
                     }
                     break;
 
-                case QUESTION_MULTITEXTBOX:
+                case QUESTION_MULTIANSWER:
+                    q = (QuestionMultiAnswer) q;
+                    ArrayList<String> allTextboxAnswers;
+                    String executable5 = "INSERT INTO Multi_answer_questions (quiz_id, sub_id, question, ordered)" +
+                            " VALUES (?, ?, ?, ?)";
+                    try (PreparedStatement pstmt = con.prepareStatement(executable5)) {
+                        pstmt.setInt(1,q.getQuizID());
+                        pstmt.setInt(2,q.getSubID());
+                        pstmt.setString(3, ((QuestionMultiAnswer) q).getQuestion());
+                        pstmt.setInt(4, ((QuestionMultiAnswer) q).getOrdered());
+                        allTextboxAnswers = ((QuestionMultiAnswer) q).getAnswerList();
+                        int rowsUpdated = pstmt.executeUpdate();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        throw new RuntimeException("Error executing SQL query", e);
+                    }
+                    for(int i = 0; i < allTextboxAnswers.size(); i++){
+                        String executable5_1 = "INSERT INTO Multi_answer_answers (quiz_id, sub_id, answer, order_num)" +
+                                " VALUES (?, ?, ?, ?)";
+                        try (PreparedStatement pstmt = con.prepareStatement(executable5_1)) {
+                            pstmt.setInt(1,q.getQuizID());
+                            pstmt.setInt(2,q.getSubID());
+                            pstmt.setString(3, allTextboxAnswers.get(i));
+                            pstmt.setInt(4,i+1);
+                            int rowsUpdated = pstmt.executeUpdate();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                            throw new RuntimeException("Error executing SQL query", e);
+                        }
+                    }
+
                     break;
 
                 case QUESTION_CHECKBOX:
@@ -1629,7 +1659,36 @@ public class DatabaseAccess {
 
 
                 case QUESTION_MATCHING:
+                    q = (QuestionMatching)q;
+                    String executable7 = "INSERT INTO Matching_questions (quiz_id, sub_id, question)" +
+                            " VALUES (?, ?, ?)";
+                    ArrayList<String> words;
+                    ArrayList<String> matchingWords;
+                    try (PreparedStatement pstmt = con.prepareStatement(executable7)) {
+                        pstmt.setInt(1,q.getQuizID());
+                        pstmt.setInt(2,q.getSubID());
+                        pstmt.setString(3, ((QuestionMatching) q).getQuestion());
+                        words = ((QuestionMatching) q).getWords();
+                        matchingWords = ((QuestionMatching) q).getMatchingWords();
+                        int rowsUpdated = pstmt.executeUpdate();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        throw new RuntimeException("Error executing SQL query", e);
+                    }
 
+                    for(int i = 0; i < words.size(); i++){
+                        String executable7_1 = "INSERT INTO Matching_answers (match_id, word, matching_word)" +
+                                " VALUES (?, ?, ?)";
+                        try (PreparedStatement pstmt = con.prepareStatement(executable7_1)) {
+                            pstmt.setInt(1, q.getQuestionID());
+                            pstmt.setString(2, words.get(i));
+                            pstmt.setString(3, matchingWords.get(i));
+                            int rowsUpdated = pstmt.executeUpdate();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                            throw new RuntimeException("Error executing SQL query", e);
+                        }
+                    }
                     break;
 
                 default:

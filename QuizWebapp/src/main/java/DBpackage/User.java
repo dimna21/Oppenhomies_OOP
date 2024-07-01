@@ -10,6 +10,7 @@ public class User {
     private int highest_scorer;
     private int practice_mode;
     private String profile_pic_url;
+    private int activeAcc;
 
     // Constructor
     public User(int user_id, String username, String password, int admin_status, int quizzes_taken,
@@ -23,8 +24,30 @@ public class User {
         this.highest_scorer = highest_scorer;
         this.practice_mode = practice_mode;
         this.profile_pic_url = profile_pic_url;
+        this.activeAcc = 1;
+    }
+    public User(int user_id, String username, String password, int admin_status, int quizzes_taken,
+                int quizzes_created, int highest_scorer, int practice_mode, String profile_pic_url,
+                int activeAcc) {
+        this.user_id = user_id;
+        this.username = username;
+        this.password = password;
+        this.admin_status = admin_status;
+        this.quizzes_taken = quizzes_taken;
+        this.quizzes_created = quizzes_created;
+        this.highest_scorer = highest_scorer;
+        this.practice_mode = practice_mode;
+        this.profile_pic_url = profile_pic_url;
+        this.activeAcc = activeAcc;
     }
 
+    public int getActiveAcc() {
+        return activeAcc;
+    }
+
+    public void setActiveAcc(int activeAcc) {
+        this.activeAcc = activeAcc;
+    }
     // Setter methods
 
 
@@ -100,4 +123,3 @@ public class User {
         return profile_pic_url;
     }
 }
-

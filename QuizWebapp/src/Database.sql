@@ -244,7 +244,8 @@ CREATE TABLE Matching_questions(
 
 CREATE TABLE Matching_answers(
                                  answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-                                 match_id INT(6) not null, -- foreign key with question_id of questions
+                                 quiz_id INT(6) not null, -- Foreign Key with Quizzes
+                                 sub_id INT(3) not null, -- Numeric order of the question in the quiz
                                  word VARCHAR(300),
                                  matching_word VARCHAR(300)
 );
@@ -415,3 +416,6 @@ INSERT INTO Achievements (achievement_title, user_id, achievement_date) VALUES
 -- -------------------------------------------
 select * from messages;
 SELECT * FROM Announcements ORDER BY announcement_date DESC LIMIT 2;
+
+Insert into Quiz_ratings(rating, quiz_id, user_id) values
+(6, 1, 1);

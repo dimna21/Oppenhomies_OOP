@@ -375,4 +375,31 @@ public class DBtest extends TestCase{
         assertEquals(act.get(1).getAchievementList().size(),1);
         assertEquals(act.get(1).getAchievementList().get(0).getAchievementTitle(),"Amateur author");
     }
+
+    public void testGetUserAchievements(){
+        System.out.println(dbCall.getUserAchievements("john_doe").toString());
+        System.out.println(dbCall.getUserAchievements("jane_smith").toString());
+        System.out.println(dbCall.getUserAchievements("alice_jones").toString());
+        System.out.println(dbCall.getUserAchievements("bob_brown").toString());
+        System.out.println(dbCall.getUserAchievements("charlie_black").toString());
+    }
+
+    public void testGetQuizRating(){
+        assertEquals(dbCall.getQuizRating(1),0.6);
+    }
+
+    public void testQuizFinished(){
+        Timestamp date = Timestamp.valueOf("2025-06-24 00:00:00");
+        dbCall.quizFinished(2,1, 120, date, 96, false, 5);
+        assertEquals(dbCall.getQuizRating(1), 1.0);
+        // jane_smith should have 9 quizzes taken
+        // jane_smith should get greatest achievement
+        // scores table must get 16th entry
+        //
+    }
+
+    public void testCreateQuiz(){
+
+    }
+
 }

@@ -490,7 +490,8 @@ public class DatabaseAccess {
         ArrayList<String> matchingWords = new ArrayList<>();
         QuestionMatching q = null;
 
-        String query1 = "select * from matching_answers where match_id = " + questionID + " ;";
+        String query1 = "select * from matching_answers where" +
+                " quiz_id = " + quizId + " and sub_id = " + subId + " ;";
         try {
             ResultSet resultSet = stmt.executeQuery(query1);
             while (resultSet.next()) {
@@ -1426,6 +1427,29 @@ public class DatabaseAccess {
             }
         }
 
+        // Update quizzes table
+        String q1 = "Select * from Quizzes where quiz_id = " + quizID;
+        int times = 0;
+        try (Statement stmt = con.createStatement()) {
+            ResultSet rs = stmt.executeQuery(q1);
+            if(rs.next()){
+                times = rs.getInt("times_taken");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+        times++;
+        String qq = "UPDATE Quizzes " +
+                " SET times_taken = " + times +
+                " WHERE quiz_id = " + quizID;
+        try (Statement stmt = con.createStatement()) {
+            int rowsUpdated = stmt.executeUpdate(qq);
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+
+
+
         //update scores table
         String query2 = "INSERT INTO Scores (quiz_id, user_id, score, time, date_scored) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = con.prepareStatement(query2)) {
@@ -1507,13 +1531,15 @@ public class DatabaseAccess {
     public static final int QUESTION_MATCHING = 7;
 
 
-    public void createQuiz(ArrayList<Question> questions, String quizName, String quizDescription,
-                           int creatorID, String creatorUsername, int randomQuestion,
-                           int immediate, int practice, int onePage, Timestamp creationDate){
+    /** Creates a quiz object in database and returns its quizID */
+    public int createQuizAndGetID(String quizName, String quizDescription,
+                                  int creatorID, String creatorUsername, int randomQuestion,
+                                  int immediate, int practice, int onePage, Timestamp creationDate) {
         String query = "INSERT INTO Quizzes (quiz_name, quiz_description, quiz_creator_id, " +
                 "random_question, one_page, immediate, practice, creation_date, times_taken) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+        int quizID = -1;
+        try (PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, quizName); // quiz_name
             pstmt.setString(2, quizDescription); // quiz_description
             pstmt.setInt(3, creatorID); // quiz_creator_id
@@ -1523,12 +1549,26 @@ public class DatabaseAccess {
             pstmt.setInt(7, practice); // practice
             pstmt.setTimestamp(8, creationDate); // creation_date (assuming it's a Timestamp object)
             pstmt.setInt(9, 0); // times_taken
+
             int rowsUpdated = pstmt.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        quizID = generatedKeys.getInt(1);
+                    }
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Error executing SQL query", e);
         }
+        return quizID;
+    }
 
+
+    /** Populates database with quiz questions */
+    public void populateQuiz(ArrayList<Question> questions){
         for (Question q : questions) {
             int type = q.getType();
             switch (type) {
@@ -1717,12 +1757,13 @@ public class DatabaseAccess {
                     }
 
                     for(int i = 0; i < words.size(); i++){
-                        String executable7_1 = "INSERT INTO Matching_answers (match_id, word, matching_word)" +
-                                " VALUES (?, ?, ?)";
+                        String executable7_1 = "INSERT INTO Matching_answers (quiz_id, sub_id, word, matching_word)" +
+                                " VALUES (?, ?, ?, ?)";
                         try (PreparedStatement pstmt = con.prepareStatement(executable7_1)) {
-                            pstmt.setInt(1, q.getQuestionID());
-                            pstmt.setString(2, words.get(i));
-                            pstmt.setString(3, matchingWords.get(i));
+                            pstmt.setInt(1, q.getQuizID());
+                            pstmt.setInt(2, q.getSubID());
+                            pstmt.setString(3, words.get(i));
+                            pstmt.setString(4, matchingWords.get(i));
                             int rowsUpdated = pstmt.executeUpdate();
                         } catch (SQLException e) {
                             e.printStackTrace();

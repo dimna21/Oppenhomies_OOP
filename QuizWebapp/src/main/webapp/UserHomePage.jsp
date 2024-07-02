@@ -1,12 +1,6 @@
 <%@ page import="javax.xml.crypto.Data" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="DBpackage.*" %><%--
-  Created by IntelliJ IDEA.
-  User: Nicolas
-  Date: 6/30/2024
-  Time: 2:13 PM
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="DBpackage.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     DatabaseAccess dbAccess = (DatabaseAccess) application.getAttribute("DatabaseAccess");
@@ -19,10 +13,12 @@
     ArrayList<Quiz> recentlyCreatedQuizzes = dbAccess.getNewestQuiz(0);
 
     ArrayList<Score> recentScores = new ArrayList<>();
-    ArrayList<Quiz> corrQuizzes = new ArrayList<>(); // Corresponding quizzes to recent Scores
+    ArrayList<Quiz> corrQuizzes = new ArrayList<>();
     dbAccess.recentQuizTakingActivitiesForUser(userID, recentScores, corrQuizzes);
 
     ArrayList<Quiz> recentQuizzesByUser = dbAccess.recentCreationsByUser(username,0);
+
+    ArrayList<Achievement> achievements = dbAccess.getRecentAchievements(username,0);
 
     ArrayList<Challenge> challenges = new ArrayList<>();
     ArrayList<Quiz> quizzesForChallenges = new ArrayList<>();
@@ -30,12 +26,14 @@
 
     ArrayList<FriendRequest> friendRequests = dbAccess.friendRequests(userID);
     ArrayList<Note> notes = DatabaseAccess.getNotes(userID, 0);
+
+    ArrayList<Activity> activities = dbAccess.getFriendsActivity(username, 0);
 %>
 <html>
 <head>
     <title>User Home Page</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="UserHomePage.css?v=1.0">
+    <link rel="stylesheet" type="text/css" href="UserHomePage.css?v=3.0">
 </head>
 <body>
 <div class="container">
@@ -102,7 +100,7 @@
                 <% for(int i=0; i<recentScores.size(); i++) {
                     Score s = recentScores.get(i);
                     Quiz q = corrQuizzes.get(i);
-                    %>
+                %>
                 <a href="QuizSummeryPage.jsp?quizId=<%=q.getQuiz_id()%>" class="quiz-link">
                     <div class="recently-taken-quizzes">
                         <h3><%=q.getName()%></h3>
@@ -120,15 +118,27 @@
             <div>
                 <% if(recentQuizzesByUser.size() > 0) {
                     for(Quiz quiz : recentQuizzesByUser) {%>
-                    <a href="QuizSummeryPage.jsp?quizId=<%=quiz.getQuiz_id()%>" class="quiz-link">
-                        <div class="recently-created-quizzes-by-user">
-                            <h3><%=quiz.getName()%></h3>
-                            <p><%=quiz.getDescription()%></p>
-                            <p><%=quiz.getCreationDate() + " " + quiz.getCreatorUsername() %></p>
-                        </div>
-                    </a>
-                    <%}
+                <a href="QuizSummeryPage.jsp?quizId=<%=quiz.getQuiz_id()%>" class="quiz-link">
+                    <div class="recently-created-quizzes-by-user">
+                        <h3><%=quiz.getName()%></h3>
+                        <p><%=quiz.getDescription()%></p>
+                        <p><%=quiz.getCreationDate() + " " + quiz.getCreatorUsername() %></p>
+                    </div>
+                </a>
+                <%}
                 }%>
+            </div>
+        </div>
+
+        <div id="tab6" class="tab-content">
+            <h2>Achievements</h2>
+            <div>
+                <% for(Achievement achievement: achievements) {%>
+                <div class="achievements">
+                    <h3><%=achievement.getAchievementTitle()%></h3>
+                    <p><%=achievement.getAchievementDate()%></p>
+                </div>
+                <%}%>
             </div>
         </div>
 
@@ -201,9 +211,67 @@
             </div>
         </div>
 
+        <div id="tab8" class="tab-content">
+            <h2>Friends' Activities</h2>
+            <div class="friends-activities">
+                <% for(Activity activity : activities) { %>
+                <div class="friend-activity">
+                    <div class="friend-header">
+                        <h3><%= activity.getUsername() %>'s Activities</h3>
+                        <button class="toggle-button">Show All Activities</button>
+                    </div>
+                    <div class="activity-content">
+                        <div class="activity-column scores">
+                            <h4>Scores</h4>
+                            <% if(!activity.getScoreList().isEmpty()) { %>
+                            <div class="score-item">
+                                <p>Quiz ID: <%= activity.getScoreList().get(0).getQuiz_id() %>, Score: <%= activity.getScoreList().get(0).getScore() %></p>
+                            </div>
+                            <% } %>
+                            <div class="detailed-content" style="display: none;">
+                                <% for(int i = 1; i < activity.getScoreList().size(); i++) { %>
+                                <div class="score-item">
+                                    <p>Quiz ID: <%= activity.getScoreList().get(i).getQuiz_id() %>, Score: <%= activity.getScoreList().get(i).getScore() %></p>
+                                </div>
+                                <% } %>
+                            </div>
+                        </div>
+                        <div class="activity-column quizzes">
+                            <h4>Quizzes</h4>
+                            <% if(!activity.getQuizList().isEmpty()) { %>
+                            <div class="quiz-item">
+                                <p>Quiz: <%= activity.getQuizList().get(0).getName() %></p>
+                            </div>
+                            <% } %>
+                            <div class="detailed-content" style="display: none;">
+                                <% for(int i = 1; i < activity.getQuizList().size(); i++) { %>
+                                <div class="quiz-item">
+                                    <p>Quiz: <%= activity.getQuizList().get(i).getName() %></p>
+                                </div>
+                                <% } %>
+                            </div>
+                        </div>
+                        <div class="activity-column achievements">
+                            <h4>Achievements</h4>
+                            <% if(!activity.getAchievementList().isEmpty()) { %>
+                            <div class="achievement-item">
+                                <p>Achievement: <%= activity.getAchievementList().get(0).getAchievementTitle() %></p>
+                            </div>
+                            <% } %>
+                            <div class="detailed-content" style="display: none;">
+                                <% for(int i = 1; i < activity.getAchievementList().size(); i++) { %>
+                                <div class="achievement-item">
+                                    <p>Achievement: <%= activity.getAchievementList().get(i).getAchievementTitle() %></p>
+                                </div>
+                                <% } %>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <% } %>
+            </div>
+        </div>
 
-
-        <!-- todo-->
 
     </div>
 </div>
@@ -221,8 +289,22 @@
             $(this).addClass("active");
             $("#" + tabId).addClass("active");
         });
+
+        $('.toggle-button').click(function(){
+            var $friendActivity = $(this).closest('.friend-activity');
+            var $detailedContent = $friendActivity.find('.detailed-content');
+
+            if ($detailedContent.is(':visible')) {
+                $detailedContent.hide();
+                $(this).text('Show All Activities');
+            } else {
+                $detailedContent.show();
+                $(this).text('Show Preview');
+            }
+        });
     });
 </script>
+
 
 </body>
 </html>

@@ -21,8 +21,8 @@
 
     ArrayList<Achievement> achievements = dbAccess.getRecentAchievements(username,0);
 
-    ArrayList<Challenge> challenges = new ArrayList<>();
-    ArrayList<Quiz> quizzesForChallenges = new ArrayList<>();
+    ArrayList<Challenge> challenges = new ArrayList<Challenge>();
+    ArrayList<Quiz> quizzesForChallenges = new ArrayList<Quiz>();
     dbAccess.getChallengesForUser(userID, challenges, quizzesForChallenges);
 
     ArrayList<FriendRequest> friendRequests = dbAccess.friendRequests(userID);

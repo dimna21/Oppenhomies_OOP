@@ -9,13 +9,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fd04e7a7-2cdc-475e-a051-561b58ee9076" name="Changes" comment="pervi komit">
+    <list default="true" id="fd04e7a7-2cdc-475e-a051-561b58ee9076" name="Changes" comment="bugfix UserHomePage.jsp">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DatabaseInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DatabaseInfo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/UserHomePage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/UserHomePage.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DatabaseInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DatabaseInfo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Questions/QuestionMultipleChoice.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Questions/QuestionMultipleChoice.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Quiz.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Quiz.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -32,7 +30,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="feature/css" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -55,35 +53,42 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.studentsTable [clean].executor": "Run",
-    "Maven.studentsTable [tomcat7:run].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Tomcat Server.Wellcome.jsp.executor": "Run",
-    "git-widget-placeholder": "feature/css",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.studentsTable [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.studentsTable [tomcat7:run].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Tomcat Server.Wellcome.jsp.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="mvn clean" />
       <command value="mvn tomcat7:run" />
     </option>
+  </component>
+  <component name="RunManager">
+    <configuration name="Database.sql" type="DatabaseScript" editBeforeRun="true" nameIsGenerated="true">
+      <script-file value="$PROJECT_DIR$/QuizWebapp/src/Database.sql" />
+      <script-mode>FILE</script-mode>
+      <method v="2" />
+    </configuration>
   </component>
   <component name="SharedIndexes">
     <attachedChunks>
@@ -117,6 +122,7 @@
       <workItem from="1719842606182" duration="175000" />
       <workItem from="1719842792124" duration="232000" />
       <workItem from="1719843038622" duration="5464000" />
+      <workItem from="1720121969444" duration="390000" />
     </task>
     <task id="LOCAL-00001" summary="Small Bugfix">
       <option name="closed" value="true" />
@@ -134,7 +140,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719841867300</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="bugfix UserHomePage.jsp">
+      <option name="closed" value="true" />
+      <created>1720011782784</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1720011782784</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -144,6 +158,7 @@
     <MESSAGE value="Add session Attribute loginStatus" />
     <MESSAGE value="Small Bugfix" />
     <MESSAGE value="pervi komit" />
-    <option name="LAST_COMMIT_MESSAGE" value="pervi komit" />
+    <MESSAGE value="bugfix UserHomePage.jsp" />
+    <option name="LAST_COMMIT_MESSAGE" value="bugfix UserHomePage.jsp" />
   </component>
 </project>

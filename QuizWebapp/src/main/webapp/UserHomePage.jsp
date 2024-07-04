@@ -5,15 +5,16 @@
 <%
     DatabaseAccess dbAccess = (DatabaseAccess) application.getAttribute("DatabaseAccess");
 
-    int userID = (int) session.getAttribute("userID");
+    int userID = (Integer)session.getAttribute("userID");
     String username = (String) session.getAttribute("username");
 
     ArrayList<Announcement> announcements = dbAccess.getLatestAnnouncements(0);
     ArrayList<Quiz> popularQuizzes = dbAccess.getQuizzesByPopularity(0);
     ArrayList<Quiz> recentlyCreatedQuizzes = dbAccess.getNewestQuiz(0);
 
-    ArrayList<Score> recentScores = new ArrayList<>();
-    ArrayList<Quiz> corrQuizzes = new ArrayList<>();
+    ArrayList<Score> recentScores = new ArrayList<Score>();
+    ArrayList<Quiz> corrQuizzes = new ArrayList<Quiz>(); // Corresponding quizzes to recent Scores
+
     dbAccess.recentQuizTakingActivitiesForUser(userID, recentScores, corrQuizzes);
 
     ArrayList<Quiz> recentQuizzesByUser = dbAccess.recentCreationsByUser(username,0);

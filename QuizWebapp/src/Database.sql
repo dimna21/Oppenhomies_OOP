@@ -13,8 +13,8 @@ DROP TABLE IF EXISTS Scores;
 DROP TABLE IF EXISTS Textbox_questions;
 DROP TABLE IF EXISTS Quiz_questions;
 drop table if exists Challenge;
-drop table if exists Multi_fill_Blank_questions;
-drop table if exists Multi_fill_Blank_answers;
+drop table if exists Multi_answer_questions;
+drop table if exists Multi_answer_answers;
 drop table if exists checkbox_questions;
 drop table if exists checkbox_answers;
 drop table if exists Matching_questions;
@@ -200,17 +200,20 @@ VALUES
 
 
 
-CREATE TABLE Multi_fill_Blank_questions(
+CREATE TABLE Multi_answer_questions(
                                            question_id INT(6) AUTO_INCREMENT PRIMARY KEY,
                                            quiz_id INT(6) not null, -- Foreign Key with Quizzes
                                            sub_id INT(3) not null, -- Numeric order of the question in the quiz
-                                           question VARCHAR(300)
+                                           question VARCHAR(300),
+                                           ordered int(1) default 1
 );
 
-CREATE TABLE Multi_fill_Blank_answers(
+CREATE TABLE Multi_answer_answers(
                                          answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-                                         multifill_id INT(6) not null, -- foreign key with question_id of questions
-                                         answer VARCHAR(300)
+                                         quiz_id INT(6) not null, -- Foreign Key with Quizzes
+                                         sub_id INT(3) not null, -- Numeric order of the question in the quiz
+                                         answer VARCHAR(300),
+                                         order_num int(3) not null
 );
 
 CREATE TABLE checkbox_questions(
@@ -241,7 +244,8 @@ CREATE TABLE Matching_questions(
 
 CREATE TABLE Matching_answers(
                                  answer_id INT(6) AUTO_INCREMENT PRIMARY KEY,
-                                 match_id INT(6) not null, -- foreign key with question_id of questions
+                                 quiz_id INT(6) not null, -- Foreign Key with Quizzes
+                                 sub_id INT(3) not null, -- Numeric order of the question in the quiz
                                  word VARCHAR(300),
                                  matching_word VARCHAR(300)
 );
@@ -281,8 +285,10 @@ INSERT INTO Quiz_questions (quiz_id, sub_id, type) VALUES
    (6, 3, 3), -- Multiple-choice question
    (6, 4, 4), -- Picture question
    (6, 5, 6), -- CheckBox question
-   (6, 6, 6); -- CheckBox question
-
+   (6, 6, 6), -- CheckBox question
+   (6, 7, 7), -- multiAnswer question
+   (6, 8, 7), -- multiAnswer question
+   (6, 9, 7); -- multiAnswer question
 -- Add a textbox question to the Textbox_questions table
 INSERT INTO Textbox_questions (quiz_id, sub_id, question, answer) VALUES
     (6, 1, 'What is the capital of France?', 'Paris');
@@ -309,6 +315,35 @@ INSERT INTO Picture_questions (quiz_id, sub_id, question, answer, image_url) VAL
 INSERT INTO checkbox_questions (quiz_id, sub_id, question) VALUES
     (6, 5, 'What are the primary colors?'),
     (6, 6, 'Select the programming languages.');
+INSERT INTO Multi_answer_questions (quiz_id, sub_id, question, ordered) VALUES
+    (6, 7, 'What are the primary colors?', 0),
+    (6, 8, 'What are the planets in the Solar System in order?', 1),
+    (6, 9, 'What are the components of a computer?', 0);
+
+INSERT INTO Multi_answer_answers (quiz_id, sub_id, answer, order_num) VALUES
+-- For question "What are the primary colors?"
+(6, 7, 'Red', 1),
+(6, 7, 'Blue', 2),
+(6, 7, 'Green', 3),
+(6, 7, 'Yellow', 4),
+
+-- For question "What are the planets in the Solar System?"
+(6, 8, 'Mercury', 1),
+(6, 8, 'Venus', 2),
+(6, 8, 'Earth', 3),
+(6, 8, 'Mars', 4),
+(6, 8, 'Jupiter', 5),
+(6, 8, 'Saturn', 6),
+(6, 8, 'Uranus', 7),
+(6, 8, 'Neptune', 8),
+
+-- For question "What are the components of a computer?"
+(6, 9, 'CPU', 1),
+(6, 9, 'RAM', 2),
+(6, 9, 'Motherboard', 3),
+(6, 9, 'Power Supply', 4),
+(6, 9, 'Storage', 5);
+
 
 -- Insert checkbox answers
 INSERT INTO checkbox_answers (quiz_id,sub_id, answer, correct, order_num) VALUES
@@ -381,3 +416,6 @@ INSERT INTO Achievements (achievement_title, user_id, achievement_date) VALUES
 -- -------------------------------------------
 select * from messages;
 SELECT * FROM Announcements ORDER BY announcement_date DESC LIMIT 2;
+
+Insert into Quiz_ratings(rating, quiz_id, user_id) values
+(6, 1, 1);

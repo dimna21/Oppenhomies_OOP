@@ -4,12 +4,15 @@ import DBpackage.Quiz;
 import DBpackage.User;
 import junit.framework.TestCase;
 
+import javax.faces.bean.RequestScoped;
 import javax.validation.constraints.AssertTrue;
 import java.security.NoSuchAlgorithmException;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import static DBpackage.DatabaseAccess.*;
 
 
 public class DBtest extends TestCase{
@@ -125,6 +128,27 @@ public class DBtest extends TestCase{
 
 
     }
+    public void testGetMultiAnswer(){
+        Question q;
+        Question Ques = new Question(8,6,8,7);
+        q=dbCall.getMultiAnswer(Ques);
+        QuestionMultiAnswer q2 = (QuestionMultiAnswer)q;
+        assertEquals(q2.getOrdered(),1);
+        assertEquals(q2.getQuestion(),"What are the planets in the Solar System in order?");
+        assertEquals(q2.getAnswerList(),new ArrayList<>(Arrays.asList
+                ("Mercury", "Venus", "Earth", "Mars","Jupiter", "Saturn", "Uranus", "Neptune")));
+
+
+         Ques = new Question(9,6,9,7);
+        q=dbCall.getMultiAnswer(Ques);
+         q2 = (QuestionMultiAnswer)q;
+        assertEquals(q2.getOrdered(),0);
+        assertEquals(q2.getQuestion(),"What are the components of a computer?");
+        assertEquals(q2.getAnswerList(),new ArrayList<>(Arrays.asList
+                ("CPU", "RAM", "Motherboard", "Power Supply", "Storage")));
+
+    }
+
     public void testGetQuizQuestions(){
         Quiz quiz = dbCall.getQuizInfo(6);
         ArrayList<Question> myQuestions= dbCall.getQuizQuestions(6);
@@ -356,4 +380,93 @@ public class DBtest extends TestCase{
         assertEquals(act.get(1).getAchievementList().size(),1);
         assertEquals(act.get(1).getAchievementList().get(0).getAchievementTitle(),"Amateur author");
     }
+
+    public void testGetUserAchievements(){
+        System.out.println(dbCall.getUserAchievements("john_doe").toString());
+        System.out.println(dbCall.getUserAchievements("jane_smith").toString());
+        System.out.println(dbCall.getUserAchievements("alice_jones").toString());
+        System.out.println(dbCall.getUserAchievements("bob_brown").toString());
+        System.out.println(dbCall.getUserAchievements("charlie_black").toString());
+    }
+
+    public void testGetQuizRating(){
+        assertEquals(dbCall.getQuizRating(1),0.6);
+    }
+
+    public void testQuizFinished(){
+        Timestamp date = Timestamp.valueOf("2025-06-24 00:00:00");
+        dbCall.quizFinished(2,1, 120, date, 96, false, 5);
+        assertEquals(dbCall.getQuizRating(1), 1.0);
+        // jane_smith should have 9 quizzes taken
+        // jane_smith should get greatest achievement
+        // scores table must get 16th entry
+    }
+
+    public void testCreateQuiz(){
+        Timestamp date = Timestamp.valueOf("2024-07-01 00:00:00");
+        int quizID = dbCall.createQuizAndGetID("Football quiz", "Test your football knowledge", 1, "john_doe", 0, 0, 0, 0, date);
+        ArrayList<Question> questions = new ArrayList<>();
+
+        // A question where you have to fill in one textbox
+        QuestionTextbox q1 = new QuestionTextbox(1, quizID, 1, QUESTION_TEXTBOX,
+                "Which footballer is famous for having a penalty kick named after him?", "Panenka");
+        // A question where you have to fill in a blank in a sentence
+        QuestionFillBlank q2 = new QuestionFillBlank(1, quizID, 2, QUESTION_FILL_BLANK,
+                "Kylian Mbappe has a girlfriend",
+                "Kylian Mbappe has a transgender girlfriend",
+                "transgender");
+        // Multiple choice question with one answer
+        ArrayList<String> ans3 = new ArrayList<String>();
+        ans3.add("Pele");
+        ans3.add("Garrincha");
+        ans3.add("Cafu");
+        QuestionMultipleChoice q3 = new QuestionMultipleChoice(1, quizID, 3, QUESTION_MULTIPLE_CHOICE,
+                "Which of these players has the most world cups?", 1, ans3, "Pele");
+
+        // A question about a picture with one answer
+        QuestionPicture q4 = new QuestionPicture(1, quizID, 4, QUESTION_PICTURE, "Who is this distinguished gentleman?", "Ronaldo", "src/main/webapp/Pictures/440942305_405396802310623_7796720358131087077_n.jpg");
+
+        // A question that has several textboxes that require one answer each
+        ArrayList<String> ans5 = new ArrayList<String>();
+        ans5.add("Messi");
+        ans5.add("Neymar");
+        ans5.add("Suarez");
+        QuestionMultiAnswer q5 = new QuestionMultiAnswer(1, quizID, 5, QUESTION_MULTIANSWER, "Name the 3 players who made up MSN trio:", 0, ans5);
+
+        // A multiple choice question that has several answers
+        ArrayList<String> ans6 = new ArrayList<String>();
+        ans6.add("Messi");
+        ans6.add("Neymar");
+        ans6.add("Suarez");
+        ans6.add("Mbappe");
+        ArrayList<Integer> correctAns6 = new ArrayList<>();
+        correctAns6.add(1);
+        correctAns6.add(0);
+        correctAns6.add(0);
+        correctAns6.add(1);
+        QuestionCheckbox q6 = new QuestionCheckbox(1, quizID, 6, QUESTION_CHECKBOX,
+                "Which players have won the world cup? ", 0, ans6, correctAns6);
+
+        // A matching question
+        ArrayList<String> words = new ArrayList<>();
+        ArrayList<String> matching = new ArrayList<>();
+        words.add("Lionel Messi");
+        matching.add("8");
+        words.add("Cristiano Ronaldo");
+        matching.add("5");
+        words.add("Johan Cruyff");
+        matching.add("3");
+        QuestionMatching q7 = new QuestionMatching(1, quizID, 7, QUESTION_MATCHING,
+                "How many Ballon'd'ors have these players won?", words, matching);
+        questions.add(q1);
+        questions.add(q2);
+        questions.add(q3);
+        questions.add(q4);
+        questions.add(q5);
+        questions.add(q6);
+        questions.add(q7);
+        dbCall.populateQuiz(questions);
+
+    }
+
 }

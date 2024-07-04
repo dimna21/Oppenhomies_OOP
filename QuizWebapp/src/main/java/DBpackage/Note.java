@@ -3,11 +3,13 @@ package DBpackage;
 public class Note {
     private int noteId;
     private int fromId;
+    private String fromUsername;
     private int toId;
     private String text;
     private int notification;
-    public Note(int noteId, int fromId, int toID, String text, int notification){
+    public Note(int noteId, int fromId, String fromUsername, int toID, String text, int notification){
         this.fromId=fromId;
+        this.fromUsername = fromUsername;
         this.noteId=noteId;
         this.text=text;
         this.toId=toID;
@@ -45,6 +47,7 @@ public class Note {
     public void setFromId(int fromId) {
         this.fromId = fromId;
     }
+    public String getFromUsername() { return this.fromUsername; }
 
     public int getToId() {
         return toId;

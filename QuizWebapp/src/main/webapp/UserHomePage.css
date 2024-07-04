@@ -1,122 +1,246 @@
-/* Reset default margin and padding */
-* {
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-}
-
-/* Center the entire content */
-body, html {
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start; /* Align items to the top */
-    padding-top: 10px; /* Add space at the top of the page */
-    padding-bottom: 10px;
+    background-color: #f4f4f4;
 }
 
 .container {
-    width: 80%; /* Adjust as needed */
+    width: 80%;
+    margin: auto;
+    overflow: hidden;
+    padding: 20px;
 }
 
-/* Style for tabs container */
+h1, h2, h3 {
+    color: #333;
+}
+
 .tabs-container {
-    margin-top: 20px; /* Add spacing from the top */
-}
-
-ul.tabs {
-    list-style-type: none;
-    display: flex;
-    justify-content: center; /* Center tabs horizontally */
-    background-color: #f0f0f0;
-    padding: 10px 0;
+    background: #fff;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-ul.tabs li {
+.tabs {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    background-color: #f1f1f1;
+    border-bottom: 1px solid #ccc;
+}
+
+.tab-link {
+    float: left;
+    display: block;
+    color: #333;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: background-color 0.3s;
     cursor: pointer;
-    padding: 10px 20px;
-    border: 1px solid #ccc;
-    border-bottom: none;
-    border-radius: 5px 5px 0 0;
+    border-bottom: 2px solid transparent;
 }
 
-ul.tabs li.active {
-    background-color: #ccc;
-    font-weight: bold;
+.tab-link:hover {
+    background-color: #ddd;
+}
+
+.tab-link.active {
+    background-color: #fff;
+    border-bottom: 2px solid #866fa4;
 }
 
 .tab-content {
     display: none;
     padding: 20px;
-    margin-top: 10px; /* Increase margin from the top */
-    overflow-y: auto; /* Enable vertical scroll if content exceeds height */
-    border: 1px solid #ccc;
-    border-top: none;
-    border-radius: 0 5px 5px 5px;
 }
 
 .tab-content.active {
     display: block;
 }
 
-/* Style for individual announcements */
-.announcement {
-    margin-bottom: 20px;
-    padding: 10px;
-    background-color: #f9f9f9;
+.announcement, .popular-quizzes, .recently-created-quizzes, .recently-taken-quizzes, .recently-created-quizzes-by-user {
+    background: #fff;
     border: 1px solid #ddd;
     border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 15px;
 }
 
-/* Adjust heading position */
-.tab-content.active > h2 {
-    margin-top: 0; /* Reset default margin */
-    margin-bottom: 10px; /* Add margin below the heading */
-}
-
-/* Style for tab2 content */
-#tab2.tab-content {
-    display: none;
-    padding: 20px;
-    margin-top: 10px; /* Increase margin from the top */
-    overflow-y: auto; /* Enable vertical scroll if content exceeds height */
-    border: 1px solid #ccc;
-    border-top: none;
-    border-radius: 0 5px 5px 5px;
-}
-
-#tab2.tab-content.active {
-    display: block;
-}
-
-/* Style for individual quizzes in tab2 */
-.recently-created-quizzes .popular-quizzes{
-    margin-bottom: 20px;
-    padding: 10px;
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-/* Style for quiz links */
 .quiz-link {
-    text-decoration: none; /* Remove underline from links */
-    color: inherit; /* Inherit text color from parent */
-    display: block; /* Make entire div clickable */
+    text-decoration: none;
+    color: inherit;
 }
 
-.quiz-link:hover .recently-created-quizzes .popular-quizzes {
-    background-color: #e0e0e0; /* Darken background on hover */
+.quiz-link:hover {
+    opacity: 0.8;
 }
 
-/* Style for individual quizzes */
-.recently-created-quizzes .popular-quizzes {
-    margin-bottom: 20px;
-    padding: 10px;
+.inbox-columns {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.inbox-column {
+    flex: 1;
     background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.inbox-column h3 {
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
+    padding: 5px;
+    margin: -15px -15px 15px -15px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    font-size: 1em;
+}
+
+.challenge, .friend-request, .note {
+    background: #fff;
     border: 1px solid #ddd;
     border-radius: 5px;
-    transition: background-color 0.3s ease; /* Smooth transition for background color */
+    padding: 15px;
+    margin-bottom: 15px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+.challenge-actions, .friend-request-actions, .note-actions {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
+button {
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+button[type="submit"] {
+    background-color: #4CAF50;
+}
+
+button[type="submit"]:hover {
+    background-color: #45a049;
+}
+
+form[action*="Reject"] button[type="submit"] {
+    background-color: #f44336;
+}
+
+form[action*="Reject"] button[type="submit"]:hover {
+    background-color: #d32f2f;
+}
+
+.inbox-column:nth-child(1) h3 { background-color: #866fa4; }
+.inbox-column:nth-child(2) h3 { background-color: #866fa4; }
+.inbox-column:nth-child(3) h3 { background-color: #866fa4; }
+
+/* Friends' Activities Styling */
+/* Friends' Activities Styling */
+#tab8 {
+    background-color: #f9f9f9;
+    padding: 20px;
+}
+
+#tab8 h2 {
+    color: #866fa4;
+    margin-bottom: 20px;
+}
+
+.friends-activities {
+    background: #fff;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    padding: 20px;
+}
+
+.friend-activity {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    overflow: hidden;
+}
+
+.friend-header {
+    background-color: #f0ebf9;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.friend-header h3 {
+    margin: 0;
+    color: #866fa4;
+}
+
+.toggle-button {
+    background-color: #866fa4;
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.toggle-button:hover {
+    background-color: #755a93;
+}
+
+.activity-content {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 15px;
+}
+
+.activity-column {
+    flex: 1;
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 15px;
+}
+
+.activity-column h4 {
+    color: #866fa4;
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-align: center;
+    padding: 5px;
+    background-color: #e6e1f2;
+    border-radius: 4px;
+}
+
+.score-item, .quiz-item, .achievement-item {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+.score-item p, .quiz-item p, .achievement-item p {
+    margin: 0;
+    color: #333;
+}
+
+.activity-details {
+    display: none;
 }

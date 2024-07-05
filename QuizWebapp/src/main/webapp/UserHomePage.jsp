@@ -214,7 +214,6 @@
 
         <div id="tab8" class="tab-content">
             <h2>Friends' Activities</h2>
-            <div class="friends-activities">
                 <% for(Activity activity : activities) { %>
                 <div class="friend-activity">
                     <div class="friend-header">
@@ -269,11 +268,8 @@
                         </div>
                     </div>
                 </div>
-                <% } %>
-            </div>
+            <% } %>
         </div>
-
-
     </div>
 </div>
 

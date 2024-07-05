@@ -1,59 +1,79 @@
+/* General body styling */
 body, html {
     background-color: #643B9F;
-    height: 70%;
+    height: 100%;
     margin: 0;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: Arial, sans-serif;
+    font-family: 'Comic Sans MS', 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     font-weight: bold;
 }
+
+/* Styling for the container */
 .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
     text-align: center;
 }
+
+/* Styling for centered text */
 .center-text {
     font-size: 150px;
     margin: 0;
-    color: #FFDD00FF;
+    color: #000000;
     line-height: 1;
 }
 
+/* Styling for the inner container */
 .container2 {
     background-color: #C8A4D4;
     border: 2px solid #371F76;
-    width: 300px;
+    width: 500px;
     padding: 20px 40px;
-    margin: 10px auto; /* Center horizontally */
-    border-radius: 8px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    margin: 10px auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Line beneath the heading */
 hr {
     width: 120%;
-    color: #FFDD00FF;
-    border: 2px solid #FFDD00FF;
-    margin-left: -10%
+    color: #000000;
+    border: 2px solid #000000;
+    margin-left: -10%;
 }
-.intro-text{
+
+/* Styling for the intro text */
+.intro-text {
     font-weight: normal;
     font-size: 60px;
     margin-top: 50px;
-    color: #00ffff;
+    color: #000000;
 }
+
+/* Styling for the options */
 .opciones {
     margin-top: 20px;
 }
+
+/* Styling for buttons */
 .opciones a {
     display: inline-block;
     text-decoration: none;
-    color: white;
-    background-color: #00b318;
+    color: #fff;
+    background-color: #007bff;
     padding: 10px 20px;
-    border-radius: 5px;
+    border-radius: 4px;
     margin: 0 10px;
     margin-top: 50px;
     font-size: 18px;
+    transition: background-color 0.3s;
 }
+
+/* Hover effect for buttons */
 .opciones a:hover {
-    background-color: #FFDD00FF;
+    background-color: #0056b3;
 }

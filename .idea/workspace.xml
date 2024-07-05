@@ -9,12 +9,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fd04e7a7-2cdc-475e-a051-561b58ee9076" name="Changes" comment="sulabam daakomiteo">
+    <list default="true" id="fd04e7a7-2cdc-475e-a051-561b58ee9076" name="Changes" comment="bugfix UserHomePage.jsp">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/Homepage/WellWellWell.css" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/Homepage/WellWellWell.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/Homepage/Wellcome.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/Homepage/Wellcome.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/UserAuthentication/loginPage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/UserAuthentication/loginPage.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Quiz.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Quiz.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DatabaseInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DatabaseInfo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/UserHomePage.css" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/UserHomePage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/UserHomePage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/UserHomePage.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QuizWebapp/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QuizWebapp/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
     </list>
@@ -27,30 +27,17 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Jsp File" />
-        <option value="CSS File" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="feature/css" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
-  "lastFilter": {
-    "state": "OPEN",
-    "assignee": "ShalvaLaghadze"
-  }
-}]]></component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/dimna21/Oppenhomies_OOP",
-    "accountId": "d5a23c03-9441-4372-bd51-037ee05e484d"
-  }
-}]]></component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
     <option name="FILTER_WARNINGS" value="false" />
@@ -69,42 +56,48 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.studentsTable [clean].executor": "Run",
-    "Maven.studentsTable [tomcat7:run].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Tomcat Server.Wellcome.jsp.executor": "Run",
-    "git-widget-placeholder": "feature/homepage",
-    "kotlin-language-version-configured": "true",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.studentsTable [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.studentsTable [tomcat7:run].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Tomcat Server.Wellcome.jsp.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/css&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="mvn clean" />
       <command value="mvn tomcat7:run" />
     </option>
   </component>
+  <component name="RunManager">
+    <configuration name="Database.sql" type="DatabaseScript" editBeforeRun="true" nameIsGenerated="true">
+      <script-file value="$PROJECT_DIR$/QuizWebapp/src/Database.sql" />
+      <script-mode>FILE</script-mode>
+      <method v="2" />
+    </configuration>
+  </component>
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.18034.62" />
-        <option value="bundled-js-predefined-1d06a55b98c1-0b3e54e931b4-JavaScript-IU-241.18034.62" />
+        <option value="bundled-jdk-9f38398b9061-18abd8497189-intellij.indexing.shared.core-IU-241.14494.240" />
+        <option value="bundled-js-predefined-1d06a55b98c1-74d2a5396914-JavaScript-IU-241.14494.240" />
       </set>
     </attachedChunks>
   </component>
@@ -132,7 +125,7 @@
       <workItem from="1719842606182" duration="175000" />
       <workItem from="1719842792124" duration="232000" />
       <workItem from="1719843038622" duration="5464000" />
-      <workItem from="1719853918129" duration="5571000" />
+      <workItem from="1720121969444" duration="390000" />
     </task>
     <task id="LOCAL-00001" summary="Small Bugfix">
       <option name="closed" value="true" />
@@ -150,23 +143,15 @@
       <option name="project" value="LOCAL" />
       <updated>1719841867300</updated>
     </task>
-    <task id="LOCAL-00003" summary="sulabam daakomiteo">
+    <task id="LOCAL-00003" summary="bugfix UserHomePage.jsp">
       <option name="closed" value="true" />
-      <created>1719854623795</created>
+      <created>1720011782784</created>
       <option name="number" value="00003" />
       <option name="presentableId" value="LOCAL-00003" />
       <option name="project" value="LOCAL" />
-      <updated>1719854623795</updated>
+      <updated>1720011782784</updated>
     </task>
-    <task id="LOCAL-00004" summary="sulabam daakomiteo">
-      <option name="closed" value="true" />
-      <created>1719854702725</created>
-      <option name="number" value="00004" />
-      <option name="presentableId" value="LOCAL-00004" />
-      <option name="project" value="LOCAL" />
-      <updated>1719854702725</updated>
-    </task>
-    <option name="localTasksCounter" value="5" />
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -176,7 +161,7 @@
     <MESSAGE value="Add session Attribute loginStatus" />
     <MESSAGE value="Small Bugfix" />
     <MESSAGE value="pervi komit" />
-    <MESSAGE value="sulabam daakomiteo" />
-    <option name="LAST_COMMIT_MESSAGE" value="sulabam daakomiteo" />
+    <MESSAGE value="bugfix UserHomePage.jsp" />
+    <option name="LAST_COMMIT_MESSAGE" value="bugfix UserHomePage.jsp" />
   </component>
 </project>

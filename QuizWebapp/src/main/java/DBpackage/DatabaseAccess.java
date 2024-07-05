@@ -5,7 +5,6 @@ import java.security.NoSuchAlgorithmException;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.text.SimpleDateFormat;
 
 
 public class DatabaseAccess {
@@ -114,52 +113,75 @@ public class DatabaseAccess {
         }
         return true;
     }
-    public ArrayList<FriendRequest> friendRequests(String currentUser){
-        ArrayList<FriendRequest> ls= new ArrayList<>();
-        if(getUserInfo(currentUser)==null)return null;
-        int userID = getUserInfo(currentUser).getUser_id();
-        String query = "select * from friend_requests where to_id = '" + userID
-                + "';";
+    public ArrayList<FriendRequest> friendRequests(int userID){
+        ArrayList<FriendRequest> friendRequests= new ArrayList<>();
+
+        String query = "SELECT fr.*, fu.username as \"from_username\", tu.username as \"to_username\" " +
+                "FROM friend_requests fr " +
+                "LEFT JOIN users fu ON fr.from_id = fu.user_id " +
+                "LEFT JOIN users tu ON fr.to_id = tu.user_id " +
+                "WHERE fr.to_id = " + userID + " AND fr.notification = 1";
 
         try {
-            FriendRequest fr;
             ResultSet resultSet = stmt.executeQuery(query);
             while (resultSet.next()){
-                int req = resultSet.getInt("request_id");
-                int fromid =  resultSet.getInt("from_id");
-                int toid =  resultSet.getInt("to_id");
-                int notif =  resultSet.getInt("notification");
-                fr =  new FriendRequest(req, fromid, toid, notif, getUsername(fromid), getUsername(toid));
-                ls.add(fr);
+                FriendRequest friendRequest = new FriendRequest(
+                        resultSet.getInt("request_id"),
+                        resultSet.getInt("from_id"),
+                        resultSet.getInt("to_id"),
+                        resultSet.getInt("notification"),
+                        resultSet.getString("from_username"),
+                        resultSet.getString("to_username")
+                );
+                friendRequests.add(friendRequest);
             }
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-        return ls;
+        return friendRequests;
     }
-    public ArrayList<Challenge> challenges(String currentUser){
-        ArrayList<Challenge> ls= new ArrayList<>();
-        if(getUserInfo(currentUser)==null)return null;
-        int userID = getUserInfo(currentUser).getUser_id();
-        String query = "select * from Friend_requests where to_id = '" + userID
-                + "';";
+
+
+    public void getChallengesForUser(int userID, ArrayList<Challenge> challenges, ArrayList<Quiz> quizzes){
+        String query = "SELECT c.*, q.*, u.username as \"quiz_creator_username\", tu.username as \"to_username\", fu.username as \"from_username\" " +
+                "FROM challenge c " +
+                "LEFT JOIN quizzes q ON c.quiz_id = q.quiz_id " +
+                "LEFT JOIN users u ON q.quiz_creator_id = u.user_id " +
+                "LEFT JOIN users tu ON c.to_id = tu.user_id " +
+                "LEFT JOIN users fu ON c.from_id = fu.user_id " +
+                "WHERE c.to_id = " + userID + " AND c.notification = 1";
 
         try {
-            Challenge ch;
-            ResultSet resultSet = stmt.executeQuery(query);
-            while (resultSet.next()){
-                int req = resultSet.getInt("request_id");
-                int fromid = resultSet.getInt("from_id");
-                int toid = resultSet.getInt("to_id");
-                int quizid = resultSet.getInt("quiz_id");
-                int notif = resultSet.getInt("notification");
-                ch =  new Challenge(req,fromid,toid,quizid,notif, getUsername(fromid),getUsername(toid));
-                ls.add(ch);
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                Challenge challenge = new Challenge(
+                        rs.getInt("challenge_id"),
+                        rs.getInt("from_id"),
+                        rs.getInt("to_id"),
+                        rs.getInt("quiz_id"),
+                        rs.getInt("notification"),
+                        rs.getString("from_username"),
+                        rs.getString("to_username")
+                );
+
+                Quiz quiz = new Quiz(
+                        rs.getInt("quiz_id"),
+                        rs.getString("quiz_name"),
+                        rs.getString("quiz_description"),
+                        rs.getInt("quiz_creator_id"),
+                        rs.getString("quiz_creator_username"),
+                        rs.getInt("random_question"),
+                        rs.getInt("one_page"),
+                        rs.getInt("immediate"),
+                        rs.getInt("practice"),
+                        rs.getTimestamp("creation_date"),
+                        rs.getInt("times_taken")
+                );
+                challenges.add(challenge);
+                quizzes.add(quiz);
             }
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
-        return ls;
+        catch (SQLException e) {throw new RuntimeException(e);}
     }
 
 
@@ -275,6 +297,8 @@ public class DatabaseAccess {
                     q2=getMultipleChoice(q);
                     questions2.add(q2);
                 case 4:    //picture
+                    q2=getPictureQuestion(q);
+                    questions2.add(q2);
                 case 5:     //multitextbox
                 case 6:      //multi-multi-choice
                 case 7:      //match
@@ -284,6 +308,7 @@ public class DatabaseAccess {
         return questions2;
 
     }
+
     public Question getTextBox(Question ques) {
         int quizId=ques.getQuizID(); int subId=ques.getSubID();
         String query = "select * from textbox_questions where quiz_id = " + quizId + " and sub_id = " + subId + " ;";
@@ -326,6 +351,93 @@ public class DatabaseAccess {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        return q;
+    }
+    public QuestionCheckbox getCheckbox(Question ques) {
+        int quizId = ques.getQuizID();
+        int subId = ques.getSubID();
+
+        String query = "SELECT * FROM checkbox_questions WHERE quiz_id = " + quizId + " AND sub_id = " + subId + ";";
+        QuestionCheckbox q = null;
+
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            if (resultSet.next()) {
+                q = new QuestionCheckbox(
+                        resultSet.getInt("question_id"),
+                        resultSet.getInt("quiz_id"),
+                        resultSet.getInt("sub_id"),
+                        ques.getType(),  // Assuming getType() exists in Question class
+                        resultSet.getString("question"),
+                        resultSet.getInt("ordered"),
+                        new ArrayList<String>(),
+                        new ArrayList<Integer>()
+                );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        query = "SELECT * FROM checkbox_answers WHERE quiz_id = " + q.getQuizID() +
+                " and sub_id = "+q.getSubID()+" ORDER BY order_num ASC;";
+        ArrayList<String> answers = new ArrayList<>();
+        ArrayList<Integer> correct = new ArrayList<>();
+
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()) {
+                answers.add(resultSet.getString("answer"));
+                correct.add(resultSet.getInt("correct"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        q.setAnswerList(answers);
+        q.setCorrectList(correct);
+
+        return q;
+    }
+
+    public QuestionMultiAnswer getMultiAnswer(Question ques) {
+        int quizId = ques.getQuizID();
+        int subId = ques.getSubID();
+
+        String query = "SELECT * FROM multi_answer_questions WHERE quiz_id = " + quizId + " AND sub_id = " + subId + ";";
+        QuestionMultiAnswer q = null;
+
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            if (resultSet.next()) {
+                q = new QuestionMultiAnswer(
+                        resultSet.getInt("question_id"),
+                        resultSet.getInt("quiz_id"),
+                        resultSet.getInt("sub_id"),
+                        ques.getType(),  // Assuming getType() exists in Question class
+                        resultSet.getString("question"),
+                        resultSet.getInt("ordered"),
+                        new ArrayList<String>()
+                );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        query = "SELECT * FROM multi_answer_answers WHERE quiz_id = " + q.getQuizID() +
+                " and sub_id = "+q.getSubID()+" ORDER BY order_num ASC;";
+        ArrayList<String> answers = new ArrayList<>();
+
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()) {
+                answers.add(resultSet.getString("answer"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        q.setAnswerList(answers);
+
         return q;
     }
 
@@ -393,6 +505,46 @@ public class DatabaseAccess {
         }
         return q;
 
+    }
+    public Question getQuestionMatching(Question ques){
+        int quizId=ques.getQuizID(); int subId=ques.getSubID();
+        int questionID = ques.getQuestionID();
+        ArrayList<String> words = new ArrayList<>();
+        ArrayList<String> matchingWords = new ArrayList<>();
+        QuestionMatching q = null;
+
+        String query1 = "select * from matching_answers where" +
+                " quiz_id = " + quizId + " and sub_id = " + subId + " ;";
+        try {
+            ResultSet resultSet = stmt.executeQuery(query1);
+            while (resultSet.next()) {
+                words.add(resultSet.getString("word"));
+                matchingWords.add(resultSet.getString("matching_word"));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+
+        String query = "select * from matching_questions where quiz_id = " + quizId + " and sub_id = " + subId + " ;";
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            if (resultSet.next()) {
+                q = new QuestionMatching(
+                        questionID,
+                        quizId,
+                        subId,
+                        QUESTION_MATCHING,
+                        resultSet.getString("question"),
+                        words,
+                        matchingWords
+                );
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+
+        return q;
     }
 
     public boolean accountExists(String username){
@@ -754,11 +906,22 @@ public class DatabaseAccess {
 
         return ans;
     }
-    public static ArrayList<Note> getNotes(String toUsername, int maxAmount) {
-        String query = "SELECT message_id, from_id, to_id, text, notification " +
-                "FROM Messages " +
-                "WHERE to_id = (SELECT user_id FROM Users WHERE username = '" + toUsername + "') " +
-                (maxAmount > 0 ? "ORDER BY message_id desc LIMIT " + maxAmount : "ORDER BY message_id DESC");
+    public static ArrayList<Note> getNotes(int userID, int maxAmount) {
+        String query;
+        if(maxAmount > 0) {
+            query = "SELECT m.*, u.user_id, u.username " +
+                    "FROM messages m " +
+                    "LEFT JOIN users u ON m.from_id = u.user_id " +
+                    "WHERE m.to_id = " + userID + " " +
+                    "ORDER BY m.message_id DESC " +
+                    "LIMIT " + maxAmount;
+        } else {
+            query = "SELECT m.*, u.user_id, u.username " +
+                    "FROM messages m " +
+                    "LEFT JOIN users u ON m.from_id = u.user_id " +
+                    "WHERE m.to_id = " + userID + " " +
+                    "ORDER BY m.message_id DESC ";
+        }
 
         ArrayList<Note> notes = new ArrayList<>();
 
@@ -768,11 +931,12 @@ public class DatabaseAccess {
             while (resultSet.next()) {
                 int noteId = resultSet.getInt("message_id");
                 int fromId = resultSet.getInt("from_id");
+                String fromUsername = resultSet.getString("username");
                 int toId = resultSet.getInt("to_id");
                 String text = resultSet.getString("text");
                 int notification = resultSet.getInt("notification");
 
-                Note note = new Note(noteId, fromId, toId, text, notification);
+                Note note = new Note(noteId, fromId, fromUsername, toId, text, notification);
                 notes.add(note);
             }
         } catch (SQLException e) {
@@ -1298,6 +1462,29 @@ public class DatabaseAccess {
             }
         }
 
+        // Update quizzes table
+        String q1 = "Select * from Quizzes where quiz_id = " + quizID;
+        int times = 0;
+        try (Statement stmt = con.createStatement()) {
+            ResultSet rs = stmt.executeQuery(q1);
+            if(rs.next()){
+                times = rs.getInt("times_taken");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+        times++;
+        String qq = "UPDATE Quizzes " +
+                " SET times_taken = " + times +
+                " WHERE quiz_id = " + quizID;
+        try (Statement stmt = con.createStatement()) {
+            int rowsUpdated = stmt.executeUpdate(qq);
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+
+
+
         //update scores table
         String query2 = "INSERT INTO Scores (quiz_id, user_id, score, time, date_scored) VALUES (?, ?, ?, ?, ?)";
         try (PreparedStatement pstmt = con.prepareStatement(query2)) {
@@ -1368,21 +1555,26 @@ public class DatabaseAccess {
     }
 
 
+
+
     public static final int QUESTION_TEXTBOX = 1;
     public static final int QUESTION_FILL_BLANK = 2;
     public static final int QUESTION_MULTIPLE_CHOICE = 3;
     public static final int QUESTION_PICTURE = 4;
-    public static final int QUESTION_MULTITEXTBOX = 5;
-    public static final int QUESTION_MULTI_MULTIPLE_CHOICE = 6;
+    public static final int QUESTION_MULTIANSWER = 5;
+    public static final int QUESTION_CHECKBOX = 6;
     public static final int QUESTION_MATCHING = 7;
 
-    public void createQuiz(ArrayList<Question> questions, String quizName, String quizDescription,
-                           int creatorID, String creatorUsername, int randomQuestion,
-                           int immediate, int practice, int onePage, Timestamp creationDate){
+
+    /** Creates a quiz object in database and returns its quizID */
+    public int createQuizAndGetID(String quizName, String quizDescription,
+                                  int creatorID, String creatorUsername, int randomQuestion,
+                                  int immediate, int practice, int onePage, Timestamp creationDate) {
         String query = "INSERT INTO Quizzes (quiz_name, quiz_description, quiz_creator_id, " +
                 "random_question, one_page, immediate, practice, creation_date, times_taken) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
-        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+        int quizID = -1;
+        try (PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
             pstmt.setString(1, quizName); // quiz_name
             pstmt.setString(2, quizDescription); // quiz_description
             pstmt.setInt(3, creatorID); // quiz_creator_id
@@ -1392,34 +1584,227 @@ public class DatabaseAccess {
             pstmt.setInt(7, practice); // practice
             pstmt.setTimestamp(8, creationDate); // creation_date (assuming it's a Timestamp object)
             pstmt.setInt(9, 0); // times_taken
+
             int rowsUpdated = pstmt.executeUpdate();
+
+            if (rowsUpdated > 0) {
+                try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+                    if (generatedKeys.next()) {
+                        quizID = generatedKeys.getInt(1);
+                    }
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
             throw new RuntimeException("Error executing SQL query", e);
         }
+        return quizID;
+    }
 
+
+    /** Populates database with quiz questions */
+    public void populateQuiz(ArrayList<Question> questions){
         for (Question q : questions) {
             int type = q.getType();
             switch (type) {
                 case QUESTION_TEXTBOX:
+                    q = (QuestionTextbox) q;
+                    String executable1 = "INSERT INTO Textbox_questions (quiz_id, sub_id, question, answer)" +
+                            " VALUES (?, ?, ?, ?)";
+                    try (PreparedStatement pstmt = con.prepareStatement(executable1)) {
+                        pstmt.setInt(1,q.getQuizID());
+                        pstmt.setInt(2,q.getSubID());
+                        pstmt.setString(3, ((QuestionTextbox) q).getQuestion());
+                        pstmt.setString(4, ((QuestionTextbox) q).getAnswer());
+                        int rowsUpdated = pstmt.executeUpdate();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        throw new RuntimeException("Error executing SQL query", e);
+                    }
                     break;
 
                 case QUESTION_FILL_BLANK:
+                    q = (QuestionFillBlank) q;
+                    String executable2 = "INSERT INTO Fill_blank_questions (quiz_id, sub_id, text_before, text_after, answer)" +
+                            " VALUES (?, ?, ?, ?, ?)";
+                    try (PreparedStatement pstmt = con.prepareStatement(executable2)) {
+                        pstmt.setInt(1,q.getQuizID());
+                        pstmt.setInt(2,q.getSubID());
+                        pstmt.setString(3, ((QuestionFillBlank) q).getTextBefore());
+                        pstmt.setString(4, ((QuestionFillBlank) q).getTextAfter());
+                        pstmt.setString(5,((QuestionFillBlank) q).getAnswer());
+                        int rowsUpdated = pstmt.executeUpdate();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        throw new RuntimeException("Error executing SQL query", e);
+                    }
                     break;
 
                 case QUESTION_MULTIPLE_CHOICE:
+                    q = (QuestionMultipleChoice) q;
+                    String correctAnswer = "";
+                    ArrayList<String> allAnswers;
+                    // insert question
+                    String executable3 = "INSERT INTO Multiple_choice_questions (quiz_id, sub_id, question, ordered)" +
+                            " VALUES (?, ?, ?, ?)";
+                    try (PreparedStatement pstmt = con.prepareStatement(executable3)) {
+                        pstmt.setInt(1,q.getQuizID());
+                        pstmt.setInt(2,q.getSubID());
+                        pstmt.setString(3, ((QuestionMultipleChoice) q).getQuestion());
+                        correctAnswer = ((QuestionMultipleChoice) q).getCorrectAnswer();
+                        pstmt.setInt(4, ((QuestionMultipleChoice) q).getOrdered());
+                        allAnswers = ((QuestionMultipleChoice) q).getAnswerList();
+                        int rowsUpdated = pstmt.executeUpdate();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        throw new RuntimeException("Error executing SQL query", e);
+                    }
+
+                    // insert all answers
+                    for(int i = 0; i < allAnswers.size(); i++){
+                        String answer = allAnswers.get(i);
+                        String executable3_1 = "INSERT INTO Multiple_choice_answers (quiz_id, sub_id, order_number, answer, correct)" +
+                                " VALUES (?, ?, ?, ?, ?)";
+                        try (PreparedStatement pstmt = con.prepareStatement(executable3_1)) {
+                            pstmt.setInt(1,q.getQuizID());
+                            pstmt.setInt(2,q.getSubID());
+                            pstmt.setInt(3, i+1);
+                            pstmt.setString(4, answer);
+                            int correcto = 0;
+                            if(answer.equals(correctAnswer)){
+                                correcto = 1;
+                            }
+                            pstmt.setInt(5, correcto);
+                            int rowsUpdated = pstmt.executeUpdate();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                            throw new RuntimeException("Error executing SQL query", e);
+                        }
+                    }
                     break;
 
                 case QUESTION_PICTURE:
+                    q = (QuestionPicture) q;
+                    String executable4 = "INSERT INTO Picture_questions (quiz_id, sub_id, question, answer, image_url)" +
+                            " VALUES (?, ?, ?, ?, ?)";
+                    try (PreparedStatement pstmt = con.prepareStatement(executable4)) {
+                        pstmt.setInt(1,q.getQuizID());
+                        pstmt.setInt(2,q.getSubID());
+                        pstmt.setString(3, ((QuestionPicture) q).getQuestion());
+                        pstmt.setString(4, ((QuestionPicture) q).getAnswer());
+                        pstmt.setString(5, ((QuestionPicture) q).getImageURL());
+                        int rowsUpdated = pstmt.executeUpdate();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        throw new RuntimeException("Error executing SQL query", e);
+                    }
                     break;
 
-                case QUESTION_MULTITEXTBOX:
+                case QUESTION_MULTIANSWER:
+                    q = (QuestionMultiAnswer) q;
+                    ArrayList<String> allTextboxAnswers;
+                    String executable5 = "INSERT INTO Multi_answer_questions (quiz_id, sub_id, question, ordered)" +
+                            " VALUES (?, ?, ?, ?)";
+                    try (PreparedStatement pstmt = con.prepareStatement(executable5)) {
+                        pstmt.setInt(1,q.getQuizID());
+                        pstmt.setInt(2,q.getSubID());
+                        pstmt.setString(3, ((QuestionMultiAnswer) q).getQuestion());
+                        pstmt.setInt(4, ((QuestionMultiAnswer) q).getOrdered());
+                        allTextboxAnswers = ((QuestionMultiAnswer) q).getAnswerList();
+                        int rowsUpdated = pstmt.executeUpdate();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        throw new RuntimeException("Error executing SQL query", e);
+                    }
+                    for(int i = 0; i < allTextboxAnswers.size(); i++){
+                        String executable5_1 = "INSERT INTO Multi_answer_answers (quiz_id, sub_id, answer, order_num)" +
+                                " VALUES (?, ?, ?, ?)";
+                        try (PreparedStatement pstmt = con.prepareStatement(executable5_1)) {
+                            pstmt.setInt(1,q.getQuizID());
+                            pstmt.setInt(2,q.getSubID());
+                            pstmt.setString(3, allTextboxAnswers.get(i));
+                            pstmt.setInt(4,i+1);
+                            int rowsUpdated = pstmt.executeUpdate();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                            throw new RuntimeException("Error executing SQL query", e);
+                        }
+                    }
+
                     break;
 
-                case QUESTION_MULTI_MULTIPLE_CHOICE:
+                case QUESTION_CHECKBOX:
+                    q = (QuestionCheckbox) q;
+                    ArrayList<String> allCheckboxAnswers;
+                    ArrayList<Integer> correctCheckboxAnswers;
+                    // insert question
+                    String executable6 = "INSERT INTO checkbox_questions (quiz_id, sub_id, question, ordered)" +
+                            " VALUES (?, ?, ?, ?)";
+                    try (PreparedStatement pstmt = con.prepareStatement(executable6)) {
+                        pstmt.setInt(1,q.getQuizID());
+                        pstmt.setInt(2,q.getSubID());
+                        pstmt.setString(3, ((QuestionCheckbox) q).getQuestion());
+                        pstmt.setInt(4, ((QuestionCheckbox) q).getOrdered());
+                        allCheckboxAnswers = ((QuestionCheckbox) q).getAnswerList();
+                        correctCheckboxAnswers = ((QuestionCheckbox) q).getCorrectList();
+                        int rowsUpdated = pstmt.executeUpdate();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        throw new RuntimeException("Error executing SQL query", e);
+                    }
+
+                    // insert all answers
+                    for(int i = 0; i < allCheckboxAnswers.size(); i++){
+                        String answer = allCheckboxAnswers.get(i);
+                        String executable6_1 = "INSERT INTO checkbox_answers (quiz_id, sub_id, answer, correct, order_num)" +
+                                " VALUES (?, ?, ?, ?, ?)";
+                        try (PreparedStatement pstmt = con.prepareStatement(executable6_1)) {
+                            pstmt.setInt(1,q.getQuizID());
+                            pstmt.setInt(2,q.getSubID());
+                            pstmt.setString(3, answer);
+                            pstmt.setInt(4, correctCheckboxAnswers.get(i));
+                            pstmt.setInt(5,i+1);
+                            int rowsUpdated = pstmt.executeUpdate();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                            throw new RuntimeException("Error executing SQL query", e);
+                        }
+                    }
                     break;
+
 
                 case QUESTION_MATCHING:
+                    q = (QuestionMatching)q;
+                    String executable7 = "INSERT INTO Matching_questions (quiz_id, sub_id, question)" +
+                            " VALUES (?, ?, ?)";
+                    ArrayList<String> words;
+                    ArrayList<String> matchingWords;
+                    try (PreparedStatement pstmt = con.prepareStatement(executable7)) {
+                        pstmt.setInt(1,q.getQuizID());
+                        pstmt.setInt(2,q.getSubID());
+                        pstmt.setString(3, ((QuestionMatching) q).getQuestion());
+                        words = ((QuestionMatching) q).getWords();
+                        matchingWords = ((QuestionMatching) q).getMatchingWords();
+                        int rowsUpdated = pstmt.executeUpdate();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        throw new RuntimeException("Error executing SQL query", e);
+                    }
+
+                    for(int i = 0; i < words.size(); i++){
+                        String executable7_1 = "INSERT INTO Matching_answers (quiz_id, sub_id, word, matching_word)" +
+                                " VALUES (?, ?, ?, ?)";
+                        try (PreparedStatement pstmt = con.prepareStatement(executable7_1)) {
+                            pstmt.setInt(1, q.getQuizID());
+                            pstmt.setInt(2, q.getSubID());
+                            pstmt.setString(3, words.get(i));
+                            pstmt.setString(4, matchingWords.get(i));
+                            int rowsUpdated = pstmt.executeUpdate();
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                            throw new RuntimeException("Error executing SQL query", e);
+                        }
+                    }
                     break;
 
                 default:

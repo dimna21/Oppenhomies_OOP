@@ -50,13 +50,26 @@ hr {
 .intro-text {
     font-weight: normal;
     font-size: 60px;
-    margin-top: 50px;
+    margin-top: 0px;
     color: #000000;
+}
+
+/* Styling for the opciones container */
+.opciones-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 /* Styling for the options */
 .opciones {
-    margin-top: 20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 /* Styling for buttons */
@@ -68,7 +81,6 @@ hr {
     padding: 10px 20px;
     border-radius: 4px;
     margin: 0 10px;
-    margin-top: 50px;
     font-size: 18px;
     transition: background-color 0.3s;
 }

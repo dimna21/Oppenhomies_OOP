@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>exQUIZit</title>
+    <title>Wellcome to Quizzler </title>
     <link rel="stylesheet" href="<%= request.getContextPath() %>/Homepage/WellWellWell.css">
 </head>
 <body>
@@ -12,11 +12,13 @@
     <hr />
     <div class="container2">
         <div class="intro-text">stick yo &#9757; gyatt &#127825; out for Quizzler &#129397; </div>
-        <div class="opciones">
-            <a href="<%= request.getContextPath() %>/UserAuthentication/loginPage.jsp" class="button">Sign In</a>
-            <a href="<%= request.getContextPath() %>/UserAuthentication/newAccount.jsp" class="button">Sign Up</a>
-            <a href="" class="button">Enter as Guest</a>
-        </div>
+    </div>
+</div>
+
+<div class="opciones-container">
+    <div class="opciones">
+        <a href="<%= request.getContextPath() %>/UserAuthentication/loginPage.jsp" class="button">Sign In</a>
+        <a href="<%= request.getContextPath() %>/UserAuthentication/newAccount.jsp" class="button">Sign Up</a>
     </div>
 </div>
 

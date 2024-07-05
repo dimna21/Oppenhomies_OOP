@@ -1813,8 +1813,162 @@ public class DatabaseAccess {
         }
     }
 
+    public ArrayList<ScoreAndUser> getTopPerformers(int quizID, int amount) {
+        String query;
+        if (amount == 0) {
+            query = "SELECT u.user_id, " +
+                    "u.username, " +
+                    "u.password, " +
+                    "u.admin_status, " +
+                    "u.quizzes_taken, " +
+                    "u.quizzes_created, " +
+                    "u.highest_scorer, " +
+                    "u.practice_mode, " +
+                    "u.profile_pic_url, " +
+                    "u.activeAccount, " +
+                    "s.score, " +
+                    "s.date_scored, " +
+                    "s.score_id, " +
+                    "s.quiz_id, " +
+                    "s.user_id, " +
+                    "s.time " +
+                    "FROM Users u " +
+                    "JOIN Scores s ON u.user_id = s.user_id " +
+                    "WHERE s.quiz_id = " + quizID + " " +
+                    "ORDER BY s.score DESC ;" ;
+        } else {
+            query = "SELECT u.user_id, " +
+                    "u.username, " +
+                    "u.password, " +
+                    "u.admin_status, " +
+                    "u.quizzes_taken, " +
+                    "u.quizzes_created, " +
+                    "u.highest_scorer, " +
+                    "u.practice_mode, " +
+                    "u.profile_pic_url, " +
+                    "u.activeAccount, " +
+                    "s.score, " +
+                    "s.date_scored, " +
+                    "s.score_id, " +
+                    "s.quiz_id, " +
+                    "s.user_id, " +
+                    "s.time " +
+                    "FROM Users u " +
+                    "JOIN Scores s ON u.user_id = s.user_id " +
+                    "WHERE s.quiz_id = " + quizID + " " +
+                    "ORDER BY s.score DESC " +
+                    "LIMIT " + amount;
+        }
 
+        ArrayList<ScoreAndUser> users = new ArrayList<>();
 
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
 
+            while (resultSet.next()) {
+                int scoreId = resultSet.getInt("score_id");
+                int quizId = resultSet.getInt("quiz_id");
+                int userId = resultSet.getInt("user_id");
+                int score = resultSet.getInt("score");
+                int time = resultSet.getInt("time");
+                Timestamp dateScored = resultSet.getTimestamp("date_scored");
+                String username = resultSet.getString("username");
+                String password = resultSet.getString("password");
+                int adminStatus = resultSet.getInt("admin_status");
+                int quizzesTaken = resultSet.getInt("quizzes_taken");
+                int quizzesCreated = resultSet.getInt("quizzes_created");
+                int highestScorer = resultSet.getInt("highest_scorer");
+                int practiceMode = resultSet.getInt("practice_mode");
+                String profilePicUrl = resultSet.getString("profile_pic_url");
+                int activeAccount = resultSet.getInt("activeAccount");
+                Score myScore = new Score(scoreId,quizId,userId,score,time,dateScored);
+                User user = new User(userId, username, password, adminStatus, quizzesTaken, quizzesCreated, highestScorer, practiceMode, profilePicUrl, activeAccount);
+                users.add(new ScoreAndUser(myScore,user));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving top performers: " + e.getMessage());
+        }
+
+        return users;
+    }
+
+    public ArrayList<ScoreAndUser> getRecentPerformers(int quizID, int amount) {
+        String query;
+        if (amount == 0) {
+            query = "SELECT u.user_id, " +
+                    "u.username, " +
+                    "u.password, " +
+                    "u.admin_status, " +
+                    "u.quizzes_taken, " +
+                    "u.quizzes_created, " +
+                    "u.highest_scorer, " +
+                    "u.practice_mode, " +
+                    "u.profile_pic_url, " +
+                    "u.activeAccount, " +
+                    "s.score, " +
+                    "s.date_scored, " +
+                    "s.score_id, " +
+                    "s.quiz_id, " +
+                    "s.user_id, " +
+                    "s.time " +
+                    "FROM Users u " +
+                    "JOIN Scores s ON u.user_id = s.user_id " +
+                    "WHERE s.quiz_id = " + quizID + " " +
+                    "ORDER BY s.time DESC ;" ;
+        } else {
+            query = "SELECT u.user_id, " +
+                    "u.username, " +
+                    "u.password, " +
+                    "u.admin_status, " +
+                    "u.quizzes_taken, " +
+                    "u.quizzes_created, " +
+                    "u.highest_scorer, " +
+                    "u.practice_mode, " +
+                    "u.profile_pic_url, " +
+                    "u.activeAccount, " +
+                    "s.score, " +
+                    "s.date_scored, " +
+                    "s.score_id, " +
+                    "s.quiz_id, " +
+                    "s.user_id, " +
+                    "s.time " +
+                    "FROM Users u " +
+                    "JOIN Scores s ON u.user_id = s.user_id " +
+                    "WHERE s.quiz_id = " + quizID + " " +
+                    "ORDER BY s.time DESC " +
+                    "LIMIT " + amount;
+        }
+
+        ArrayList<ScoreAndUser> users = new ArrayList<>();
+
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+
+            while (resultSet.next()) {
+                int scoreId = resultSet.getInt("score_id");
+                int quizId = resultSet.getInt("quiz_id");
+                int userId = resultSet.getInt("user_id");
+                int score = resultSet.getInt("score");
+                int time = resultSet.getInt("time");
+                Timestamp dateScored = resultSet.getTimestamp("date_scored");
+                String username = resultSet.getString("username");
+                String password = resultSet.getString("password");
+                int adminStatus = resultSet.getInt("admin_status");
+                int quizzesTaken = resultSet.getInt("quizzes_taken");
+                int quizzesCreated = resultSet.getInt("quizzes_created");
+                int highestScorer = resultSet.getInt("highest_scorer");
+                int practiceMode = resultSet.getInt("practice_mode");
+                String profilePicUrl = resultSet.getString("profile_pic_url");
+                int activeAccount = resultSet.getInt("activeAccount");
+                Score myScore = new Score(scoreId,quizId,userId,score,time,dateScored);
+                User user = new User(userId, username, password, adminStatus, quizzesTaken, quizzesCreated, highestScorer, practiceMode, profilePicUrl, activeAccount);
+                users.add(new ScoreAndUser(myScore,user));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving top performers: " + e.getMessage());
+        }
+
+        return users;
+    }
 
 }

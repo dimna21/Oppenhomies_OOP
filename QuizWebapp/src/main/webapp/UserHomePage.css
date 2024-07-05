@@ -217,7 +217,7 @@ form[action*="Reject"] button[type="submit"]:hover {
 
 .friend-header h3 {
     margin: 0;
-    color: #866fa4;
+    color: #000;
 }
 
 /* Styling for toggle button */

@@ -38,8 +38,13 @@
 </head>
 <body>
 <div class="container">
-    <h1 align="center"><%=username%></h1>
-
+    <div class="user-info">
+        <div class="user-name"><%=username%></div>
+        <form action="<%= request.getContextPath() %>/LogoutServlet" method="post">
+            <button type="submit">Log Out</button>
+        </form>
+    </div>
+    <br><br><br>
     <div class="tabs-container">
         <ul class="tabs">
             <li class="tab-link active" data-tab="tab1">Announcements</li>

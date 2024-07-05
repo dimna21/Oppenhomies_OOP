@@ -1,5 +1,6 @@
 DBpackage\Achievement.class
 DBpackage\Questions\QuestionTypeConstants.class
+ServletPackage\LogoutServlet.class
 DBpackage\Questions\QuestionMultipleChoice.class
 ServletPackage\ListenerClass.class
 DBpackage\Questions\QuestionTextbox.class

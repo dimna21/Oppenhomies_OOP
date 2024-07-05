@@ -1,6 +1,7 @@
 <%@ page import="javax.xml.crypto.Data" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="DBpackage.*" %>
+<%@ page import="java.util.HashMap" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     DatabaseAccess dbAccess = (DatabaseAccess) application.getAttribute("DatabaseAccess");
@@ -29,6 +30,14 @@
     ArrayList<Note> notes = DatabaseAccess.getNotes(userID, 0);
 
     ArrayList<Activity> activities = dbAccess.getFriendsActivity(username, 0);
+
+    HashMap<String, String> achievPictureMap = new HashMap<String, String>();
+    achievPictureMap.put("Amateur author", "Pictures/Achievements/Amateur author.png");
+    achievPictureMap.put("I am the greatest", "Pictures/Achievements/I am the greatest.png");
+    achievPictureMap.put("Prodigious author", "Pictures/Achievements/Prodigious author.png");
+    achievPictureMap.put("Prolific author", "Pictures/Achievements/Prolific author.png");
+    achievPictureMap.put("Quiz machine", "Pictures/Achievements/Quiz machine.png");
+    achievPictureMap.put("Practice makes perfect", "Pictures/Achievements/Practice makes perfect.png");
 %>
 <html>
 <head>
@@ -138,15 +147,24 @@
 
         <div id="tab6" class="tab-content">
             <h2>Achievements</h2>
-            <div>
+            <div class="achievements-container">
                 <% for(Achievement achievement: achievements) {%>
-                <div class="achievements">
-                    <h3><%=achievement.getAchievementTitle()%></h3>
-                    <p><%=achievement.getAchievementDate()%></p>
+                <div class="achievement-item">
+                    <div class="achievement">
+                        <div class="achievement-image">
+                            <img src="<%=achievPictureMap.get(achievement.getAchievementTitle())%>" alt="Achievement Icon" width="100" height="100">
+                        </div>
+                        <div class="achievement-details">
+                            <h3><%=achievement.getAchievementTitle()%></h3>
+                            <p><%=achievement.getAchievementDate()%></p>
+                        </div>
+                    </div>
                 </div>
                 <%}%>
             </div>
         </div>
+
+
 
         <div id="tab7" class="tab-content">
             <h2>Inbox</h2>

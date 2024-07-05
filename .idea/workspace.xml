@@ -9,15 +9,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fd04e7a7-2cdc-475e-a051-561b58ee9076" name="Changes" comment="bug">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+    <list default="true" id="fd04e7a7-2cdc-475e-a051-561b58ee9076" name="Changes" comment="bugfix UserHomePage.jsp">
+      <change afterPath="$PROJECT_DIR$/QuizWebapp/src/main/java/ServletPackage/LogoutServlet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DatabaseInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DatabaseInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/Homepage/Wellcome.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/Homepage/Wellcome.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DatabaseInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DatabaseInfo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/UserHomePage.css" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/UserHomePage.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/UserHomePage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/UserHomePage.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -28,13 +26,14 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Jsp File" />
+        <option value="Class" />
       </list>
     </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/css" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -63,7 +62,7 @@
     "Maven.studentsTable [tomcat7:run].executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "Tomcat Server.Wellcome.jsp.executor": "Run",
-    "git-widget-placeholder": "feature/homepage",
+    "git-widget-placeholder": "feature/css",
     "kotlin-language-version-configured": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
@@ -152,13 +151,13 @@
       <option name="project" value="LOCAL" />
       <updated>1720011782784</updated>
     </task>
-    <task id="LOCAL-00004" summary="bug">
+    <task id="LOCAL-00004" summary="Styled UserHomePage">
       <option name="closed" value="true" />
-      <created>1720181257759</created>
+      <created>1720176816954</created>
       <option name="number" value="00004" />
       <option name="presentableId" value="LOCAL-00004" />
       <option name="project" value="LOCAL" />
-      <updated>1720181257759</updated>
+      <updated>1720176816954</updated>
     </task>
     <option name="localTasksCounter" value="5" />
     <servers />
@@ -171,7 +170,7 @@
     <MESSAGE value="Small Bugfix" />
     <MESSAGE value="pervi komit" />
     <MESSAGE value="bugfix UserHomePage.jsp" />
-    <MESSAGE value="bug" />
-    <option name="LAST_COMMIT_MESSAGE" value="bug" />
+    <MESSAGE value="Styled UserHomePage" />
+    <option name="LAST_COMMIT_MESSAGE" value="Styled UserHomePage" />
   </component>
 </project>

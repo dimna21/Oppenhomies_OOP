@@ -312,3 +312,41 @@ form[action*="Reject"] button[type="submit"]:hover {
 .user-info button:hover {
     background-color: #0056b3;
 }
+.achievements-container {
+    margin-top: 20px;
+}
+
+.achievement-item {
+    background: #fff;
+    border: 2px solid #371F76;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px 40px;
+}
+
+.achievement {
+    display: flex;
+    align-items: center;
+}
+
+.achievement-image {
+    flex-shrink: 0;
+    margin-right: 20px;
+}
+
+.achievement-details {
+    flex-grow: 1;
+}
+
+.achievement h3, .achievement p {
+    margin-bottom: 5px;
+}
+
+.achievement-image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid #371F76;
+}
+

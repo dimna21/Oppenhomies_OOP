@@ -2,6 +2,7 @@ DBpackage\Achievement.class
 DBpackage\Questions\QuestionTypeConstants.class
 DBpackage\Questions\QuestionMultipleChoice.class
 ServletPackage\ListenerClass.class
+DBpackage\Questions\QuestionMultiAnswer.class
 DBpackage\Questions\QuestionTextbox.class
 ServletPackage\NewAccServlet.class
 DBpackage\FriendRequest.class
@@ -16,7 +17,9 @@ DBpackage\Questions\Question.class
 DBpackage\Quiz.class
 DBpackage\Questions\QuestionFillBlank.class
 DBpackage\User.class
+DBpackage\Questions\QuestionMatching.class
 DBpackage\Questions\QuestionPicture.class
 DBpackage\ScoreAndUser.class
 ServletPackage\LoginServlet.class
 DBpackage\Note.class
+DBpackage\Questions\QuestionCheckbox.class

@@ -73,7 +73,8 @@
                 <div class="announcement">
                     <h3><%=announcement.getTitle()%></h3>
                     <p><%=announcement.getText()%></p>
-                    <p><%=announcement.getCreationDate() + " " + announcement.getUsername() %></p>
+                    <p><%="Date: " + announcement.getCreationDate()%></p>
+                    <p><%="By: " + announcement.getUsername()%></p>
                 </div>
                 <%}%>
             </div>
@@ -87,7 +88,8 @@
                     <div class="popular-quizzes">
                         <h3><%=quiz.getName()%></h3>
                         <p><%=quiz.getDescription()%></p>
-                        <p><%=quiz.getCreationDate() + " " + quiz.getCreatorUsername() %></p>
+                        <p><%="Creation Date: " + quiz.getCreationDate()%></p>
+                        <p><%="Author: " + quiz.getCreatorUsername()%> </p>
                     </div>
                 </a>
                 <%}%>
@@ -102,7 +104,8 @@
                     <div class="recently-created-quizzes">
                         <h3><%=quiz.getName()%></h3>
                         <p><%=quiz.getDescription()%></p>
-                        <p><%=quiz.getCreationDate() + " " + quiz.getCreatorUsername() %></p>
+                        <p><%="Creation Date: " + quiz.getCreationDate()%></p>
+                        <p><%="Author: " + quiz.getCreatorUsername()%> </p>
                     </div>
                 </a>
                 <%}%>
@@ -120,13 +123,23 @@
                     <div class="recently-taken-quizzes">
                         <h3><%=q.getName()%></h3>
                         <p><%=q.getDescription()%></p>
-                        <p><%=q.getCreationDate() + " " + q.getCreatorUsername() %></p>
-                        <p><%="Score: " + s.getScore() + " Time: " + s.getTime() + " seconds" + " DATE: " +  s.getDate_scored()%></p>
+                        <p><%="Creation Date: " + q.getCreationDate()%></p>
+                        <p><%="Author: " + q.getCreatorUsername()%> </p>
+                        <div class="score-info">
+                            <p>Score: <%= s.getScore() %></p>
+                        </div>
+                        <div class="time-info">
+                            <p>Time: <%= s.getTime() %> seconds</p>
+                        </div>
+                        <div class="date-info">
+                            <p>Date: <%= s.getDate_scored() %></p>
+                        </div>
                     </div>
                 </a>
                 <%}%>
             </div>
         </div>
+
 
         <div id="tab5" class="tab-content">
             <h2>Quizzes Created By You</h2>
@@ -137,7 +150,8 @@
                     <div class="recently-created-quizzes-by-user">
                         <h3><%=quiz.getName()%></h3>
                         <p><%=quiz.getDescription()%></p>
-                        <p><%=quiz.getCreationDate() + " " + quiz.getCreatorUsername() %></p>
+                        <p><%="Creation Date: " + quiz.getCreationDate()%></p>
+                        <p><%="Author: " + quiz.getCreatorUsername()%> </p>
                     </div>
                 </a>
                 <%}

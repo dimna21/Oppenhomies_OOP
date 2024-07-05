@@ -3,6 +3,13 @@
 <%@ page import="DBpackage.*" %>
 <%@ page import="java.util.HashMap" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
+<%-- Redirect using JavaScript based on session attribute --%>
+<% if (session.getAttribute("loginStatus") != null && session.getAttribute("loginStatus").equals(0)) { %>
+<script>
+    window.location.href = "<%= request.getContextPath() %>/UserAuthentication/loginPage.jsp"; // Replace with your login page URL
+</script>
+<% } %>
 <%
     DatabaseAccess dbAccess = (DatabaseAccess) application.getAttribute("DatabaseAccess");
 

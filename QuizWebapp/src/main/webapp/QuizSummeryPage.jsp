@@ -22,13 +22,15 @@
     int quizCreatorID = quiz.getCreatorID();
 
     ArrayList<Score> pastScores = dbAccess.getLastAttemptsOfUserOnQuiz(user, quiz.getQuiz_id(), 0);
-    ArrayList<ScoreAndUser> highestPerformers = dbAccess.getTopScorers(quiz.getQuiz_id(), 10);
+    ArrayList<ScoreAndUser> highestPerformers = dbAccess.getTopPerformers(quiz.getQuiz_id(), 10);
     ArrayList<ScoreAndUser> lastDayHighestPerformers = dbAccess.getTopPerformersForLastDay(quiz.getQuiz_id(), 10);
-    ArrayList<ScoreAndUser> recentScores = dbAccess.();
+    ArrayList<ScoreAndUser> recentScores = dbAccess.getRecentPerformers(quiz.getQuiz_id(), 0);
 %>
 <html>
 <head>
-    <title>Quiz Summery</title>
+    <title>Quiz Summary</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="QuizSummeryPage.css?v=3.0">
 </head>
 <body>
     <div class = "container">
@@ -75,13 +77,14 @@
                         <h3><%=sa.getUser().getUsername() + " " + sa.getScore().getScore()%></h3>
                         <p><%=sa.getScore().getTime() + " " + sa.getScore().getDate_scored()%></p>
                     </div>
+                    <% } %>
                 </div>
             </div>
 
             <div id = "tab4" class = "tab-content">
                 <h2>Recent Scores for</h2>
                 <div>
-                    <% for(ScoreAndUser sa : recentScores) %>
+                    <% for(ScoreAndUser sa : recentScores) {%>
                     <div class = "performer">
                         <h3><%=sa.getUser().getUsername() + " " + sa.getScore().getScore()%></h3>
                         <p><%=sa.getScore().getTime() + " " + sa.getScore().getDate_scored()%></p>
@@ -92,13 +95,44 @@
 
             <div id = "tab5" class = "tab-content">
                 <h2>Statistics</h2>
-                <div>
 
-                </div>
             </div>
         </div>
-    </div>
 
+        <div class="button-container">
+            <form action="RejectFriendRequestServlet" method="post">
+                <button type="submit">Take</button>
+            </form>
+            <% if(quiz.isPractice() > 0) { %>
+            <form action="RejectFriendRequestServlet" method="post">
+                <button type="submit">Practice</button>
+            </form>
+            <% } %>
+        </div>
+    </div>
+<script>
+    $(document).ready(function(){
+        // Tab functionality
+        $('.tab-link').click(function(){
+            var tab_id = $(this).attr('data-tab');
+
+            $('.tab-link').removeClass('active');
+            $('.tab-content').removeClass('active');
+
+            $(this).addClass('active');
+            $("#"+tab_id).addClass('active');
+        });
+
+        // Add hover effect to performers
+        $('.performer, .user-score').hover(
+            function() {
+                $(this).addClass('hover');
+            }, function() {
+                $(this).removeClass('hover');
+            }
+        );
+    });
+</script>
 
 </body>
 </html>

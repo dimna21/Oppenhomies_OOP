@@ -5,6 +5,7 @@ DBpackage\Questions\QuestionMultipleChoice.class
 ServletPackage\ListenerClass.class
 DBpackage\Questions\QuestionMultiAnswer.class
 DBpackage\Questions\QuestionTextbox.class
+ServletPackage\LookUpServlet.class
 ServletPackage\NewAccServlet.class
 DBpackage\FriendRequest.class
 DBpackage\Challenge.class

@@ -9,29 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fd04e7a7-2cdc-475e-a051-561b58ee9076" name="Changes" comment="topulll">
-      <change afterPath="$PROJECT_DIR$/QuizWebapp/src/main/java/ServletPackage/LookUpServlet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/Homepage/Looker.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/Visitorpage/badstalker.jsp" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/Visitorpage/stalker.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/e996bb53-7036-4f6c-ad77-2359864e9c25.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/e996bb53-7036-4f6c-ad77-2359864e9c25.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/Homepage/WellWellWell.css" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/Homepage/WellWellWell.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/Homepage/Wellcome.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/Homepage/Wellcome.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DatabaseAccess.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DatabaseAccess.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/logs/access_log.2024-07-06" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/logs/access_log.2024-07-06" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/SESSIONS.ser" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/Homepage/Wellcome_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/Homepage/Wellcome_jsp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/Homepage/Wellcome_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/Homepage/Wellcome_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/QuizSummeryPage_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/QuizSummeryPage_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserAuthentication/loginPage_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserAuthentication/loginPage_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserAuthentication/newAccount_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserAuthentication/newAccount_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserHomePage_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserHomePage_jsp.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserHomePage_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserHomePage_jsp.java" afterDir="false" />
-    </list>
+    <list default="true" id="fd04e7a7-2cdc-475e-a051-561b58ee9076" name="Changes" comment="searchivit ragaca davamate da sulabam komiti tene xvaldilas unda vnaxoo" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -154,7 +132,7 @@
       <workItem from="1719843038622" duration="5464000" />
       <workItem from="1720121969444" duration="390000" />
       <workItem from="1720264801059" duration="5966000" />
-      <workItem from="1720294379489" duration="4158000" />
+      <workItem from="1720294379489" duration="4504000" />
     </task>
     <task id="LOCAL-00001" summary="Small Bugfix">
       <option name="closed" value="true" />
@@ -204,7 +182,23 @@
       <option name="project" value="LOCAL" />
       <updated>1720259234947</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="searchivit ragaca davamate da sulabam komiti tene xvaldilas unda vnaxoo">
+      <option name="closed" value="true" />
+      <created>1720298731307</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1720298731307</updated>
+    </task>
+    <task id="LOCAL-00008" summary="searchivit ragaca davamate da sulabam komiti tene xvaldilas unda vnaxoo">
+      <option name="closed" value="true" />
+      <created>1720298755232</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1720298755232</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -217,6 +211,7 @@
     <MESSAGE value="bugfix UserHomePage.jsp" />
     <MESSAGE value="Styled UserHomePage" />
     <MESSAGE value="topulll" />
-    <option name="LAST_COMMIT_MESSAGE" value="topulll" />
+    <MESSAGE value="searchivit ragaca davamate da sulabam komiti tene xvaldilas unda vnaxoo" />
+    <option name="LAST_COMMIT_MESSAGE" value="searchivit ragaca davamate da sulabam komiti tene xvaldilas unda vnaxoo" />
   </component>
 </project>

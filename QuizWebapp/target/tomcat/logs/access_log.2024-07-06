@@ -1,0 +1,13 @@
+0:0:0:0:0:0:0:1 - - [06/Jul/2024:01:47:39 +0400] "GET / HTTP/1.1" 200 693 http-bio-8083-exec-1 78
+0:0:0:0:0:0:0:1 - - [06/Jul/2024:01:47:39 +0400] "GET /Homepage/WellWellWell.css HTTP/1.1" 304 - http-bio-8083-exec-3 0
+0:0:0:0:0:0:0:1 - - [06/Jul/2024:01:47:39 +0400] "GET /favicon.ico HTTP/1.1" 404 973 http-bio-8083-exec-4 0
+0:0:0:0:0:0:0:1 - - [06/Jul/2024:01:47:42 +0400] "GET /UserAuthentication/loginPage.jsp HTTP/1.1" 200 785 http-bio-8083-exec-6 0
+0:0:0:0:0:0:0:1 - - [06/Jul/2024:01:47:42 +0400] "GET /UserAuthentication/authen.css HTTP/1.1" 304 - http-bio-8083-exec-8 0
+0:0:0:0:0:0:0:1 - - [06/Jul/2024:01:47:53 +0400] "POST /LoginServlet HTTP/1.1" 200 1001 http-bio-8083-exec-9 16
+0:0:0:0:0:0:0:1 - - [06/Jul/2024:01:47:58 +0400] "GET /UserAuthentication/newAccount.jsp HTTP/1.1" 200 801 http-bio-8083-exec-10 0
+0:0:0:0:0:0:0:1 - - [06/Jul/2024:01:48:12 +0400] "POST /NewAccServlet HTTP/1.1" 200 10289 http-bio-8083-exec-10 63
+0:0:0:0:0:0:0:1 - - [06/Jul/2024:01:48:12 +0400] "GET /UserHomePage.css?v=3.0 HTTP/1.1" 304 - http-bio-8083-exec-10 0
+0:0:0:0:0:0:0:1 - - [06/Jul/2024:01:48:35 +0400] "GET /QuizSummeryPage.jsp?quizId=4 HTTP/1.1" 500 3063 http-bio-8083-exec-10 861
+0:0:0:0:0:0:0:1 - - [06/Jul/2024:01:48:55 +0400] "GET /QuizSummeryPage.jsp?quizId=4 HTTP/1.1" 500 3063 http-bio-8083-exec-2 2
+0:0:0:0:0:0:0:1 - - [06/Jul/2024:01:49:03 +0400] "POST /LogoutServlet HTTP/1.1" 200 693 http-bio-8083-exec-5 0
+0:0:0:0:0:0:0:1 - - [06/Jul/2024:01:49:11 +0400] "GET /UserAuthentication/loginPage.jsp HTTP/1.1" 200 785 http-bio-8083-exec-5 5

@@ -10,16 +10,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fd04e7a7-2cdc-475e-a051-561b58ee9076" name="Changes" comment="bugfix UserHomePage.jsp">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/478919e0-f027-4639-96fd-c6b5a2f3757b.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/478919e0-f027-4639-96fd-c6b5a2f3757b/storage_v2/_src_/schema/quizdatabase.0A5Vtw.meta" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/Homepage/WellWellWell.css" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/Homepage/WellWellWell.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/Homepage/Wellcome.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/Homepage/Wellcome.jsp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QuizWebapp/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QuizWebapp/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/logs/access_log.2024-07-05" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/logs/access_log.2024-07-05" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/SESSIONS.ser" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/SESSIONS.ser" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/Homepage/Wellcome_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/Homepage/Wellcome_jsp.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/Homepage/Wellcome_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/Homepage/Wellcome_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserHomePage_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserHomePage_jsp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserAuthentication/badLogin_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserAuthentication/badLogin_jsp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserAuthentication/loginPage_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserAuthentication/loginPage_jsp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserAuthentication/newAccount_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserAuthentication/newAccount_jsp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserHomePage_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserHomePage_jsp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -61,30 +64,30 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Maven.studentsTable [clean].executor": "Run",
-    "Maven.studentsTable [tomcat7:run].executor": "Run",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "Tomcat Server.Wellcome.jsp.executor": "Run",
-    "git-widget-placeholder": "feature/homepage",
-    "kotlin-language-version-configured": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Maven.studentsTable [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.studentsTable [tomcat7:run].executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;Tomcat Server.Wellcome.jsp.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;feature/homepage&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   },
-  "keyToStringList": {
-    "DatabaseDriversLRU": [
-      "mysql"
+  &quot;keyToStringList&quot;: {
+    &quot;DatabaseDriversLRU&quot;: [
+      &quot;mysql&quot;
     ]
   }
-}]]></component>
+}</component>
   <component name="RunAnythingCache">
     <option name="myCommands">
       <command value="mvn clean" />
@@ -131,6 +134,8 @@
       <workItem from="1719842792124" duration="232000" />
       <workItem from="1719843038622" duration="5464000" />
       <workItem from="1720121969444" duration="390000" />
+      <workItem from="1720186619488" duration="149000" />
+      <workItem from="1720216032061" duration="299000" />
     </task>
     <task id="LOCAL-00001" summary="Small Bugfix">
       <option name="closed" value="true" />

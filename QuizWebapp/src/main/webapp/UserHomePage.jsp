@@ -1,6 +1,7 @@
 <%@ page import="javax.xml.crypto.Data" %>
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="DBpackage.*" %>
+<%@ page import="java.util.HashMap" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     DatabaseAccess dbAccess = (DatabaseAccess) application.getAttribute("DatabaseAccess");
@@ -30,6 +31,14 @@
     ArrayList<Note> notes = DatabaseAccess.getNotes(userID, 0);
 
     ArrayList<Activity> activities = dbAccess.getFriendsActivity(username, 0);
+
+    HashMap<String, String> achievPictureMap = new HashMap<String, String>();
+    achievPictureMap.put("Amateur author", "Pictures/Achievements/Amateur author.png");
+    achievPictureMap.put("I am the greatest", "Pictures/Achievements/I am the greatest.png");
+    achievPictureMap.put("Prodigious author", "Pictures/Achievements/Prodigious author.png");
+    achievPictureMap.put("Prolific author", "Pictures/Achievements/Prolific author.png");
+    achievPictureMap.put("Quiz machine", "Pictures/Achievements/Quiz machine.png");
+    achievPictureMap.put("Practice makes perfect", "Pictures/Achievements/Practice makes perfect.png");
 %>
 <html>
 <head>
@@ -39,8 +48,13 @@
 </head>
 <body>
 <div class="container">
-    <h1 align="center"><%=username%></h1>
-
+    <div class="user-info">
+        <div class="user-name"><%=username%></div>
+        <form action="<%= request.getContextPath() %>/LogoutServlet" method="post">
+            <button type="submit">Log Out</button>
+        </form>
+    </div>
+    <br><br><br>
     <div class="tabs-container">
         <ul class="tabs">
             <li class="tab-link active" data-tab="tab1">Announcements</li>
@@ -69,7 +83,8 @@
                 <div class="announcement">
                     <h3><%=announcement.getTitle()%></h3>
                     <p><%=announcement.getText()%></p>
-                    <p><%=announcement.getCreationDate() + " " + announcement.getUsername() %></p>
+                    <p><%="Date: " + announcement.getCreationDate()%></p>
+                    <p><%="By: " + announcement.getUsername()%></p>
                 </div>
                 <%}%>
             </div>
@@ -83,7 +98,8 @@
                     <div class="popular-quizzes">
                         <h3><%=quiz.getName()%></h3>
                         <p><%=quiz.getDescription()%></p>
-                        <p><%=quiz.getCreationDate() + " " + quiz.getCreatorUsername() %></p>
+                        <p><%="Creation Date: " + quiz.getCreationDate()%></p>
+                        <p><%="Author: " + quiz.getCreatorUsername()%> </p>
                     </div>
                 </a>
                 <%}%>
@@ -98,7 +114,8 @@
                     <div class="recently-created-quizzes">
                         <h3><%=quiz.getName()%></h3>
                         <p><%=quiz.getDescription()%></p>
-                        <p><%=quiz.getCreationDate() + " " + quiz.getCreatorUsername() %></p>
+                        <p><%="Creation Date: " + quiz.getCreationDate()%></p>
+                        <p><%="Author: " + quiz.getCreatorUsername()%> </p>
                     </div>
                 </a>
                 <%}%>
@@ -116,13 +133,23 @@
                     <div class="recently-taken-quizzes">
                         <h3><%=q.getName()%></h3>
                         <p><%=q.getDescription()%></p>
-                        <p><%=q.getCreationDate() + " " + q.getCreatorUsername() %></p>
-                        <p><%="Score: " + s.getScore() + " Time: " + s.getTime() + " seconds" + " DATE: " +  s.getDate_scored()%></p>
+                        <p><%="Creation Date: " + q.getCreationDate()%></p>
+                        <p><%="Author: " + q.getCreatorUsername()%> </p>
+                        <div class="score-info">
+                            <p>Score: <%= s.getScore() %></p>
+                        </div>
+                        <div class="time-info">
+                            <p>Time: <%= s.getTime() %> seconds</p>
+                        </div>
+                        <div class="date-info">
+                            <p>Date: <%= s.getDate_scored() %></p>
+                        </div>
                     </div>
                 </a>
                 <%}%>
             </div>
         </div>
+
 
         <div id="tab5" class="tab-content">
             <h2>Quizzes Created By You</h2>
@@ -133,7 +160,8 @@
                     <div class="recently-created-quizzes-by-user">
                         <h3><%=quiz.getName()%></h3>
                         <p><%=quiz.getDescription()%></p>
-                        <p><%=quiz.getCreationDate() + " " + quiz.getCreatorUsername() %></p>
+                        <p><%="Creation Date: " + quiz.getCreationDate()%></p>
+                        <p><%="Author: " + quiz.getCreatorUsername()%> </p>
                     </div>
                 </a>
                 <%}
@@ -143,15 +171,24 @@
 
         <div id="tab6" class="tab-content">
             <h2>Achievements</h2>
-            <div>
+            <div class="achievements-container">
                 <% for(Achievement achievement: achievements) {%>
-                <div class="achievements">
-                    <h3><%=achievement.getAchievementTitle()%></h3>
-                    <p><%=achievement.getAchievementDate()%></p>
+                <div class="achievement-item">
+                    <div class="achievement">
+                        <div class="achievement-image">
+                            <img src="<%=achievPictureMap.get(achievement.getAchievementTitle())%>" alt="Achievement Icon" width="100" height="100">
+                        </div>
+                        <div class="achievement-details">
+                            <h3><%=achievement.getAchievementTitle()%></h3>
+                            <p><%=achievement.getAchievementDate()%></p>
+                        </div>
+                    </div>
                 </div>
                 <%}%>
             </div>
         </div>
+
+
 
         <div id="tab7" class="tab-content">
             <h2>Inbox</h2>
@@ -224,7 +261,6 @@
 
         <div id="tab8" class="tab-content">
             <h2>Friends' Activities</h2>
-            <div class="friends-activities">
                 <% for(Activity activity : activities) { %>
                 <div class="friend-activity">
                     <div class="friend-header">
@@ -279,11 +315,8 @@
                         </div>
                     </div>
                 </div>
-                <% } %>
-            </div>
+            <% } %>
         </div>
-
-
     </div>
 </div>
 

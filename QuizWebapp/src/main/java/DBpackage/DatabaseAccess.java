@@ -300,8 +300,13 @@ public class DatabaseAccess {
                     q2=getPictureQuestion(q);
                     questions2.add(q2);
                 case 5:     //multitextbox
+                    q2=getMultiAnswer(q);
+                    questions2.add(q2);
                 case 6:      //multi-multi-choice
+                    q2=getCheckbox(q);
+                    questions2.add(q2);
                 case 7:      //match
+                    //q2=get
             }
 
         }
@@ -378,7 +383,7 @@ public class DatabaseAccess {
             throw new RuntimeException(e);
         }
 
-        query = "SELECT * FROM checkbox_answers WHERE quiz_id = " + q.getQuizID() +
+        query = "SELECT * FROM checkb/ox_answers WHERE quiz_id = " + q.getQuizID() +
                 " and sub_id = "+q.getSubID()+" ORDER BY order_num ASC;";
         ArrayList<String> answers = new ArrayList<>();
         ArrayList<Integer> correct = new ArrayList<>();
@@ -1565,6 +1570,40 @@ public class DatabaseAccess {
     public static final int QUESTION_CHECKBOX = 6;
     public static final int QUESTION_MATCHING = 7;
 
+    public void deleteQuizAndRelatedQuestions(int quizId) {
+        String deleteCheckboxAnswers = "DELETE FROM checkbox_answers WHERE checkbox_questions_id IN (SELECT question_id FROM checkbox_questions WHERE quiz_id = " + quizId + ");";
+        String deleteCheckboxQuestions = "DELETE FROM checkbox_questions WHERE quiz_id = " + quizId + ";";
+        String deleteMultiAnswerAnswers = "DELETE FROM multi_answer_answers WHERE quiz_id = " + quizId + ";";
+        String deleteMultiAnswerQuestions = "DELETE FROM multi_answer_questions WHERE quiz_id = " + quizId + ";";
+        String deleteQuiz = "DELETE FROM Quizzes WHERE quiz_id = " + quizId + ";";
+        String deleteFillBlank = "DELETE FROM fill_blank_questions WHERE quiz_id = " + quizId + ";";
+        String deleteMultiChoiceQuest = "DELETE FROM multiple_choice_questions WHERE quiz_id = " + quizId + ";";
+        String deleteMultiChoiceAns = "DELETE FROM multiple_choice_answers WHERE quiz_id = " + quizId + ";";
+        String deleteQuizQuestions = "DELETE FROM Quiz_questions WHERE quiz_id = " + quizId + ";";
+        String deleteMatchingQuestions = "DELETE FROM Matching_questions WHERE quiz_id = " + quizId + ";";
+        String deletePictures = "DELETE FROM Picture_questions WHERE quiz_id = " + quizId + ";";
+        String deleteMatchingAnswers = "DELETE FROM Matching_Answers WHERE quiz_id = " + quizId + ";";
+        String deleteTextboxQuestions = "DELETE FROM textbox_questions WHERE quiz_id = " + quizId + ";";
+
+        try {
+            // Execute the deletion queries in reverse order of dependency
+            stmt.executeUpdate(deleteCheckboxAnswers);
+            stmt.executeUpdate(deleteCheckboxQuestions);
+            stmt.executeUpdate(deleteMultiAnswerAnswers);
+            stmt.executeUpdate(deleteMultiAnswerQuestions);
+            stmt.executeUpdate(deleteQuiz);
+            stmt.executeUpdate(deleteFillBlank);
+            stmt.executeUpdate(deleteMultiChoiceQuest);
+            stmt.executeUpdate(deleteQuizQuestions);
+            stmt.executeUpdate(deleteMatchingQuestions);
+            stmt.executeUpdate(deletePictures);
+            stmt.executeUpdate(deleteMatchingAnswers);
+            stmt.executeUpdate(deleteTextboxQuestions);
+            stmt.executeUpdate(deleteMultiChoiceAns);
+        } catch (SQLException e) {
+            throw new RuntimeException("Error deleting quiz: " + e.getMessage());
+        }
+    }
 
     /** Creates a quiz object in database and returns its quizID */
     public int createQuizAndGetID(String quizName, String quizDescription,
@@ -1599,6 +1638,40 @@ public class DatabaseAccess {
             throw new RuntimeException("Error executing SQL query", e);
         }
         return quizID;
+    }
+
+    public void createQuizWithID(int quizId,String quizName, String quizDescription,
+                                  int creatorID, String creatorUsername, int randomQuestion,
+                                  int immediate, int practice, int onePage, Timestamp creationDate) {
+        String query = "INSERT INTO Quizzes (quiz_id,quiz_name, quiz_description, quiz_creator_id, " +
+                "random_question, one_page, immediate, practice, creation_date, times_taken) " +
+                "VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        try (PreparedStatement pstmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+            pstmt.setInt(1, quizId); // quiz_name
+            pstmt.setString(2, quizName); // quiz_name
+            pstmt.setString(3, quizDescription); // quiz_description
+            pstmt.setInt(4, creatorID); // quiz_creator_id
+            pstmt.setInt(5, randomQuestion); // random_question
+            pstmt.setInt(6, onePage); // one_page
+            pstmt.setInt(7, immediate); // immediate
+            pstmt.setInt(8, practice); // practice
+            pstmt.setTimestamp(9, creationDate); // creation_date (assuming it's a Timestamp object)
+            pstmt.setInt(10, 0); // times_taken
+
+            int rowsUpdated = pstmt.executeUpdate();
+
+//            if (rowsUpdated > 0) {
+//                try (ResultSet generatedKeys = pstmt.getGeneratedKeys()) {
+//                    if (generatedKeys.next()) {
+//                        //quizID = generatedKeys.getInt(1);
+//                    }
+//                }
+//            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("Error executing SQL query", e);
+        }
+        //return quizID;
     }
 
 

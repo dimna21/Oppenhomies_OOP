@@ -280,6 +280,76 @@ form[action*="Reject"] button[type="submit"]:hover {
 .activity-details {
     display: none;
 }
+
+
+/* New CSS for the announcement form and button */
+#createAnnouncementBtn {
+    background-color: #866fa4;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: background-color 0.3s;
+}
+
+#createAnnouncementBtn:hover {
+    background-color: #755a93;
+}
+
+#announcementForm {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+#announcementForm input[type="text"],
+#announcementForm textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+#announcementForm textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+#saveAnnouncement,
+#discardAnnouncement {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+#saveAnnouncement {
+    background-color: #4CAF50;
+    color: white;
+    margin-right: 10px;
+}
+
+#saveAnnouncement:hover {
+    background-color: #45a049;
+}
+
+#discardAnnouncement {
+    background-color: #f44336;
+    color: white;
+}
+
+#discardAnnouncement:hover {
+    background-color: #d32f2f;
+}
+
 .user-info {
     position: absolute;
     top: 20px;

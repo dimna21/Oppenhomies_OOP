@@ -318,6 +318,13 @@
             <% } %>
         </div>
     </div>
+
+    <div class="opciones-container">
+        <div class="opciones">
+            <a href="<%= request.getContextPath() %>/Homepage/Looker.jsp" class="button">Look Someone Up</a>
+        </div>
+    </div>
+
 </div>
 
 <script>

@@ -1,14 +1,8 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Khatuna.Tkebuchava
-  Date: 7/7/2024
-  Time: 12:23 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>Title</title>
+    <title>User Lookup</title>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/Homepage/LookerDesign.css">
 </head>
 <body>
 <form action="<%= request.getContextPath() %>/LookUpServlet" method="post">
@@ -20,6 +14,5 @@
         <button type="submit" class="button">Search</button>
     </div>
 </form>
-
 </body>
 </html>

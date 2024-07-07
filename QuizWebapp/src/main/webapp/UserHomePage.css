@@ -420,3 +420,38 @@ form[action*="Reject"] button[type="submit"]:hover {
     border: 2px solid #371F76;
 }
 
+.opciones-container {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling for the options */
+.opciones {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+/* Styling for buttons */
+.opciones a {
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    margin: 0 10px;
+    font-size: 15px;
+    transition: background-color 0.3s;
+}
+
+/* Hover effect for buttons */
+.opciones a:hover {
+    background-color: #0056b3;
+}
+

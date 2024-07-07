@@ -26,7 +26,7 @@ public class LookUpServlet extends HttpServlet {
             int userID = dbAccess.getUserInfo(username).getUser_id();
             HttpSession session = req.getSession();
             session.setAttribute("username", username);
-            dispatcher = req.getRequestDispatcher("Visitorpage/stalker.jsp");
+            dispatcher = req.getRequestDispatcher("ProfilePage.jsp?profileId=" + userID);
         }else{
             dispatcher = req.getRequestDispatcher("Visitorpage/badstalker.jsp");
         }

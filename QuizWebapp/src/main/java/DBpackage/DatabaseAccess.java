@@ -20,7 +20,7 @@ public class DatabaseAccess {
                         DatabaseInfo.server + "/" + DatabaseInfo.database,
                 DatabaseInfo.username, DatabaseInfo.password);
 
-        stmt = con.createStatement();
+        stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
     }
     public static String getUsername(int userID) {
         String query = "SELECT username FROM users WHERE user_id = '" + userID + "';";
@@ -1971,4 +1971,139 @@ public class DatabaseAccess {
         return users;
     }
 
+    public ArrayList<Quiz> getPopularQuizzesByUser(int userId, int amount) {
+        String query = "SELECT q.*, u.username " +
+                "FROM quizzes q " +
+                "LEFT JOIN users u ON q.quiz_creator_id = u.user_id " +
+                "WHERE q.quiz_creator_id = " + userId + " " +
+                "ORDER BY q.times_taken DESC";
+        if(amount > 0) query += " LIMIT " + amount;
+
+        try {
+            ResultSet rs = stmt.executeQuery(query);
+            return getQuizzesFromResultSet(rs);
+        }
+        catch (SQLException e) { throw new RuntimeException(e); }
+    }
+
+    public ArrayList<Quiz> getRecentQuizzesByUser(int userId, int amount) {
+        String query = "SELECT q.*, u.username " +
+                "FROM quizzes q " +
+                "LEFT JOIN users u ON q.quiz_creator_id = u.user_id " +
+                "WHERE q.quiz_creator_id = " + userId + " " +
+                "ORDER BY q.creation_date DESC";
+        if(amount > 0) query += " LIMIT " + amount;
+
+        try {
+            ResultSet rs = stmt.executeQuery(query);
+            return getQuizzesFromResultSet(rs);
+        }
+        catch (SQLException e) { throw new RuntimeException(e); }
+    }
+
+    private ArrayList<Quiz> getQuizzesFromResultSet(ResultSet rs) throws SQLException {
+        ArrayList<Quiz> quizzes = new ArrayList<>();
+        while (rs.next()) {
+            Quiz quiz = new Quiz(
+                    rs.getInt("quiz_id"),
+                    rs.getString("quiz_name"),
+                    rs.getString("quiz_description"),
+                    rs.getInt("quiz_creator_id"),
+                    rs.getString("username"),
+                    rs.getInt("random_question"),
+                    rs.getInt("one_page"),
+                    rs.getInt("immediate"),
+                    rs.getInt("practice"),
+                    rs.getTimestamp("creation_date"),
+                    rs.getInt("times_taken")
+            );
+            quizzes.add(quiz);
+        }
+        return quizzes;
+    }
+
+
+    public void getMostSuccessfulScoresAndQuizzesForUser(ArrayList<Score> scores, ArrayList<Quiz> quizzes,int userId, int amount) {
+        String query = "SELECT s.*, q.*, u.username " +
+                "FROM scores s " +
+                "LEFT JOIN quizzes q ON s.quiz_id = q.quiz_id " +
+                "LEFT JOIN users u ON q.quiz_creator_id = u.user_id " +
+                "WHERE s.user_id = " + userId + " " +
+                "ORDER BY s.score DESC";
+        if(amount > 0) query += " LIMIT " + amount;
+
+        try {
+            ResultSet rs = stmt.executeQuery(query);
+            scores.addAll(getScoresFromResultSet(rs));
+            rs.beforeFirst();
+            quizzes.addAll(getQuizzesFromResultSet(rs));
+        }
+        catch (SQLException e) {throw new RuntimeException(e);}
+    }
+
+    private ArrayList<Score> getScoresFromResultSet(ResultSet rs) throws SQLException {
+        ArrayList<Score> scores = new ArrayList<>();
+        while (rs.next()) {
+            Score score = new Score(
+                rs.getInt("score_id"),
+                rs.getInt("quiz_id"),
+                rs.getInt("user_id"),
+                rs.getInt("score"),
+                rs.getInt("time"),
+                rs.getTimestamp("date_scored")
+            );
+            scores.add(score);
+        }
+        return scores;
+    }
+
+    public void getRecentScoresAndQuizzesForUser(ArrayList<Score> scores, ArrayList<Quiz> quizzes, int userId, int amount) {
+        String query = "SELECT s.*, q.*, u.username " +
+                "FROM scores s " +
+                "LEFT JOIN quizzes q ON s.quiz_id = q.quiz_id " +
+                "LEFT JOIN users u ON q.quiz_creator_id = u.user_id " +
+                "WHERE s.user_id = " + userId + " " +
+                "ORDER BY s.date_scored DESC";
+        if(amount > 0) query += " LIMIT " + amount;
+
+        try {
+            ResultSet rs = stmt.executeQuery(query);
+            scores.addAll(getScoresFromResultSet(rs));
+            rs.beforeFirst();
+            quizzes.addAll(getQuizzesFromResultSet(rs));
+        }
+        catch (SQLException e) {throw new RuntimeException(e);}
+    }
+
+    public ArrayList<Note> getNotesForChat(int fromId, int toId, int amount) {
+        String query = "SELECT m.*, u.username " +
+                "FROM messages m " +
+                "LEFT JOIN users u ON m.from_id = u.user_id " +
+                "WHERE (m.from_id = " +  fromId + " AND m.to_id = " + toId + ") OR " +
+                "(m.from_id = "+ toId +" AND m.to_id = " + fromId +") " +
+                "ORDER BY m.message_id DESC";
+        if(amount > 0) query += " LIMIT " + amount;
+
+        try {
+            ResultSet rs = stmt.executeQuery(query);
+            return getNotesFromResultSet(rs);
+        }
+        catch (SQLException e) {throw new RuntimeException(e);}
+    }
+
+    private ArrayList<Note> getNotesFromResultSet(ResultSet rs) throws SQLException {
+        ArrayList<Note> notes = new ArrayList<>();
+        while (rs.next()) {
+            Note note = new Note(
+                rs.getInt("message_id"),
+                rs.getInt("from_id"),
+                rs.getString("username"),
+                rs.getInt("to_id"),
+                rs.getString("text"),
+                rs.getInt("notification")
+            );
+            notes.add(note);
+        }
+        return notes;
+    }
 }

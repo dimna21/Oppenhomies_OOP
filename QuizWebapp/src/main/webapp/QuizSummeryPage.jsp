@@ -62,7 +62,7 @@
                 <div>
                     <% for(ScoreAndUser sa : highestPerformers) {%>
                     <div class = "performer">
-                        <h3><%=sa.getUser().getUsername() + " " + sa.getScore().getScore()%></h3>
+                        <h3><a href="ProfilePage.jsp?profileId=<%=sa.getUser().getUser_id()%>"><%=sa.getUser().getUsername()%></a> <%=sa.getScore().getScore()%></h3>
                         <p><%=sa.getScore().getTime() + " " + sa.getScore().getDate_scored()%></p>
                     </div>
                     <% } %>
@@ -74,7 +74,7 @@
                 <div>
                     <% for(ScoreAndUser sa : lastDayHighestPerformers) { %>
                     <div class = "performer">
-                        <h3><%=sa.getUser().getUsername() + " " + sa.getScore().getScore()%></h3>
+                        <h3><a href="ProfilePage.jsp?profileId=<%=sa.getUser().getUser_id()%>"><%=sa.getUser().getUsername()%></a> <%=sa.getScore().getScore()%></h3>
                         <p><%=sa.getScore().getTime() + " " + sa.getScore().getDate_scored()%></p>
                     </div>
                     <% } %>
@@ -82,11 +82,11 @@
             </div>
 
             <div id = "tab4" class = "tab-content">
-                <h2>Recent Scores for</h2>
+                <h2>Recent Scores for Quiz</h2>
                 <div>
                     <% for(ScoreAndUser sa : recentScores) {%>
                     <div class = "performer">
-                        <h3><%=sa.getUser().getUsername() + " " + sa.getScore().getScore()%></h3>
+                        <h3><a href="ProfilePage.jsp?profileId=<%=sa.getUser().getUser_id()%>"><%=sa.getUser().getUsername()%></a> <%=sa.getScore().getScore()%></h3>
                         <p><%=sa.getScore().getTime() + " " + sa.getScore().getDate_scored()%></p>
                     </div>
                     <% } %>

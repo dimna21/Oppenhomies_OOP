@@ -7,6 +7,7 @@
 
     int userID = (Integer)session.getAttribute("userID");
     String username = (String) session.getAttribute("username");
+    User user = dbAccess.getUserInfo(username);
 
     ArrayList<Announcement> announcements = dbAccess.getLatestAnnouncements(0);
     ArrayList<Quiz> popularQuizzes = dbAccess.getQuizzesByPopularity(0);
@@ -54,7 +55,16 @@
 
         <div id="tab1" class="tab-content active">
             <h2>Announcements by Administration</h2>
-            <div>
+            <% if (user.getAdmin_status() == 1) { %>
+            <button id="createAnnouncementBtn">Create Announcement</button>
+            <div id="announcementForm" style="display: none;">
+                <input type="text" id="announcementTitle" placeholder="Title">
+                <textarea id="announcementText" placeholder="Text"></textarea>
+                <button id="saveAnnouncement">Save</button>
+                <button id="discardAnnouncement">Discard</button>
+            </div>
+            <% } %>
+            <div id="announcementsList">
                 <% for(Announcement announcement : announcements) {%>
                 <div class="announcement">
                     <h3><%=announcement.getTitle()%></h3>
@@ -302,6 +312,33 @@
                 $detailedContent.show();
                 $(this).text('Show Preview');
             }
+        });
+
+        $('#createAnnouncementBtn').click(function() {
+            $('#announcementForm').slideToggle();
+        });
+
+        $('#discardAnnouncement').click(function() {
+            $('#announcementForm').slideUp();
+            $('#announcementTitle').val('');
+            $('#announcementText').val('');
+        });
+
+
+        $('#saveAnnouncement').click(function() {
+            var title = $('#announcementTitle').val();
+            var text = $('#announcementText').val();
+
+            var newAnnouncement = '<div class="announcement">' +
+                '<h3>' + title + '</h3>' +
+                '<p>' + text + '</p>' +
+                '<p>Just now - ' + '<%=username%>' + '</p>' +
+                '</div>';
+            $('#announcementsList').prepend(newAnnouncement);
+
+            $('#announcementTitle').val('');
+            $('#announcementText').val('');
+            $('#announcementForm').slideUp();
         });
     });
 </script>

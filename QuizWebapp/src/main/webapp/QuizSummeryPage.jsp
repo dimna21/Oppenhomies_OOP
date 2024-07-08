@@ -30,13 +30,13 @@
 <head>
     <title>Quiz Summary</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="QuizSummeryPage.css?v=3.0">
+    <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/QuizSummeryPage.css">
 </head>
 <body>
     <div class = "container">
         <h1 align = "center"><%=quizName%></h1>
 
-        <div class = "tab-container">
+        <div class = "tabs-container">
             <ul class = "tabs">
                 <li class = "tab-link active" data-tab = "tab1">Your Past Scores</li>
                 <li class = "tab-link" data-tab = "tab2">Highest Performers</li>
@@ -50,8 +50,9 @@
                 <div>
                     <% for (Score s : pastScores) { %>
                     <div class = "user-score">
-                        <h3><%=s.getScore()%></h3>
-                        <p><%=s.getTime() + " " + s.getDate_scored()%></p>
+                        <h3><%="Score: " + s.getScore()%></h3>
+                        <p><%="Time: " + s.getTime() + " Seconds"%></p>
+                        <p><%="Date Taken: " + s.getDate_scored()%></p>
                     </div>
                     <% } %>
                 </div>
@@ -62,8 +63,10 @@
                 <div>
                     <% for(ScoreAndUser sa : highestPerformers) {%>
                     <div class = "performer">
-                        <h3><a href="ProfilePage.jsp?profileId=<%=sa.getUser().getUser_id()%>"><%=sa.getUser().getUsername()%></a> <%=sa.getScore().getScore()%></h3>
-                        <p><%=sa.getScore().getTime() + " " + sa.getScore().getDate_scored()%></p>
+                        <h3><a href="ProfilePage.jsp?profileId=<%=sa.getUser().getUser_id()%>"><%=sa.getUser().getUsername()%></a> </h3>
+                        <h3><%="Score: " + sa.getScore().getScore()%></h3>
+                        <p><%="Time: " + sa.getScore().getTime() + " Seconds"%></p>
+                        <p><%="Date Taken: " + sa.getScore().getDate_scored()%></p>
                     </div>
                     <% } %>
                 </div>
@@ -74,8 +77,10 @@
                 <div>
                     <% for(ScoreAndUser sa : lastDayHighestPerformers) { %>
                     <div class = "performer">
-                        <h3><a href="ProfilePage.jsp?profileId=<%=sa.getUser().getUser_id()%>"><%=sa.getUser().getUsername()%></a> <%=sa.getScore().getScore()%></h3>
-                        <p><%=sa.getScore().getTime() + " " + sa.getScore().getDate_scored()%></p>
+                        <h3><a href="ProfilePage.jsp?profileId=<%=sa.getUser().getUser_id()%>"><%=sa.getUser().getUsername()%></a> </h3>
+                        <h3><%="Score: " + sa.getScore().getScore()%></h3>
+                        <p><%="Time: " + sa.getScore().getTime() + " Seconds"%></p>
+                        <p><%="Date Taken: " + sa.getScore().getDate_scored()%></p>
                     </div>
                     <% } %>
                 </div>
@@ -86,8 +91,10 @@
                 <div>
                     <% for(ScoreAndUser sa : recentScores) {%>
                     <div class = "performer">
-                        <h3><a href="ProfilePage.jsp?profileId=<%=sa.getUser().getUser_id()%>"><%=sa.getUser().getUsername()%></a> <%=sa.getScore().getScore()%></h3>
-                        <p><%=sa.getScore().getTime() + " " + sa.getScore().getDate_scored()%></p>
+                        <h3><a href="ProfilePage.jsp?profileId=<%=sa.getUser().getUser_id()%>"><%=sa.getUser().getUsername()%></a> </h3>
+                        <h3><%="Score: " + sa.getScore().getScore()%></h3>
+                        <p><%="Time: " + sa.getScore().getTime() + " Seconds"%></p>
+                        <p><%="Date Taken: " + sa.getScore().getDate_scored()%></p>
                     </div>
                     <% } %>
                 </div>

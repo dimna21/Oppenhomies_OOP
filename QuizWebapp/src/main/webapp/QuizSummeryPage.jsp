@@ -27,6 +27,10 @@
     ArrayList<ScoreAndUser> highestPerformers = QuizDAO.getTopPerformers(quiz.getQuiz_id(), 10);
     ArrayList<ScoreAndUser> lastDayHighestPerformers = UserDAO.getTopPerformersForLastDay(quiz.getQuiz_id(), 10);
     ArrayList<ScoreAndUser> recentScores = QuizDAO.getRecentPerformers(quiz.getQuiz_id(), 0);
+    double averageTime = QuizDAO.getAverageTime(quiz.getQuiz_id());
+    double averageScore = QuizDAO.getAverageScore(quiz.getQuiz_id());
+    double quizRating = QuizDAO.getQuizRating(quiz.getQuiz_id());
+
 %>
 <html>
 <head>
@@ -47,7 +51,7 @@
                 <li class = "tab-link" data-tab = "tab2">Highest Performers</li>
                 <li class = "tab-link" data-tab = "tab3">Yesterday's Highest Performers</li>
                 <li class = "tab-link" data-tab = "tab4">Recent Scores for</li>
-                <li class = "tab-link" datatype = "tab5">Statistics</li>
+                <li class = "tab-link" data-tab = "tab5">Statistics</li>
             </ul>
 
             <div id = "tab1" class = "tab-content active">
@@ -106,8 +110,15 @@
             </div>
 
             <div id = "tab5" class = "tab-content">
-                <h2>Statistics</h2>
 
+                <h2>Statistics</h2>
+                <div class = "performer">
+                    <div>
+                        <h3><%="average time: " + averageTime%></h3>
+                        <h3><%="average score: " + averageScore%></h3>
+                        <h3><%="average rating: " + quizRating%></h3>
+                    </div>
+                </div>
             </div>
         </div>
 

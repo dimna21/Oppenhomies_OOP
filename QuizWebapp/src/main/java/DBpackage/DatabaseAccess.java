@@ -1217,6 +1217,10 @@ public class DatabaseAccess {
     public static  ArrayList<Score> getLastAttemptsOfUserOnQuiz(String username, int quizId, int amount){
         String query = "select * from Scores where quiz_id = "+ quizId+" and user_id = " +
                 getUserID(username) + " order by date_scored desc limit "+amount+" ;" ;
+        if(amount == 0){
+            query = "select * from Scores where quiz_id = "+ quizId+" and user_id = " +
+                    getUserID(username) + " order by date_scored desc  ;";
+        }
         ArrayList<Score>s=new ArrayList<>();
         try {
             ResultSet resultSet = stmt.executeQuery(query);

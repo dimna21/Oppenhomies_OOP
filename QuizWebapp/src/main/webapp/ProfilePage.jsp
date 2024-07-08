@@ -63,7 +63,7 @@
 <head>
     <title>Profile Page</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/ProfilePage.css">
+    <link rel="stylesheet" type="text/css" href="ProfilePage.css">
 </head>
 <body>
     <div class = "container">
@@ -258,5 +258,10 @@
             }
         });
     </script>
+    <div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
 </body>
 </html>

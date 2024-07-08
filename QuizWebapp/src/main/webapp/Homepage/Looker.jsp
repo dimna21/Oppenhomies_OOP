@@ -14,5 +14,10 @@
         <button type="submit" class="button">Search</button>
     </div>
 </form>
+<div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+</div>
 </body>
 </html>

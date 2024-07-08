@@ -4,6 +4,7 @@ S:\oop project\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\ScoreAndUser.j
 S:\oop project\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\Questions\QuestionPicture.java
 S:\oop project\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\Activity.java
 S:\oop project\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\Questions\QuestionMultipleChoice.java
+S:\oop project\Oppenhomies_OOP\QuizWebapp\src\main\java\ServletPackage\AddFriendServlet.java
 S:\oop project\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\Questions\QuestionCheckbox.java
 S:\oop project\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\Questions\QuestionMultiAnswer.java
 S:\oop project\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\Achievement.java
@@ -21,12 +22,14 @@ S:\oop project\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\DAOpackage\Sta
 S:\oop project\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\Note.java
 S:\oop project\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\Quiz.java
 S:\oop project\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\DAOpackage\NoteDAO.java
+S:\oop project\Oppenhomies_OOP\QuizWebapp\src\main\java\ServletPackage\RejectFriendRequestServlet.java
 S:\oop project\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\DAOpackage\ChallengeDAO.java
 S:\oop project\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\DAOpackage\AnnouncementDAO.java
 S:\oop project\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\DAOpackage\FriendDAO.java
 S:\oop project\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\User.java
 S:\oop project\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\DatabaseAccess.java
 S:\oop project\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\FriendRequest.java
+S:\oop project\Oppenhomies_OOP\QuizWebapp\src\main\java\ServletPackage\AcceptFriendRequestServlet.java
 S:\oop project\Oppenhomies_OOP\QuizWebapp\src\main\java\ServletPackage\LoginServlet.java
 S:\oop project\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\DatabaseInfo.java
 S:\oop project\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\hasher.java

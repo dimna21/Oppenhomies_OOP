@@ -3,13 +3,14 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="java.util.Collections" %>
 <%@ page import="DBpackage.Questions.*" %>
+<%@ page import="DBpackage.DAOpackage.QuizDAO" %>
 
 <%
-    DatabaseAccess dbAccess = (DatabaseAccess) application.getAttribute("DatabaseAccess");
+    //DatabaseAccess dbAccess = (DatabaseAccess) application.getAttribute("DatabaseAccess");
     int quizId = Integer.parseInt(request.getParameter("quizId"));
     System.out.println(quizId);
-    Quiz quiz = dbAccess.getQuizInfo(quizId);
-    ArrayList<Question> questions = dbAccess.getQuizQuestions(quizId);
+    Quiz quiz = QuizDAO.getQuizInfo(quizId);
+    ArrayList<Question> questions = QuizDAO.getQuizQuestions(quizId);
     System.out.println(questions.size());
     if(quiz.getRandomQuestion() == 1) Collections.shuffle(questions);
     int questionIndex = 0;

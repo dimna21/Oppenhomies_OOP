@@ -2,35 +2,36 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="DBpackage.*" %>
 <%@ page import="java.util.HashMap" %>
+<%@ page import="DBpackage.DAOpackage.*" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    DatabaseAccess dbAccess = (DatabaseAccess) application.getAttribute("DatabaseAccess");
+    //DatabaseAccess dbAccess = (DatabaseAccess) application.getAttribute("DatabaseAccess");
 
     int userID = (Integer)session.getAttribute("userID");
     String username = (String) session.getAttribute("username");
-    User user = dbAccess.getUserInfo(username);
+    User user = UserDAO.getUserInfo(username);
 
-    ArrayList<Announcement> announcements = dbAccess.getLatestAnnouncements(0);
-    ArrayList<Quiz> popularQuizzes = dbAccess.getQuizzesByPopularity(0);
-    ArrayList<Quiz> recentlyCreatedQuizzes = dbAccess.getNewestQuiz(0);
+    ArrayList<Announcement> announcements = AnnouncementDAO.getLatestAnnouncements(0);
+    ArrayList<Quiz> popularQuizzes = QuizDAO.getQuizzesByPopularity(0);
+    ArrayList<Quiz> recentlyCreatedQuizzes = QuizDAO.getNewestQuiz(0);
 
     ArrayList<Score> recentScores = new ArrayList<Score>();
     ArrayList<Quiz> corrQuizzes = new ArrayList<Quiz>(); // Corresponding quizzes to recent Scores
 
-    dbAccess.recentQuizTakingActivitiesForUser(userID, recentScores, corrQuizzes);
+    QuizDAO.recentQuizTakingActivitiesForUser(userID, recentScores, corrQuizzes);
 
-    ArrayList<Quiz> recentQuizzesByUser = dbAccess.recentCreationsByUser(username,0);
+    ArrayList<Quiz> recentQuizzesByUser = UserDAO.recentCreationsByUser(username,0);
 
-    ArrayList<Achievement> achievements = dbAccess.getRecentAchievements(username,0);
+    ArrayList<Achievement> achievements = AchievementDAO.getRecentAchievements(username,0);
 
     ArrayList<Challenge> challenges = new ArrayList<Challenge>();
     ArrayList<Quiz> quizzesForChallenges = new ArrayList<Quiz>();
-    dbAccess.getChallengesForUser(userID, challenges, quizzesForChallenges);
+    ChallengeDAO.getChallengesForUser(userID, challenges, quizzesForChallenges);
 
-    ArrayList<FriendRequest> friendRequests = dbAccess.waitingFriendRequests(userID);
+    ArrayList<FriendRequest> friendRequests = FriendDAO.waitingFriendRequests(userID);
     ArrayList<Note> notes = DatabaseAccess.getNotes(userID, 0);
 
-    ArrayList<Activity> activities = dbAccess.getFriendsActivity(username, 0);
+    ArrayList<Activity> activities = FriendDAO.getFriendsActivity(username, 0);
 
     HashMap<String, String> achievPictureMap = new HashMap<String, String>();
     achievPictureMap.put("Amateur author", "Pictures/Achievements/Amateur author.png");
@@ -252,12 +253,6 @@
                             <p>From: <%= note.getFromUsername() %></p>
                             <p><%= note.getText() %></p>
                         </div>
-                        <div class="note-actions">
-                            <form action="AcknowledgeNoteServlet" method="post">
-                                <input type="hidden" name="noteId" value="<%= note.getNoteId() %>">
-                                <button type="submit">Acknowledge</button>
-                            </form>
-                        </div>
                     </div>
                     <% } %>
                 </div>
@@ -387,7 +382,11 @@
         });
     });
 </script>
-
+<div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+    <div class="wave"></div>
+</div>
 
 </body>
 </html>

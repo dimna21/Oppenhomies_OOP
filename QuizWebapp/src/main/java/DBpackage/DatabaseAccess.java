@@ -142,7 +142,7 @@ public class DatabaseAccess {
         return friendRequests;
     }
 
-    public ArrayList<FriendRequest> waitingFriendRequests(int userID){
+    public static ArrayList<FriendRequest> waitingFriendRequests(int userID){
         ArrayList<FriendRequest> friendRequests= new ArrayList<>();
 
         String query = "SELECT fr.*, fu.username as \"from_username\", tu.username as \"to_username\" " +

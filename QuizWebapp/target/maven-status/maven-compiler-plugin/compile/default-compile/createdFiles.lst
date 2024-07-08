@@ -1,10 +1,15 @@
 DBpackage\Achievement.class
+DBpackage\DAOpackage\ChallengeDAO.class
 DBpackage\Questions\QuestionTypeConstants.class
 ServletPackage\LogoutServlet.class
+DBpackage\DAOpackage\AnnouncementDAO.class
 DBpackage\Questions\QuestionMultipleChoice.class
+DBpackage\DAOpackage\UserDAO.class
 ServletPackage\ListenerClass.class
+DBpackage\DAOpackage\FriendDAO.class
 DBpackage\Questions\QuestionMultiAnswer.class
 DBpackage\Questions\QuestionTextbox.class
+DBpackage\DAOpackage\QuizDAO.class
 ServletPackage\LookUpServlet.class
 ServletPackage\NewAccServlet.class
 ServletPackage\AcceptFriendRequestServlet.class
@@ -12,6 +17,7 @@ DBpackage\FriendRequest.class
 DBpackage\Challenge.class
 DBpackage\Score.class
 DBpackage\Announcement.class
+ServletPackage\ChatServlet.class
 ServletPackage\RejectFriendRequestServlet.class
 DBpackage\Activity.class
 DBpackage\DatabaseAccess.class
@@ -23,9 +29,12 @@ DBpackage\Quiz.class
 ServletPackage\AddFriendServlet.class
 DBpackage\Questions\QuestionFillBlank.class
 DBpackage\User.class
+DBpackage\DAOpackage\StatisticDAO.class
 DBpackage\Questions\QuestionMatching.class
+DBpackage\DAOpackage\NoteDAO.class
 DBpackage\Questions\QuestionPicture.class
 DBpackage\ScoreAndUser.class
 ServletPackage\LoginServlet.class
+DBpackage\DAOpackage\AchievementDAO.class
 DBpackage\Note.class
 DBpackage\Questions\QuestionCheckbox.class

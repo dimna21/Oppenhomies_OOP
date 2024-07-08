@@ -9,7 +9,7 @@
 <html>
 <head>
   <title>Welcome</title>
-  <link rel="stylesheet" href="<%= request.getContextPath() %>/UserAuthentication/authen.css">
+  <link rel="stylesheet" type="text/css" href="authen.css?v=2.0">
 </head>
 <body>
 <div class="container">
@@ -31,5 +31,11 @@
     </form>
   </div>
 </div>
+
+
 </body>
 </html>
+
+<div class="bg"></div>
+<div class="bg bg2"></div>
+<div class="bg bg3"></div>

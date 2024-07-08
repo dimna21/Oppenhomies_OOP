@@ -1,41 +1,61 @@
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
+    background-color: #795695;
+    font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 0;
+    line-height: 1.6;
 }
 
+/* Styling for the container */
 .container {
     width: 80%;
-    margin: 0 auto;
-    background-color: white;
+    margin: auto;
+    overflow: hidden;
     padding: 20px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    background-color: #795695;
+}
+
+/* Styling for headings */
+h1, h2, h3 {
+    color: #000;
+    font-weight: bold;
 }
 
 h1 {
-    color: #333;
     text-align: center;
+    font-size: 3em;
+    color: #000;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
-.tab-container {
-    margin-top: 20px;
+/* Styling for tabs container */
+.tabs-container {
+    background: #C8A4D4;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Styling for tabs */
 .tabs {
     list-style-type: none;
     padding: 0;
     margin: 0;
     overflow: hidden;
+    background-color: #AC94F4;
     border-bottom: 1px solid #ccc;
-    display: flex;
-    justify-content: space-around;
 }
 
 .tab-link {
-    padding: 10px 15px;
-    cursor: pointer;
+    float: left;
+    display: block;
+    color: #333;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
     transition: background-color 0.3s;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
 }
 
 .tab-link:hover {
@@ -43,14 +63,14 @@ h1 {
 }
 
 .tab-link.active {
-    background-color: #ccc;
+    background-color: #C8A2C9;
+    border-bottom: 2px solid #ccc;
 }
 
+/* Styling for tab content */
 .tab-content {
     display: none;
     padding: 20px;
-    border: 1px solid #ccc;
-    border-top: none;
 }
 
 .tab-content.active {
@@ -67,15 +87,6 @@ h1 {
 
 .popular-quizzes:hover, .recently-created-quizzes:hover, .achievements:hover {
     background-color: #e9e9e9;
-}
-
-h2 {
-    color: #444;
-}
-
-h3 {
-    color: #666;
-    margin: 5px 0;
 }
 
 p {
@@ -159,7 +170,7 @@ form:nth-child(2) button:hover {
 }
 
 .FRIEND-container {
-    background-color: #ffffff;
+    background-color: #795695;
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -172,6 +183,7 @@ form:nth-child(2) button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
+    color: #000
 }
 
 /* Styling for buttons */
@@ -192,7 +204,47 @@ form:nth-child(2) button:hover {
 .FRIEND a:hover {
     background-color: #0056b3;
 }
+.achievements-container {
+    margin-top: 20px;
+}
 
+.achievement-item {
+    background: #fff;
+    border: 2px solid #371F76;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px 40px;
+}
+
+.achievement {
+    display: flex;
+    align-items: center;
+}
+
+.achievement-image {
+    flex-shrink: 0;
+    margin-right: 20px;
+}
+
+.achievement-details {
+    flex-grow: 1;
+}
+
+.achievement h3, .achievement p {
+    margin-bottom: 5px;
+}
+
+.achievement-image img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid #371F76;
+}
+
+.waitfa{
+    color: #000000;
+}
 /*.link-button {*/
 /*    background: none;*/
 /*    border: none;*/

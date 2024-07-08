@@ -27,9 +27,6 @@
 <div class="container">
     <div class="center-text">QUIZZLER</div>
     <hr />
-    <div class="container2">
-        <div class="intro-text">Stick Yo &#9757; Gyatt &#127825; Out For Quizzler &#129397; </div>
-    </div>
     <div class="tabs-container">
         <ul class="tabs">
             <li class="tab-link active" data-tab="tab1">Announcements</li>

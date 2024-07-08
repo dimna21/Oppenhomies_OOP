@@ -1,5 +1,6 @@
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="DBpackage.*" %><%--
+<%@ page import="DBpackage.*" %>
+<%@ page import="java.util.HashMap" %><%--
   Created by IntelliJ IDEA.
   User: Nicolas
   Date: 7/6/2024
@@ -49,12 +50,19 @@
     for(FriendRequest friendRequest : requests)
         if (friendRequest.getFrom_username().equals(LoggedInUser)) waiting = true;
 
+    HashMap<String, String> achievPictureMap = new HashMap<String, String>();
+    achievPictureMap.put("Amateur author", "Pictures/Achievements/Amateur author.png");
+    achievPictureMap.put("I am the greatest", "Pictures/Achievements/I am the greatest.png");
+    achievPictureMap.put("Prodigious author", "Pictures/Achievements/Prodigious author.png");
+    achievPictureMap.put("Prolific author", "Pictures/Achievements/Prolific author.png");
+    achievPictureMap.put("Quiz machine", "Pictures/Achievements/Quiz machine.png");
+    achievPictureMap.put("Practice makes perfect", "Pictures/Achievements/Practice makes perfect.png");
 %>
 <html>
 <head>
     <title>Profile Page</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="ProfilePage.css?v=3.0">
+    <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/ProfilePage.css">
 </head>
 <body>
     <div class = "container">
@@ -70,8 +78,8 @@
 
         else if (waiting) {%>
         <div class="FRIEND-container">
-            < class="FRIEND">
-            <p>Waiting For Answer</p>
+            <div class="FRIEND">
+            <p class="waitfa">Waiting For Answer</p>
             </div>
         </div>
         <%}
@@ -85,7 +93,7 @@
         <%}%>
 
 
-        <div class = "tab-container">
+        <div class = "tabs-container">
             <ul class = "tabs">
                 <li class = "tab-link active" data-tab = "tab1">Most Popular Quizzes</li>
                 <li class = "tab-link" data-tab = "tab2">Recently Created Quizzes</li>
@@ -94,7 +102,7 @@
                 <li class = "tab-link" data-tab = "tab5">Achievements</li>
                 <li class = "tab-link" data-tab = "tab6">Chat</li>
             </ul>
-        </div>
+
 
         <div id = "tab1" class="tab-content active">
             <h2><%=profile%>'s Most Popular Quizzes</h2>
@@ -104,7 +112,7 @@
                     <div class="popular-quizzes">
                         <h3><%=quiz.getName()%></h3>
                         <p><%=quiz.getDescription()%></p>
-                        <p><%=quiz.getCreationDate()%></p>
+                        <p><%="Creation Date: " + quiz.getCreationDate()%></p>
                     </div>
                 </a>
                 <%}%>
@@ -119,7 +127,7 @@
                     <div class="recently-created-quizzes">
                         <h3><%=quiz.getName()%></h3>
                         <p><%=quiz.getDescription()%></p>
-                        <p><%=quiz.getCreationDate()%></p>
+                        <p><%="Creation Date: " + quiz.getCreationDate()%></p>
                     </div>
                 </a>
                 <%}%>
@@ -135,9 +143,10 @@
                 %>
                 <a href="QuizSummeryPage.jsp?quizId=<%=quiz.getQuiz_id()%>" class="quiz-link">
                     <div class="recently-created-quizzes">
-                        <h3><%=quiz.getName()%> <%=score.getScore()%></h3>
+                        <h3><%=quiz.getName()%></h3>
+                        <h3> <%="Score: " + score.getScore()%></h3>
                         <p><%=quiz.getDescription()%></p>
-                        <p><%=score.getDate_scored()%></p>
+                        <p><%="Date Taken: " + score.getDate_scored()%></p>
                     </div>
                 </a>
                 <% } %>
@@ -153,26 +162,34 @@
                 %>
                 <a href="QuizSummeryPage.jsp?quizId=<%=quiz.getQuiz_id()%>" class="quiz-link">
                     <div class="recently-created-quizzes">
-                        <h3><%=quiz.getName()%> <%=score.getScore()%></h3>
+                        <h3><%=quiz.getName()%></h3>
+                        <h3> <%="Score: " + score.getScore()%></h3>
                         <p><%=quiz.getDescription()%></p>
-                        <p><%=score.getDate_scored()%></p>
+                        <p><%="Date Taken: " + score.getDate_scored()%></p>
                     </div>
                 </a>
                 <% } %>
             </div>
         </div>
 
-        <div id="tab5" class="tab-content">
-            <h2>Achievements</h2>
-            <div>
-                <% for(Achievement achievement: achievements) {%>
-                <div class="achievements">
-                    <h3><%=achievement.getAchievementTitle()%></h3>
-                    <p><%=achievement.getAchievementDate()%></p>
+            <div id="tab5" class="tab-content">
+                <h2>Achievements</h2>
+                <div class="achievements-container">
+                    <% for(Achievement achievement: achievements) {%>
+                    <div class="achievement-item">
+                        <div class="achievement">
+                            <div class="achievement-image">
+                                <img src="<%=achievPictureMap.get(achievement.getAchievementTitle())%>" alt="Achievement Icon" width="100" height="100">
+                            </div>
+                            <div class="achievement-details">
+                                <h3><%=achievement.getAchievementTitle()%></h3>
+                                <p><%=achievement.getAchievementDate()%></p>
+                            </div>
+                        </div>
+                    </div>
+                    <%}%>
                 </div>
-                <%}%>
             </div>
-        </div>
 
         <div id="tab6" class="tab-content">
             <h2>Chat</h2>
@@ -200,7 +217,7 @@
             </div>
         </div>
 
-
+        </div>
     </div>
 
     <script>

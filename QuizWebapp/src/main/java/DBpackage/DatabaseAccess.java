@@ -141,6 +141,34 @@ public class DatabaseAccess {
         return friendRequests;
     }
 
+    public ArrayList<FriendRequest> waitingFriendRequests(int userID){
+        ArrayList<FriendRequest> friendRequests= new ArrayList<>();
+
+        String query = "SELECT fr.*, fu.username as \"from_username\", tu.username as \"to_username\" " +
+                "FROM friend_requests fr " +
+                "LEFT JOIN users fu ON fr.from_id = fu.user_id " +
+                "LEFT JOIN users tu ON fr.to_id = tu.user_id " +
+                "WHERE fr.to_id = " + userID + " AND fr.notification = 0";
+
+        try {
+            ResultSet resultSet = stmt.executeQuery(query);
+            while (resultSet.next()){
+                FriendRequest friendRequest = new FriendRequest(
+                        resultSet.getInt("request_id"),
+                        resultSet.getInt("from_id"),
+                        resultSet.getInt("to_id"),
+                        resultSet.getInt("notification"),
+                        resultSet.getString("from_username"),
+                        resultSet.getString("to_username")
+                );
+                friendRequests.add(friendRequest);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return friendRequests;
+    }
+
 
     public void getChallengesForUser(int userID, ArrayList<Challenge> challenges, ArrayList<Quiz> quizzes){
         String query = "SELECT c.*, q.*, u.username as \"quiz_creator_username\", tu.username as \"to_username\", fu.username as \"from_username\" " +
@@ -760,7 +788,18 @@ public class DatabaseAccess {
     public void updateFriendRequestStatus(int userAnswering, int answeringTo, int status) throws SQLException {
         String query = "UPDATE Friend_requests " +
                 "SET notification = " + status +
-                " WHERE from_id = " + answeringTo + " AND to_id = " + userAnswering;
+                " WHERE from_id = " + answeringTo + " AND to_id = " + userAnswering + " ORDER BY request_id DESC LIMIT 1";
+        try (Statement stmt = con.createStatement()) {
+            int rowsUpdated = stmt.executeUpdate(query);
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
+    public void updateFriendRequestStatus(int request_id, int status) throws SQLException {
+        String query = "UPDATE Friend_requests " +
+                "SET notification = " + status +
+                " WHERE requset_id = " + request_id;
         try (Statement stmt = con.createStatement()) {
             int rowsUpdated = stmt.executeUpdate(query);
         } catch (SQLException e) {
@@ -771,7 +810,7 @@ public class DatabaseAccess {
     /** Returns a friendlist of specified username */
     public ArrayList<User> getFriendlist(String username){
         ArrayList<User> friendlist = new ArrayList<>();
-        String query = "SELECT * FROM Friend_requests WHERE (to_id = " + getUserID(username) + " OR from_id = " + getUserID(username) + ") AND notification = 1";
+        String query = "SELECT * FROM Friend_requests WHERE ( from_id = " + getUserID(username) + ") AND notification = 1";
         try (PreparedStatement stmt = con.prepareStatement(query)) {
             ResultSet resultSet = stmt.executeQuery(query);
             while(resultSet.next()){

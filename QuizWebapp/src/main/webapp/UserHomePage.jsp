@@ -27,7 +27,7 @@
     ArrayList<Quiz> quizzesForChallenges = new ArrayList<Quiz>();
     dbAccess.getChallengesForUser(userID, challenges, quizzesForChallenges);
 
-    ArrayList<FriendRequest> friendRequests = dbAccess.friendRequests(userID);
+    ArrayList<FriendRequest> friendRequests = dbAccess.waitingFriendRequests(userID);
     ArrayList<Note> notes = DatabaseAccess.getNotes(userID, 0);
 
     ArrayList<Activity> activities = dbAccess.getFriendsActivity(username, 0);
@@ -221,12 +221,17 @@
                 </div>
                 <div class="inbox-column">
                     <h3>Friend Requests</h3>
-                    <% for (FriendRequest friendRequest : friendRequests) { %>
+                    <%
+                        int nums = 0;
+                        for (FriendRequest friendRequest : friendRequests) {
+                            nums++;
+                    %>
                     <div class="friend-request">
                         <div class="friend-request-details">
                             <p>From: <%= friendRequest.getFrom_username() %></p>
                         </div>
                         <div class="friend-request-actions">
+                            <% if(nums == 1){ %>
                             <form action="AcceptFriendRequestServlet" method="post">
                                 <input type="hidden" name="requestId" value="<%= friendRequest.getRequestId() %>">
                                 <button type="submit">Accept</button>
@@ -235,6 +240,7 @@
                                 <input type="hidden" name="requestId" value="<%= friendRequest.getRequestId() %>">
                                 <button type="submit">Reject</button>
                             </form>
+                            <% } %>
                         </div>
                     </div>
                     <% } %>

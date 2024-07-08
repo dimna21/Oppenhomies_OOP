@@ -45,15 +45,10 @@
         if(user.getUsername().equals(VisitedUser)) drugi = true;
 
     boolean waiting = false;
-    ArrayList<FriendRequest> requests = dbAccess.friendRequests(dbAccess.getUserID(VisitedUser));
-    System.out.println(requests.size());
-    for(FriendRequest friendRequest : requests) {
+    ArrayList<FriendRequest> requests = dbAccess.waitingFriendRequests(dbAccess.getUserID(VisitedUser));
+    for(FriendRequest friendRequest : requests)
         if (friendRequest.getFrom_username().equals(LoggedInUser)) waiting = true;
-        System.out.println(friendRequest.getFrom_username());
-    }
-    System.out.println(waiting);
-    System.out.println(LoggedInUser);
-    System.out.println(dbAccess.getUserID(VisitedUser));
+
 %>
 <html>
 <head>
@@ -75,8 +70,8 @@
 
         else if (waiting) {%>
         <div class="FRIEND-container">
-            <div class="FRIEND">
-                <a href="ProfilePage.jsp" class="button">Waiting For Answer</a>
+            < class="FRIEND">
+            <p>Waiting For Answer</p>
             </div>
         </div>
         <%}

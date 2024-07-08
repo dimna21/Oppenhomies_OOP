@@ -1,8 +1,8 @@
 package ServletPackage;
 
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,37 +12,33 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import DBpackage.DatabaseAccess;
-public class AddFriendServlet extends HttpServlet {
+
+public class AcceptFriendRequestServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
         DatabaseAccess dbAccess = (DatabaseAccess) getServletContext().getAttribute("DatabaseAccess");
         HttpSession session = req.getSession();
 
-        String VisitedUser = session.getAttribute("VisitedUser").toString();
         String LoggedInUser = session.getAttribute("LoggedInUser").toString();
-        int userID = dbAccess.getUserInfo(VisitedUser).getUser_id();
+        ArrayList<String> Senders = (ArrayList<String>)session.getAttribute("SenderID");
+        String Sender = Senders.get(0);
 
-        ArrayList<String> senders = (ArrayList<String>)session.getAttribute("SenderID");
-        if(senders == null) senders = new ArrayList<String>();
-
-        senders.add(LoggedInUser);
-        System.out.println(senders.size());
-
-
-//        System.out.println("LoggedInUser: " + LoggedInUser);
-//        System.out.println("VisitedUser: " + VisitedUser);
-//        System.out.println("-- END OF ADD --");
-
+        int userID = dbAccess.getUserInfo(LoggedInUser).getUser_id();
+        int SenderID = dbAccess.getUserInfo(Sender).getUser_id();
         try {
-            session.setAttribute("SenderID", senders);
-            dbAccess.sendFriendRequest(LoggedInUser, VisitedUser);
+            dbAccess.updateFriendRequestStatus(userID, SenderID, 1);
+            dbAccess.sendFriendRequest(LoggedInUser, Sender);
+            dbAccess.updateFriendRequestStatus(SenderID, userID, 1);
+
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
+        Senders.remove(0);
+        session.setAttribute("SenderID", Senders);
         RequestDispatcher dispatcher;
-        dispatcher = req.getRequestDispatcher("ProfilePage.jsp?profileId=" + userID);
+        dispatcher = req.getRequestDispatcher("UserHomePage.jsp");
         dispatcher.forward(req, res);
     }
 }

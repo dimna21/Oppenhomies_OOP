@@ -8,6 +8,7 @@ D:\PCZone.ge\Desktop\study material\OOP\Oppenhomies_OOP\QuizWebapp\src\main\java
 D:\PCZone.ge\Desktop\study material\OOP\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\Questions\QuestionPicture.java
 D:\PCZone.ge\Desktop\study material\OOP\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\Questions\QuestionMatching.java
 D:\PCZone.ge\Desktop\study material\OOP\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\Questions\QuestionMultipleChoice.java
+D:\PCZone.ge\Desktop\study material\OOP\Oppenhomies_OOP\QuizWebapp\src\main\java\ServletPackage\AcceptFriendRequestServlet.java
 D:\PCZone.ge\Desktop\study material\OOP\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\hasher.java
 D:\PCZone.ge\Desktop\study material\OOP\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\User.java
 D:\PCZone.ge\Desktop\study material\OOP\Oppenhomies_OOP\QuizWebapp\src\main\java\ServletPackage\NewAccServlet.java
@@ -20,6 +21,7 @@ D:\PCZone.ge\Desktop\study material\OOP\Oppenhomies_OOP\QuizWebapp\src\main\java
 D:\PCZone.ge\Desktop\study material\OOP\Oppenhomies_OOP\QuizWebapp\src\main\java\ServletPackage\LoginServlet.java
 D:\PCZone.ge\Desktop\study material\OOP\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\Announcement.java
 D:\PCZone.ge\Desktop\study material\OOP\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\Note.java
+D:\PCZone.ge\Desktop\study material\OOP\Oppenhomies_OOP\QuizWebapp\src\main\java\ServletPackage\RejectFriendRequestServlet.java
 D:\PCZone.ge\Desktop\study material\OOP\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\Score.java
 D:\PCZone.ge\Desktop\study material\OOP\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\Questions\QuestionMultiAnswer.java
 D:\PCZone.ge\Desktop\study material\OOP\Oppenhomies_OOP\QuizWebapp\src\main\java\DBpackage\Questions\QuestionTextbox.java

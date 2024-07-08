@@ -7,10 +7,12 @@ DBpackage\Questions\QuestionMultiAnswer.class
 DBpackage\Questions\QuestionTextbox.class
 ServletPackage\LookUpServlet.class
 ServletPackage\NewAccServlet.class
+ServletPackage\AcceptFriendRequestServlet.class
 DBpackage\FriendRequest.class
 DBpackage\Challenge.class
 DBpackage\Score.class
 DBpackage\Announcement.class
+ServletPackage\RejectFriendRequestServlet.class
 DBpackage\Activity.class
 DBpackage\DatabaseAccess.class
 DBpackage\DatabaseInfo.class

@@ -23,19 +23,7 @@ public class AddFriendServlet extends HttpServlet {
         String LoggedInUser = session.getAttribute("LoggedInUser").toString();
         int userID = dbAccess.getUserInfo(VisitedUser).getUser_id();
 
-        ArrayList<String> senders = (ArrayList<String>)session.getAttribute("SenderID");
-        if(senders == null) senders = new ArrayList<String>();
-
-        senders.add(LoggedInUser);
-        System.out.println(senders.size());
-
-
-//        System.out.println("LoggedInUser: " + LoggedInUser);
-//        System.out.println("VisitedUser: " + VisitedUser);
-//        System.out.println("-- END OF ADD --");
-
         try {
-            session.setAttribute("SenderID", senders);
             dbAccess.sendFriendRequest(LoggedInUser, VisitedUser);
         } catch (SQLException e) {
             throw new RuntimeException(e);

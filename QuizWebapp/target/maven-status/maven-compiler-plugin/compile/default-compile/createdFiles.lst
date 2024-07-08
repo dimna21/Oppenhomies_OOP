@@ -17,6 +17,7 @@ DBpackage\Activity.class
 DBpackage\DatabaseAccess.class
 DBpackage\DatabaseInfo.class
 DBpackage\hasher.class
+ServletPackage\CreateQuizServlet.class
 DBpackage\Questions\Question.class
 DBpackage\Quiz.class
 ServletPackage\AddFriendServlet.class

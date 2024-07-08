@@ -222,16 +222,13 @@
                 <div class="inbox-column">
                     <h3>Friend Requests</h3>
                     <%
-                        int nums = 0;
                         for (FriendRequest friendRequest : friendRequests) {
-                            nums++;
                     %>
                     <div class="friend-request">
                         <div class="friend-request-details">
                             <p>From: <%= friendRequest.getFrom_username() %></p>
                         </div>
                         <div class="friend-request-actions">
-                            <% if(nums == 1){ %>
                             <form action="AcceptFriendRequestServlet" method="post">
                                 <input type="hidden" name="requestId" value="<%= friendRequest.getRequestId() %>">
                                 <button type="submit">Accept</button>
@@ -240,7 +237,6 @@
                                 <input type="hidden" name="requestId" value="<%= friendRequest.getRequestId() %>">
                                 <button type="submit">Reject</button>
                             </form>
-                            <% } %>
                         </div>
                     </div>
                     <% } %>

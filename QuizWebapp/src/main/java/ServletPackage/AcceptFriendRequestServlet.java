@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import DBpackage.DatabaseAccess;
+import DBpackage.FriendRequest;
 
 public class AcceptFriendRequestServlet extends HttpServlet {
     @Override
@@ -21,11 +22,18 @@ public class AcceptFriendRequestServlet extends HttpServlet {
         HttpSession session = req.getSession();
 
         String LoggedInUser = session.getAttribute("LoggedInUser").toString();
-        ArrayList<String> Senders = (ArrayList<String>)session.getAttribute("SenderID");
-        String Sender = Senders.get(0);
-
         int userID = dbAccess.getUserInfo(LoggedInUser).getUser_id();
+        String Sender = "";
+
+        int requestId = Integer.parseInt(req.getParameter("requestId"));
+        System.out.println("Request ID: " + requestId);
+        ArrayList<FriendRequest> fr = dbAccess.waitingFriendRequests(userID);
+        for (FriendRequest frm : fr)
+            if (frm.getRequestId() == requestId)
+                Sender = frm.getFrom_username();
+
         int SenderID = dbAccess.getUserInfo(Sender).getUser_id();
+
         try {
             dbAccess.updateFriendRequestStatus(userID, SenderID, 1);
             dbAccess.sendFriendRequest(LoggedInUser, Sender);
@@ -35,8 +43,6 @@ public class AcceptFriendRequestServlet extends HttpServlet {
             throw new RuntimeException(e);
         }
 
-        Senders.remove(0);
-        session.setAttribute("SenderID", Senders);
         RequestDispatcher dispatcher;
         dispatcher = req.getRequestDispatcher("UserHomePage.jsp");
         dispatcher.forward(req, res);

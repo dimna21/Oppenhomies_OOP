@@ -249,12 +249,6 @@
                             <p>From: <%= note.getFromUsername() %></p>
                             <p><%= note.getText() %></p>
                         </div>
-                        <div class="note-actions">
-                            <form action="AcknowledgeNoteServlet" method="post">
-                                <input type="hidden" name="noteId" value="<%= note.getNoteId() %>">
-                                <button type="submit">Acknowledge</button>
-                            </form>
-                        </div>
                     </div>
                     <% } %>
                 </div>

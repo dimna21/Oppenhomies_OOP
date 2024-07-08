@@ -1,5 +1,6 @@
 package ServletPackage;
 
+import DBpackage.DAOpackage.QuizDAO;
 import DBpackage.DatabaseAccess;
 import DBpackage.Questions.*;
 import com.google.gson.Gson;
@@ -19,7 +20,7 @@ import java.util.List;
 public class CreateQuizServlet extends HttpServlet
 {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        DatabaseAccess dbAccess = (DatabaseAccess) getServletContext().getAttribute("DatabaseAccess");
+        //DatabaseAccess dbAccess = (DatabaseAccess) getServletContext().getAttribute("DatabaseAccess");
 
         BufferedReader reader = request.getReader();
         StringBuilder sb = new StringBuilder();
@@ -47,7 +48,7 @@ public class CreateQuizServlet extends HttpServlet
         java.util.Date now = new java.util.Date();
         java.sql.Timestamp currDate = new java.sql.Timestamp(now.getTime());
 
-        int quizId = dbAccess.createQuizAndGetID(quizName, quizDescription, creatorId, "", randomQuestion, immediate, practice, onePage, currDate);
+        int quizId = QuizDAO.createQuizAndGetID(quizName, quizDescription, creatorId, "", randomQuestion, immediate, practice, onePage, currDate);
 
         JsonArray questionsArray = jsonObject.getAsJsonArray("questions");
         ArrayList<Question> questions = new ArrayList<>();
@@ -154,6 +155,6 @@ public class CreateQuizServlet extends HttpServlet
             question.setSubID(i);
             questions.add(question);
         }
-        dbAccess.populateQuiz(questions);
+        QuizDAO.populateQuiz(questions);
     }
 }

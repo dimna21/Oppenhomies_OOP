@@ -11,6 +11,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import DBpackage.DAOpackage.FriendDAO;
+import DBpackage.DAOpackage.UserDAO;
 import DBpackage.DatabaseAccess;
 import DBpackage.FriendRequest;
 
@@ -19,26 +21,26 @@ public class RejectFriendRequestServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-        DatabaseAccess dbAccess = (DatabaseAccess) getServletContext().getAttribute("DatabaseAccess");
+        //DatabaseAccess dbAccess = (DatabaseAccess) getServletContext().getAttribute("DatabaseAccess");
         HttpSession session = req.getSession();
 
         String LoggedInUser = session.getAttribute("LoggedInUser").toString();
-        int userID = dbAccess.getUserInfo(LoggedInUser).getUser_id();
+        int userID = UserDAO.getUserInfo(LoggedInUser).getUser_id();
         String Sender = "";
 
         int requestId = Integer.parseInt(req.getParameter("requestId"));
         System.out.println("Request ID: " + requestId);
-        ArrayList<FriendRequest> fr = dbAccess.waitingFriendRequests(userID);
+        ArrayList<FriendRequest> fr = FriendDAO.waitingFriendRequests(userID);
         for (FriendRequest frm : fr)
             if (frm.getRequestId() == requestId)
                 Sender = frm.getFrom_username();
-        int SenderID = dbAccess.getUserInfo(Sender).getUser_id();
+        int SenderID = UserDAO.getUserInfo(Sender).getUser_id();
 
         try {
-            dbAccess.updateFriendRequestStatus(userID, SenderID, 2);
+            FriendDAO.updateFriendRequestStatus(userID, SenderID, 2);
 
-            dbAccess.sendFriendRequest(LoggedInUser, Sender);
-            dbAccess.updateFriendRequestStatus(SenderID, userID, 2);
+            FriendDAO.sendFriendRequest(LoggedInUser, Sender);
+            FriendDAO.updateFriendRequestStatus(SenderID, userID, 2);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);

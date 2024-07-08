@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import DBpackage.DAOpackage.FriendDAO;
+import DBpackage.DAOpackage.UserDAO;
 import DBpackage.DatabaseAccess;
 
 public class LookUpServlet extends HttpServlet {
@@ -15,7 +17,7 @@ public class LookUpServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-        DatabaseAccess dbAccess = (DatabaseAccess) getServletContext().getAttribute("DatabaseAccess");
+        //DatabaseAccess dbAccess = (DatabaseAccess) getServletContext().getAttribute("DatabaseAccess");
         HttpSession session = req.getSession();
 
         String username = req.getParameter("username");
@@ -25,12 +27,12 @@ public class LookUpServlet extends HttpServlet {
 //        System.out.println("username: " + username);
 //        System.out.println("-- END OF LOOKUP --");
 
-        boolean exists = (dbAccess.getUserInfo(username) != null);
+        boolean exists = (UserDAO.getUserInfo(username) != null);
         boolean same = username.equals(LoggedInUser);
         RequestDispatcher dispatcher;
         if(exists){
             if(!same){
-                int userID = dbAccess.getUserInfo(username).getUser_id();
+                int userID = UserDAO.getUserInfo(username).getUser_id();
                 session.setAttribute("username", username);
                 session.setAttribute("LoggedInUser", LoggedInUser);
                 session.setAttribute("VisitedUser", username);

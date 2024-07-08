@@ -35,9 +35,12 @@
     <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/QuizSummeryPage.css">
 </head>
 <body>
+    <div class = quizMaker>
+        <h3>quiz author : <%=quizCreator%></h3>
+    </div>
     <div class = "container">
         <h1 align = "center"><%=quizName%></h1>
-
+        <h2> <%=quizDescription%> </h2>
         <div class = "tabs-container">
             <ul class = "tabs">
                 <li class = "tab-link active" data-tab = "tab1">Your Past Scores</li>
@@ -109,11 +112,11 @@
         </div>
 
         <div class="button-container">
-            <form action="RejectFriendRequestServlet" method="post">
+            <form action="TakeQuizServlet" method="post">
                 <button type="submit">Take</button>
             </form>
             <% if(quiz.isPractice() > 0) { %>
-            <form action="RejectFriendRequestServlet" method="post">
+            <form action="TakeQuizServlet" method="post">
                 <button type="submit">Practice</button>
             </form>
             <% } %>
@@ -142,6 +145,10 @@
         );
     });
 </script>
-
+    <div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+        <div class="wave"></div>
+    </div>
 </body>
 </html>

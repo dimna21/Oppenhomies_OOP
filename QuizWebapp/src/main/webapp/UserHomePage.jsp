@@ -44,12 +44,15 @@
 <head>
     <title>User Home Page</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="UserHomePage.css?v=3.0">
+    <link rel="stylesheet" type="text/css" href="UserHomePage.css?v=2.0">
 </head>
 <body>
 <div class="container">
     <div class="user-info">
         <div class="user-name"><%=username%></div>
+        <form action="CreateQuiz.jsp" method="post">
+            <button type="submit">Create Quiz</button>
+        </form>
         <form action="<%= request.getContextPath() %>/LogoutServlet" method="post">
             <button type="submit">Log Out</button>
         </form>

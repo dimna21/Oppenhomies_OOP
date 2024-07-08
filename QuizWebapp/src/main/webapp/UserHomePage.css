@@ -367,6 +367,7 @@ form[action*="Reject"] button[type="submit"]:hover {
 .user-info .user-name {
     margin-right: 10px;
     font-weight: bold;
+    align-content: center;
 }
 
 .user-info button {
@@ -377,6 +378,9 @@ form[action*="Reject"] button[type="submit"]:hover {
     border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.3s;
+    margin-left: 10px;
+    margin-right: 10px;
+
 }
 
 .user-info button:hover {

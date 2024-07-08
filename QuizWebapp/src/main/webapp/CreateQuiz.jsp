@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <title>Create Quiz</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="CreateQuiz.css?v=3.0">
+  <link rel="stylesheet" type="text/css" href="CreateQuiz.css?v=3.2">
 </head>
 <body>
 <h1>Create Quiz</h1>
@@ -13,12 +13,22 @@
   <input type="text" id="quizTitle" placeholder="Quiz Title" required><br>
   <textarea id="quizDescription" placeholder="Quiz Description" required></textarea><br>
   <div class="checkbox-container">
-    <input type="checkbox" id="randomCheckbox" name="randomCheckbox">
-    <label for="randomCheckbox">Random Order of Questions</label>
-    <input type="checkbox" id="onePageCheckbox" name="onePageCheckbox">
-    <label for="onePageCheckbox">Display on One Page</label>
-    <input type="checkbox" id="immediateCheckbox" name="immediateCheckbox">
-    <label for="immediateCheckbox">Immediate Answers to Questions</label>
+    <label>
+      <span>Random Order of Questions</span>
+      <input type="checkbox" id="randomCheckbox" name="randomCheckbox">
+    </label>
+    <label>
+      <span>Display on One Page</span>
+      <input type="checkbox" id="onePageCheckbox" name="onePageCheckbox">
+    </label>
+    <label>
+      <span>Immediate Answers to Questions</span>
+      <input type="checkbox" id="immediateCheckbox" name="immediateCheckbox">
+    </label>
+    <label>
+      <span>Practice Mode</span>
+      <input type="checkbox" id="practiceCheckbox" name="practiceCheckbox">
+    </label>
   </div>
   <div id="questions"></div>
 
@@ -67,9 +77,13 @@
     $('#onePageCheckbox').change(function() {
       if ($(this).is(':checked')) {
         $('#immediateCheckbox').prop('checked', false);
-        $('#immediateCheckbox').prop('disabled', true);
-      } else {
-        $('#immediateCheckbox').prop('disabled', false);
+        //$('#immediateCheckbox').prop('disabled', true);
+      }
+    });
+
+    $('#immediateCheckbox').change(function (){
+      if($(this).is(':checked')) {
+        $('#onePageCheckbox').prop('checked',false);
       }
     });
 
@@ -87,7 +101,7 @@
     function addQuestionResponseQuestion() {
       questionId++;
       let questionHtml = `
-        <div class="question" id="question${questionId}">
+        <div class="question" id="question${questionId}" data-type="questionResponse">
           <input type="text" placeholder="Question" required>
           <div class="answers">
             <input type="text" placeholder="Answer" required>
@@ -125,7 +139,7 @@
     function addFillBlankQuestion() {
       questionId++;
       let questionHtml = `
-        <div class="question" id="question${questionId}">
+        <div class="question" id="question${questionId}" data-type="fillBlank">
           <input type="text" placeholder="Before">
           <div class="answers">
             <input type="text" placeholder="Answer" required>
@@ -164,7 +178,7 @@
     function addMultipleChoiceQuestion() {
       questionId++;
       let questionHtml = `
-        <div class="question" id="question${questionId}">
+        <div class="question" id="question${questionId}" data-type="multipleChoice">
           <input type="text" placeholder="Question" required>
           <select class="answerCount">
             <option value="2">2 Answers</option>
@@ -221,8 +235,9 @@
     function addPictureResponseQuestion() {
       questionId++;
       let questionHtml = `
-        <div class="question" id="question${questionId}">
-          <input type="file" accept="image/*">
+        <div class="question" id="question${questionId}" data-type="pictureResponse">
+          <input type="text" placeholder="Question" required>
+          <input type="text" placeholder="Image URL" required>
           <div class="answers">
             <input type="text" placeholder="Answer" required>
           </div>
@@ -263,22 +278,34 @@
         randomOrder: $('#randomCheckbox').is(':checked'),
         onePage: $('#onePageCheckbox').is(':checked'),
         immediateCorrection: $('#immediateCheckbox').is(':checked'),
+        practice: $('#practiceCheckbox').is(':checked'),
         questions: []
       };
 
       $('.question').each(function() {
         let $question = $(this);
         let type = $question.data('type');
-        let questionData = {
-          type: type,
-          question: $question.find('input[placeholder="Question"]').val()
-        };
+        let questionData = { type: type };
 
         switch(type) {
           case 'questionResponse':
-          case 'fillBlank':
+          case 'multipleChoice':
           case 'pictureResponse':
-            questionData.answer = $question.find('.answers input').val();
+            questionData.question = $question.find('input[placeholder="Question"]').val();
+            break;
+          case 'fillBlank':
+            questionData.before = $question.find('input[placeholder="Before"]').val();
+            questionData.after = $question.find('input[placeholder="After"]').val();
+            break;
+        }
+
+        switch(type) {
+          case 'questionResponse':
+          case 'pictureResponse':
+            questionData.answer = $question.find('input[placeholder="Answer"]').val();
+            break;
+          case 'fillBlank':
+            questionData.answer = $question.find('input[placeholder="Answer"]').val();
             break;
           case 'multipleChoice':
             questionData.answers = [];
@@ -291,20 +318,14 @@
             break;
         }
 
-        if (type === 'fillBlank') {
-          questionData.before = $question.find('input[placeholder="Before"]').val();
-          questionData.after = $question.find('input[placeholder="After"]').val();
-        }
-
         if (type === 'pictureResponse') {
-          // Note: File upload will require additional handling
-          questionData.image = $question.find('input[type="file"]').val();
+          questionData.image = $question.find('input[placeholder="Image URL"]').val();
         }
 
         quiz.questions.push(questionData);
       });
 
-      return JSON.stringify(quiz);
+      return quiz;
     }
 
     $('#quizForm').submit(function(e) {
@@ -315,7 +336,7 @@
         url: 'CreateQuizServlet',
         type: 'POST',
         contentType: 'application/json',
-        data: quizData,
+        data: JSON.stringify(quizData),  // This line is changed
         success: function(response) {
           alert('Quiz created successfully!');
           // Optionally, redirect or clear the form

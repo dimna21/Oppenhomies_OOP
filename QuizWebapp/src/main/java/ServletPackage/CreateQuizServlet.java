@@ -101,18 +101,59 @@ public class CreateQuizServlet extends HttpServlet
                     question.setType(DatabaseAccess.QUESTION_PICTURE);
                     break;
 
+                case "multiAnswer":
+                    question = new QuestionMultiAnswer();
+                    ((QuestionMultiAnswer)question).setQuestion(questionJson.get("question").getAsString());
+                    JsonArray multiAnswersArray = questionJson.getAsJsonArray("answers");
+                    ArrayList<String> multiAnswers = new ArrayList<>();
+                    for (int j = 0; j < multiAnswersArray.size(); j++) {
+                        multiAnswers.add(multiAnswersArray.get(j).getAsString());
+                    }
+                    ((QuestionMultiAnswer) question).setAnswerList(multiAnswers);
+                    question.setType(DatabaseAccess.QUESTION_MULTIANSWER);
+                    break;
+
+                case "multiChoiceMultiAnswer":
+                    question = new QuestionCheckbox();
+                    ((QuestionCheckbox)question).setQuestion(questionJson.get("question").getAsString());
+                    JsonArray multiChoiceAnswersArray = questionJson.getAsJsonArray("answers");
+                    ArrayList<String> multiChoiceAnswers = new ArrayList<>();
+                    ArrayList<Integer> correctAnswers = new ArrayList<>();
+                    for (int j = 0; j < multiChoiceAnswersArray.size(); j++) {
+                        JsonObject answerJson = multiChoiceAnswersArray.get(j).getAsJsonObject();
+                        String answer = answerJson.get("text").getAsString();
+                        if(answerJson.get("isCorrect").getAsBoolean()) correctAnswers.add(1);
+                        else correctAnswers.add(0);
+                        multiChoiceAnswers.add(answer);
+                    }
+                    ((QuestionCheckbox) question).setAnswerList(multiChoiceAnswers);
+                    ((QuestionCheckbox) question).setCorrectList(correctAnswers);
+                    question.setType(DatabaseAccess.QUESTION_CHECKBOX);
+                    break;
+
+                case "matching":
+                    question = new QuestionMatching();
+                    ((QuestionMatching)question).setQuestion(questionJson.get("question").getAsString());
+                    JsonArray pairsArray = questionJson.getAsJsonArray("pairs");
+                    ArrayList<String> leftSide = new ArrayList<>();
+                    ArrayList<String> rightSide = new ArrayList<>();
+                    for (int j = 0; j < pairsArray.size(); j++) {
+                        JsonObject pairJson = pairsArray.get(j).getAsJsonObject();
+                        leftSide.add(pairJson.get("a").getAsString());
+                        rightSide.add(pairJson.get("b").getAsString());
+                    }
+                    ((QuestionMatching) question).setWords(leftSide);
+                    ((QuestionMatching) question).setMatchingWords(rightSide);
+                    question.setType(DatabaseAccess.QUESTION_MATCHING);
+                    break;
+
                 default:
                     throw new IllegalArgumentException("Unknown question type: " + type);
             }
             question.setQuizID(quizId);
             question.setSubID(i);
             questions.add(question);
-
-            System.out.println(question);
         }
-
-
-
         dbAccess.populateQuiz(questions);
     }
 }

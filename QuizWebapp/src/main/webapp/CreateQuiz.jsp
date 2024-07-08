@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <title>Create Quiz</title>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <link rel="stylesheet" type="text/css" href="CreateQuiz.css?v=3.2">
+  <link rel="stylesheet" type="text/css" href="CreateQuiz.css?v=2.2">
 </head>
 <body>
 <h1>Create Quiz</h1>
@@ -41,6 +41,9 @@
       <option value="fillBlank">Fill in the Blank</option>
       <option value="multipleChoice">Multiple Choice</option>
       <option value="pictureResponse">Picture Response</option>
+      <option value="multiAnswer">Multi-Answer Questions</option>
+      <option value="multiChoiceMultiAnswer">Multiple Choice-Multiple Answers</option>
+      <option value="matching">Matching Question</option>
     </select>
   </div>
 
@@ -70,6 +73,15 @@
       }
       if (type === 'pictureResponse') {
         addPictureResponseQuestion();
+      }
+      if(type == 'multiAnswer') {
+        addMultiAnswerQuestion();
+      }
+      if(type == 'multiChoiceMultiAnswer') {
+        addMultiChoiceMultiAnswerQuestion();
+      }
+      if(type == 'matching') {
+        addMatchingQuestion();
       }
       $('#questionContainer').hide();
     });
@@ -113,25 +125,7 @@
       `;
       $('#questions').append(questionHtml);
 
-      $(`#question${questionId} .saveBtn`).click(function() {
-        $(this).closest('.question').find('input').prop('disabled', true);
-        $(this).hide();
-        $(this).siblings('.editBtn').show();
-      });
-
-      $(`#question${questionId} .editBtn`).click(function() {
-        $(this).closest('.question').find('input').prop('disabled', false);
-        $(this).hide();
-        $(this).siblings('.saveBtn').show();
-      });
-
-      $(`#question${questionId} .deleteBtn`).click(function() {
-        $(this).closest('.question').remove();
-        questionCount--;
-        if (questionCount === 0) {
-          $('#createQuizBtn').hide();
-        }
-      });
+      setupQuestionButtons(questionId);
 
       afterAddingQuestion();
     }
@@ -152,25 +146,7 @@
       `;
       $('#questions').append(questionHtml);
 
-      $(`#question${questionId} .saveBtn`).click(function() {
-        $(this).closest('.question').find('input').prop('disabled', true);
-        $(this).hide();
-        $(this).siblings('.editBtn').show();
-      });
-
-      $(`#question${questionId} .editBtn`).click(function() {
-        $(this).closest('.question').find('input').prop('disabled', false);
-        $(this).hide();
-        $(this).siblings('.saveBtn').show();
-      });
-
-      $(`#question${questionId} .deleteBtn`).click(function() {
-        $(this).closest('.question').remove();
-        questionCount--;
-        if (questionCount === 0) {
-          $('#createQuizBtn').hide();
-        }
-      });
+      setupQuestionButtons(questionId);
 
       afterAddingQuestion();
     }
@@ -209,25 +185,7 @@
         $(`#question${questionId} .answers`).html(answersHtml);
       });
 
-      $(`#question${questionId} .saveBtn`).click(function() {
-        $(this).closest('.question').find('input, select').prop('disabled', true);
-        $(this).hide();
-        $(this).siblings('.editBtn').show();
-      });
-
-      $(`#question${questionId} .editBtn`).click(function() {
-        $(this).closest('.question').find('input, select').prop('disabled', false);
-        $(this).hide();
-        $(this).siblings('.saveBtn').show();
-      });
-
-      $(`#question${questionId} .deleteBtn`).click(function() {
-        $(this).closest('.question').remove();
-        questionCount--;
-        if (questionCount === 0) {
-          $('#createQuizBtn').hide();
-        }
-      });
+      setupQuestionButtons(questionId);
 
       afterAddingQuestion();
     }
@@ -248,27 +206,113 @@
       `;
       $('#questions').append(questionHtml);
 
-      $(`#question${questionId} .saveBtn`).click(function() {
-        $(this).closest('.question').find('input, select').prop('disabled', true);
-        $(this).hide();
-        $(this).siblings('.editBtn').show();
-      });
-
-      $(`#question${questionId} .editBtn`).click(function() {
-        $(this).closest('.question').find('input, select').prop('disabled', false);
-        $(this).hide();
-        $(this).siblings('.saveBtn').show();
-      });
-
-      $(`#question${questionId} .deleteBtn`).click(function() {
-        $(this).closest('.question').remove();
-        questionCount--;
-        if (questionCount === 0) {
-          $('#createQuizBtn').hide();
-        }
-      });
+      setupQuestionButtons(questionId);
 
       afterAddingQuestion();
+    }
+
+    function addMultiAnswerQuestion() {
+      questionId++;
+      let questionHtml = `
+    <div class="question" id="question${questionId}" data-type="multiAnswer">
+      <input type="text" placeholder="Question" required>
+      <input class="answerCount" type="number" min="2" placeholder="Number of answers" required>
+      <div class="answers"></div>
+      <button type="button" class="saveBtn">Save</button>
+      <button type="button" class="editBtn" style="display:none;">Edit</button>
+      <button type="button" class="deleteBtn">Delete</button>
+    </div>
+  `;
+      $('#questions').append(questionHtml);
+
+      $(`#question${questionId} .answerCount`).change(function() {
+        let answerCount = $(this).val();
+        let answersHtml = '';
+        for (let i = 0; i < answerCount; i++) {
+            answersHtml += `
+                <div>
+                  <input type="text" placeholder="Answer ${i + 1}" required>
+                </div>
+              `;
+          }
+        $(`#question${questionId} .answers`).html(answersHtml);
+      });
+
+      setupQuestionButtons(questionId);
+
+      afterAddingQuestion();
+    }
+
+    function addMultiChoiceMultiAnswerQuestion() {
+      questionId++;
+      let questionHtml = `
+        <div class="question" id="question${questionId}" data-type="multiChoiceMultiAnswer">
+          <input type="text" placeholder="Question" required>
+          <select class="answerCount">
+            <option value="2">2 Answers</option>
+            <option value="3">3 Answers</option>
+            <option value="4">4 Answers</option>
+            <option value="5">5 Answers</option>
+            <option value="6">6 Answers</option>
+          </select>
+          <div class="answers"></div>
+          <button type="button" class="saveBtn">Save</button>
+          <button type="button" class="editBtn" style="display:none;">Edit</button>
+          <button type="button" class="deleteBtn">Delete</button>
+        </div>
+      `;
+      $('#questions').append(questionHtml);
+
+      $(`#question${questionId} .answerCount`).change(function() {
+        let answerCount = $(this).val();
+        let answersHtml = '';
+        for (let i = 0; i < answerCount; i++) {
+          answersHtml += `
+            <div>
+              <input type="text" placeholder="Answer ${i + 1}" required>
+              <input type="checkbox" name="correct${questionId}" value="${i}"> Correct
+            </div>
+          `;
+        }
+        $(`#question${questionId} .answers`).html(answersHtml);
+      });
+
+      setupQuestionButtons(questionId);
+
+      afterAddingQuestion();
+    }
+
+    function addMatchingQuestion() {
+        questionId++;
+        let questionHtml = `
+          <div class="question" id="question${questionId}" data-type="matching">
+              <input type="text" placeholder="Question" required>
+              <input class="answerCount" type="number" min="2" placeholder="Number of answers" required>
+              <div class="answers"></div>
+              <button type="button" class="saveBtn">Save</button>
+              <button type="button" class="editBtn" style="display:none;">Edit</button>
+              <button type="button" class="deleteBtn">Delete</button>
+          </div>
+        `;
+        $('#questions').append(questionHtml);
+
+        $(`#question${questionId} .answerCount`).change(function() {
+          let answerCount = $(this).val();
+          let answersHtml = '';
+          for (let i = 0; i < answerCount; i++) {
+            answersHtml += `
+                  <div>
+                    <input type="text" placeholder="Match ${i + 1}-a" required>
+                    <input type="text" placeholder="Match ${i + 1}-b" required>
+                  </div>
+                `;
+          }
+          $(`#question${questionId} .answers`).html(answersHtml);
+        });
+
+        setupQuestionButtons(questionId);
+
+        afterAddingQuestion();
     }
 
     function serializeQuiz() {
@@ -291,6 +335,9 @@
           case 'questionResponse':
           case 'multipleChoice':
           case 'pictureResponse':
+          case 'multiAnswer':
+          case 'multiChoiceMultiAnswer':
+          case 'matching':
             questionData.question = $question.find('input[placeholder="Question"]').val();
             break;
           case 'fillBlank':
@@ -313,6 +360,34 @@
               questionData.answers.push({
                 text: $(this).val(),
                 isCorrect: $question.find(`input[name="correct${$question.attr('id').replace('question', '')}"][value="${index}"]`).is(':checked')
+              });
+            });
+            break;
+
+          case 'multiAnswer':
+            questionData.answers = [];
+            $question.find('.answers input[type="text"]').each(function() {
+              questionData.answers.push($(this).val());
+            });
+            break;
+
+          case 'multiChoiceMultiAnswer':
+            questionData.answers = [];
+            $question.find('.answers input[type="text"]').each(function(index) {
+              questionData.answers.push({
+                text: $(this).val(),
+                isCorrect: $question.find(`input[name="correct${$question.attr('id').replace('question', '')}"][value="${index}"]`).is(':checked')
+              });
+            });
+            break;
+
+          case 'matching':
+            questionData.pairs = [];
+            $question.find('.answers > div').each(function() {
+              let $inputs = $(this).find('input[type="text"]');
+              questionData.pairs.push({
+                a: $inputs.eq(0).val(),
+                b: $inputs.eq(1).val()
               });
             });
             break;
@@ -346,6 +421,28 @@
         }
       });
     });
+
+    function setupQuestionButtons(questionId) {
+      $(`#question${questionId} .saveBtn`).click(function() {
+        $(this).closest('.question').find('input, select').prop('disabled', true);
+        $(this).hide();
+        $(this).siblings('.editBtn').show();
+      });
+
+      $(`#question${questionId} .editBtn`).click(function() {
+        $(this).closest('.question').find('input, select').prop('disabled', false);
+        $(this).hide();
+        $(this).siblings('.saveBtn').show();
+      });
+
+      $(`#question${questionId} .deleteBtn`).click(function() {
+        $(this).closest('.question').remove();
+        questionCount--;
+        if (questionCount === 0) {
+          $('#createQuizBtn').hide();
+        }
+      });
+    }
 
   });
 </script>

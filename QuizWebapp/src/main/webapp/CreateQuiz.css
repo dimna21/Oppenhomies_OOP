@@ -191,3 +191,35 @@ input[type="checkbox"]:disabled {
     background-color: #f4f4f4;
     cursor: not-allowed;
 }
+
+/* Existing styles... */
+
+/* Matching question specific styles */
+.question[data-type="matching"] .answers > div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.question[data-type="matching"] .answers > div input[type="text"] {
+    width: 48%; /* Adjust as needed */
+    margin-bottom: 0;
+}
+
+/* You might want to adjust the general input styles for matching questions */
+.question[data-type="matching"] input[type="text"],
+.question[data-type="matching"] input[type="number"] {
+    margin-bottom: 10px;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 600px) {
+    .question[data-type="matching"] .answers > div {
+        flex-direction: column;
+    }
+
+    .question[data-type="matching"] .answers > div input[type="text"] {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+}

@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+import DBpackage.DAOpackage.UserDAO;
 import DBpackage.DatabaseAccess;
 
 public class LookUpServlet extends HttpServlet {
@@ -15,15 +16,15 @@ public class LookUpServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-        DatabaseAccess dbAccess = (DatabaseAccess) getServletContext().getAttribute("DatabaseAccess");
+        //DatabaseAccess dbAccess = (DatabaseAccess) getServletContext().getAttribute("DatabaseAccess");
 
         String username = req.getParameter("username");
 
-        boolean exists = (dbAccess.getUserInfo(username) != null);
+        boolean exists = (UserDAO.getUserInfo(username) != null);
 
         RequestDispatcher dispatcher;
         if(exists){
-            int userID = dbAccess.getUserInfo(username).getUser_id();
+            int userID = UserDAO.getUserInfo(username).getUser_id();
             HttpSession session = req.getSession();
             session.setAttribute("username", username);
             dispatcher = req.getRequestDispatcher("Visitorpage/stalker.jsp");

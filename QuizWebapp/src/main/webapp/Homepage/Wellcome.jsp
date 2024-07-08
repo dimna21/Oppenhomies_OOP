@@ -2,16 +2,18 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="DBpackage.*" %>
 <%@ page import="java.util.HashMap" %>
+<%@ page import="DBpackage.DAOpackage.AnnouncementDAO" %>
+<%@ page import="DBpackage.DAOpackage.QuizDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
-    DatabaseAccess dbAccess = (DatabaseAccess) application.getAttribute("DatabaseAccess");
+    //DatabaseAccess dbAccess = (DatabaseAccess) application.getAttribute("DatabaseAccess");
 
     int userID = (Integer)session.getAttribute("userID");
     String username = (String) session.getAttribute("username");
 
-    ArrayList<Announcement> announcements = dbAccess.getLatestAnnouncements(0);
-    ArrayList<Quiz> popularQuizzes = dbAccess.getQuizzesByPopularity(0);
-    ArrayList<Quiz> recentlyCreatedQuizzes = dbAccess.getNewestQuiz(0);
+    ArrayList<Announcement> announcements = AnnouncementDAO.getLatestAnnouncements(0);
+    ArrayList<Quiz> popularQuizzes = QuizDAO.getQuizzesByPopularity(0);
+    ArrayList<Quiz> recentlyCreatedQuizzes = QuizDAO.getNewestQuiz(0);
 %>
 <html>
 <head>

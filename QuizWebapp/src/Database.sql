@@ -286,9 +286,9 @@ INSERT INTO Quiz_questions (quiz_id, sub_id, type) VALUES
    (6, 4, 4), -- Picture question
    (6, 5, 6), -- CheckBox question
    (6, 6, 6), -- CheckBox question
-   (6, 7, 7), -- multiAnswer question
-   (6, 8, 7), -- multiAnswer question
-   (6, 9, 7); -- multiAnswer question
+   (6, 7, 5), -- multiAnswer question
+   (6, 8, 5), -- multiAnswer question
+   (6, 9, 5); -- multiAnswer question
 -- Add a textbox question to the Textbox_questions table
 INSERT INTO Textbox_questions (quiz_id, sub_id, question, answer) VALUES
     (6, 1, 'What is the capital of France?', 'Paris');

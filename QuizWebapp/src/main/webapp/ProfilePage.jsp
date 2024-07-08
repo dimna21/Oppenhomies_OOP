@@ -1,29 +1,32 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="DBpackage.*" %>
 <%@ page import="java.util.HashMap" %>
+<%@ page import="DBpackage.DAOpackage.QuizDAO" %>
+<%@ page import="DBpackage.DAOpackage.AchievementDAO" %>
+<%@ page import="DBpackage.DAOpackage.NoteDAO" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
     int userId = (Integer) session.getAttribute("userID");
     String username = (String) session.getAttribute("username");
 
     int profileId = Integer.parseInt(request.getParameter("profileId"));
-    DatabaseAccess dbAccess = (DatabaseAccess) application.getAttribute("DatabaseAccess");
+    //DatabaseAccess dbAccess = (DatabaseAccess) application.getAttribute("DatabaseAccess");
     String profile = DatabaseAccess.getUsername(profileId);
 
-    ArrayList<Quiz> mostPopularQuizzes = dbAccess.getPopularQuizzesByUser(profileId, 0);
-    ArrayList<Quiz> recentQuizzes = dbAccess.getRecentQuizzesByUser(profileId, 0);
+    ArrayList<Quiz> mostPopularQuizzes = QuizDAO.getPopularQuizzesByUser(profileId, 0);
+    ArrayList<Quiz> recentQuizzes = QuizDAO.getRecentQuizzesByUser(profileId, 0);
 
     ArrayList<Score> mostSuccessfulScores = new ArrayList<Score>();
     ArrayList<Quiz> mostSuccessfulQuizzes = new ArrayList<Quiz>();
-    dbAccess.getMostSuccessfulScoresAndQuizzesForUser(mostSuccessfulScores, mostSuccessfulQuizzes, profileId, 0);
+    QuizDAO.getMostSuccessfulScoresAndQuizzesForUser(mostSuccessfulScores, mostSuccessfulQuizzes, profileId, 0);
 
     ArrayList<Score> recentScoresTaken = new ArrayList<Score>();
     ArrayList<Quiz> recentQuizzesTaken = new ArrayList<Quiz>();
-    dbAccess.getRecentScoresAndQuizzesForUser(recentScoresTaken, recentQuizzesTaken, profileId, 0);
+    QuizDAO.getRecentScoresAndQuizzesForUser(recentScoresTaken, recentQuizzesTaken, profileId, 0);
 
-    ArrayList<Achievement> achievements = dbAccess.getRecentAchievements(profile, 0);
+    ArrayList<Achievement> achievements = AchievementDAO.getRecentAchievements(profile, 0);
 
-    ArrayList<Note> chat = dbAccess.getNotesForChat(userId, profileId, 0);
+    ArrayList<Note> chat = NoteDAO.getNotesForChat(userId, profileId, 0);
 
     HashMap<String, String> achievPictureMap = new HashMap<String, String>();
     achievPictureMap.put("Amateur author", "Pictures/Achievements/Amateur author.png");

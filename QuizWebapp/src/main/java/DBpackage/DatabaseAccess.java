@@ -22,6 +22,7 @@ public class DatabaseAccess {
 
         stmt = con.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
     }
+
     public static String getUsername(int userID) {
         String query = "SELECT username FROM users WHERE user_id = '" + userID + "';";
         String username = null;
@@ -35,7 +36,7 @@ public class DatabaseAccess {
         }
         return username;
     }
-    public boolean login(String name, String pw)  {
+    public static boolean login(String name, String pw)  {
         String hashcode = null;
         try {
             hashcode = hasher.getHash(pw);
@@ -57,7 +58,7 @@ public class DatabaseAccess {
         }
         return total == 1;
     }
-    public User getUserInfo(String name){
+    public static User getUserInfo(String name){
         String query = "select * from users where username = '" + name +"' ;";
         User user = null;
         try {
@@ -81,7 +82,7 @@ public class DatabaseAccess {
         }
         return user;
     }
-    public boolean addUser(String username, String pw, int adminStatus){
+    public static boolean addUser(String username, String pw, int adminStatus){
         String Hashcode = null;
         try {
             Hashcode = hasher.getHash(pw);
@@ -99,7 +100,7 @@ public class DatabaseAccess {
         }
         return true;
     }
-    public boolean updatePicture(String username, String pic){
+    public static boolean updatePicture(String username, String pic){
         if(getUserInfo(username)==null)return false;
         String query = "UPDATE Users SET profile_pic_url = '" + pic+
                 "' WHERE username = '"+username +"';";
@@ -113,7 +114,7 @@ public class DatabaseAccess {
         }
         return true;
     }
-    public ArrayList<FriendRequest> friendRequests(int userID){
+    public static ArrayList<FriendRequest> friendRequests(int userID){
         ArrayList<FriendRequest> friendRequests= new ArrayList<>();
 
         String query = "SELECT fr.*, fu.username as \"from_username\", tu.username as \"to_username\" " +
@@ -142,7 +143,7 @@ public class DatabaseAccess {
     }
 
 
-    public void getChallengesForUser(int userID, ArrayList<Challenge> challenges, ArrayList<Quiz> quizzes){
+    public static void getChallengesForUser(int userID, ArrayList<Challenge> challenges, ArrayList<Quiz> quizzes){
         String query = "SELECT c.*, q.*, u.username as \"quiz_creator_username\", tu.username as \"to_username\", fu.username as \"from_username\" " +
                 "FROM challenge c " +
                 "LEFT JOIN quizzes q ON c.quiz_id = q.quiz_id " +
@@ -187,7 +188,7 @@ public class DatabaseAccess {
 
 
 
-    public Quiz getQuizInfo(int quiz_id){
+    public static Quiz getQuizInfo(int quiz_id){
         String query = "SELECT quizzes.*, users.user_id, users.username FROM quizzes" +
                 " LEFT JOIN users ON quizzes.quiz_creator_id = users.user_id" +
                 " WHERE quizzes.quiz_id = " + quiz_id +" ;";
@@ -219,7 +220,7 @@ public class DatabaseAccess {
 
 
 
-    public ArrayList<Quiz> getNewestQuiz(int amountToGet){
+    public static ArrayList<Quiz> getNewestQuiz(int amountToGet){
         ArrayList<Quiz> ls= new ArrayList<>();
         String query;
         if(amountToGet>0){
@@ -259,7 +260,7 @@ public class DatabaseAccess {
         }
         return ls;
     }
-    public ArrayList<Question> getQuizQuestions(int quizId){
+    public static ArrayList<Question> getQuizQuestions(int quizId){
         ArrayList<Question> questions2 = new ArrayList<>();
         ArrayList<Question> qList1 = new ArrayList<>();
         String query;
@@ -282,9 +283,14 @@ public class DatabaseAccess {
         }
 
 
+
+
         for(Question q : qList1){
             Question q2;
+            //System.out.println(q.getQuizID() + " " + q.getSubID() + " " + q.getType());
+
             switch(q.getType()){
+
                 case 1:    //textbox
                     q2=getTextBox(q);
                     questions2.add(q2);
@@ -296,17 +302,23 @@ public class DatabaseAccess {
                 case 3:    //multipleChoice
                     q2=getMultipleChoice(q);
                     questions2.add(q2);
+                    break;
                 case 4:    //picture
                     q2=getPictureQuestion(q);
                     questions2.add(q2);
+                    break;
                 case 5:     //multitextbox
                     q2=getMultiAnswer(q);
                     questions2.add(q2);
+                    break;
                 case 6:      //multi-multi-choice
                     q2=getCheckbox(q);
                     questions2.add(q2);
+                    break;
                 case 7:      //match
-                    //q2=get
+                    q2=getQuestionMatching(q);
+                    questions2.add(q2);
+                    break;
             }
 
         }
@@ -314,7 +326,7 @@ public class DatabaseAccess {
 
     }
 
-    public Question getTextBox(Question ques) {
+    public static Question getTextBox(Question ques) {
         int quizId=ques.getQuizID(); int subId=ques.getSubID();
         String query = "select * from textbox_questions where quiz_id = " + quizId + " and sub_id = " + subId + " ;";
         QuestionTextbox q=null;
@@ -335,7 +347,7 @@ public class DatabaseAccess {
         }
         return q;
     }
-    public Question getFillBlank(Question ques) {
+    public  static Question getFillBlank(Question ques) {
         int quizId=ques.getQuizID(); int subId=ques.getSubID();
 
         String query = "select * from fill_blank_questions where quiz_id = " + quizId + " and sub_id = " + subId + " ;";
@@ -358,7 +370,7 @@ public class DatabaseAccess {
         }
         return q;
     }
-    public QuestionCheckbox getCheckbox(Question ques) {
+    public  static QuestionCheckbox getCheckbox(Question ques) {
         int quizId = ques.getQuizID();
         int subId = ques.getSubID();
 
@@ -383,7 +395,7 @@ public class DatabaseAccess {
             throw new RuntimeException(e);
         }
 
-        query = "SELECT * FROM checkb/ox_answers WHERE quiz_id = " + q.getQuizID() +
+        query = "SELECT * FROM checkbox_answers WHERE quiz_id = " + q.getQuizID() +
                 " and sub_id = "+q.getSubID()+" ORDER BY order_num ASC;";
         ArrayList<String> answers = new ArrayList<>();
         ArrayList<Integer> correct = new ArrayList<>();
@@ -404,10 +416,10 @@ public class DatabaseAccess {
         return q;
     }
 
-    public QuestionMultiAnswer getMultiAnswer(Question ques) {
+    public static  QuestionMultiAnswer getMultiAnswer(Question ques) {
         int quizId = ques.getQuizID();
         int subId = ques.getSubID();
-
+        //System.out.println(quizId + " " + subId + " " + ques.getType());
         String query = "SELECT * FROM multi_answer_questions WHERE quiz_id = " + quizId + " AND sub_id = " + subId + ";";
         QuestionMultiAnswer q = null;
 
@@ -427,7 +439,7 @@ public class DatabaseAccess {
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
-
+        //System.out.println(q.getQuizID());
         query = "SELECT * FROM multi_answer_answers WHERE quiz_id = " + q.getQuizID() +
                 " and sub_id = "+q.getSubID()+" ORDER BY order_num ASC;";
         ArrayList<String> answers = new ArrayList<>();
@@ -446,7 +458,8 @@ public class DatabaseAccess {
         return q;
     }
 
-    public Question getMultipleChoice(Question ques){
+    public static  Question getMultipleChoice(Question ques){
+        //System.out.println("HERE!!!");
         int quizId=ques.getQuizID(); int subId=ques.getSubID();
         String query = "select * from multiple_choice_questions where quiz_id = " + quizId + " and sub_id = " + subId + " ;";
         QuestionMultipleChoice q=null;
@@ -487,7 +500,7 @@ public class DatabaseAccess {
         return q;
     }
 
-    public Question getPictureQuestion(Question ques){
+    public static  Question getPictureQuestion(Question ques){
         int quizId=ques.getQuizID(); int subId=ques.getSubID();
 
         String query = "select * from picture_questions where quiz_id = " + quizId + " and sub_id = " + subId + " ;";
@@ -511,7 +524,7 @@ public class DatabaseAccess {
         return q;
 
     }
-    public Question getQuestionMatching(Question ques){
+    public static  Question getQuestionMatching(Question ques){
         int quizId=ques.getQuizID(); int subId=ques.getSubID();
         int questionID = ques.getQuestionID();
         ArrayList<String> words = new ArrayList<>();
@@ -552,7 +565,7 @@ public class DatabaseAccess {
         return q;
     }
 
-    public boolean accountExists(String username){
+    public  static boolean accountExists(String username){
         String query = "select username from Users where username = '" + username + "' ;";
         int len = 0;
         try {
@@ -567,7 +580,7 @@ public class DatabaseAccess {
     }
 
 
-    public HashMap<String, Integer> getTopScorers(int quizID, int numScorers){
+    public static HashMap<String, Integer> getTopScorers(int quizID, int numScorers){
         String query =  "select user_id, score from Scores where quiz_id = " + quizID + " order by score DESC;";
         HashMap<String, Integer> ans = new HashMap<>();
         try {
@@ -585,7 +598,7 @@ public class DatabaseAccess {
         return ans;
     }
 
-    public ArrayList<Quiz> getQuizzesByPopularity(int amountToGet) {
+    public static  ArrayList<Quiz> getQuizzesByPopularity(int amountToGet) {
         ArrayList<Quiz> quizzes= new ArrayList<>();
         String query;
         if(amountToGet>0){
@@ -626,7 +639,7 @@ public class DatabaseAccess {
 
 
 
-    public boolean createNote(String fromUsername, String toUsername, String messageText) {
+    public static  boolean createNote(String fromUsername, String toUsername, String messageText) {
         String query = "INSERT INTO Messages (from_id, to_id, text, notification) " +
                 "SELECT " +
                 "(SELECT user_id FROM Users WHERE username = ? LIMIT 1), " +
@@ -656,7 +669,7 @@ public class DatabaseAccess {
     }
 
     /**Creates an announcement in the database*/
-    public boolean makeAnnouncement(String username, String title, String text, Timestamp date) throws SQLException {
+    public static  boolean makeAnnouncement(String username, String title, String text, Timestamp date) throws SQLException {
         if (!isAdmin(username)) {
             return false;
         }
@@ -678,7 +691,7 @@ public class DatabaseAccess {
 
 
     /** Returns a user's ID based in their username*/
-    public static int getUserID(String username) {
+    public   static int getUserID(String username) {
         String query = "SELECT user_id FROM users WHERE username = '" + username + "';";
         int ans = 0;
         try {
@@ -696,7 +709,7 @@ public class DatabaseAccess {
     /**
      * Checks whether a user is admin or not
      */
-    public boolean isAdmin(String username){
+    public static boolean isAdmin(String username){
         String query = "select * from Users where username = '" + username + "' ;";
         int x = 0;
         try {
@@ -715,7 +728,7 @@ public class DatabaseAccess {
      *  If the user is already an admin or the promoting user is not an admin,
      *  operation returns false
      */
-    public boolean promoteToAdmin(String admin, String user) {
+    public  static boolean promoteToAdmin(String admin, String user) {
         if (!isAdmin(admin) || isAdmin(user)) {
             return false;
         }
@@ -742,7 +755,7 @@ public class DatabaseAccess {
      * Sends a friend request from one account to another
      *
      */
-    public void sendFriendRequest(String from, String to) throws SQLException {
+    public  static void sendFriendRequest(String from, String to) throws SQLException {
         String query = "INSERT INTO Friend_requests (from_id, to_id, notification) VALUES (?, ?, 0)";
         PreparedStatement preparedStmt = con.prepareStatement(query);
         int fromId = getUserID(from);
@@ -757,7 +770,7 @@ public class DatabaseAccess {
      *  Status = 1 accepted
      *  Status = 2 rejected
      */
-    public void updateFriendRequestStatus(int userAnswering, int answeringTo, int status) throws SQLException {
+    public static  void updateFriendRequestStatus(int userAnswering, int answeringTo, int status) throws SQLException {
         String query = "UPDATE Friend_requests " +
                 "SET notification = " + status +
                 " WHERE from_id = " + answeringTo + " AND to_id = " + userAnswering;
@@ -769,7 +782,7 @@ public class DatabaseAccess {
     }
 
     /** Returns a friendlist of specified username */
-    public ArrayList<User> getFriendlist(String username){
+    public  static ArrayList<User> getFriendlist(String username){
         ArrayList<User> friendlist = new ArrayList<>();
         String query = "SELECT * FROM Friend_requests WHERE (to_id = " + getUserID(username) + " OR from_id = " + getUserID(username) + ") AND notification = 1";
         try (PreparedStatement stmt = con.prepareStatement(query)) {
@@ -785,7 +798,7 @@ public class DatabaseAccess {
     }
 
     /** Sends a pending challenge from one user to another */
-    public void sendChallenge(String from, String to, int quizID) {
+    public  static void sendChallenge(String from, String to, int quizID) {
         String query = "INSERT INTO Challenge (from_id, to_id, quiz_id, notification) VALUES (?, ?, ?, 0)";
         try (PreparedStatement stmt = con.prepareStatement(query)) {
             stmt.setInt(1, getUserID(from));
@@ -802,7 +815,7 @@ public class DatabaseAccess {
      *  Status = 1 accepted
      *  Status = 2 rejected
      */
-    public void answerChallenge(int userAnswering, int answeringTo, int status) throws SQLException {
+    public  static void answerChallenge(int userAnswering, int answeringTo, int status) throws SQLException {
         String query = "UPDATE Challenge " +
                 "SET notification = " + status  +
                 " WHERE from_id = " + answeringTo + " AND to_id = " + userAnswering;
@@ -816,7 +829,7 @@ public class DatabaseAccess {
     /** Deletes a user's account if the action is performed by an admin
      * and returns a corresponding boolean
      */
-    public boolean deleteAccount(int adminID, int userID){
+    public static  boolean deleteAccount(int adminID, int userID){
         if (!isAdmin(getUsername(adminID))) {
             return false;
         }
@@ -832,7 +845,7 @@ public class DatabaseAccess {
     }
 
     /** Deletes a quiz from the database */
-    public void deleteQuiz(int quizID){
+    public static  void deleteQuiz(int quizID){
         String query = "DELETE from Quizzes where quiz_id = " + quizID;
         try (Statement stmt = con.createStatement()) {
             int rowsUpdated = stmt.executeUpdate(query);
@@ -846,7 +859,7 @@ public class DatabaseAccess {
      * The first entry of the ArrayList is total number of users.
      * The second entry of the ArrayList is total number of quizzes taken
      */
-    public ArrayList<Integer> getSiteStatistics(){
+    public static  ArrayList<Integer> getSiteStatistics(){
         ArrayList<Integer> stats = new ArrayList<>(2);
         String queryUsers = "SELECT COUNT(*) AS totalUsers FROM Users";
         String queryQuizzesTaken = "SELECT COUNT(*) AS totalQuizzesTaken FROM Scores";
@@ -870,14 +883,14 @@ public class DatabaseAccess {
         return stats;
     }
 
-    public void anotherTest(){
+    public static  void anotherTest(){
 
     }
 
-    public void helpMe(){
+    public  static void helpMe(){
 
     }
-    public ArrayList<Announcement> getLatestAnnouncements(int num)  {
+    public static  ArrayList<Announcement> getLatestAnnouncements(int num)  {
         String query = "SELECT Announcements.*, users.user_id, users.username FROM Announcements " +
                 "LEFT JOIN users ON Announcements.announcer_id = users.user_id " +
                 "ORDER BY Announcements.announcement_date DESC;\n";
@@ -911,7 +924,7 @@ public class DatabaseAccess {
 
         return ans;
     }
-    public static ArrayList<Note> getNotes(int userID, int maxAmount) {
+    public  static  ArrayList<Note> getNotes(int userID, int maxAmount) {
         String query;
         if(maxAmount > 0) {
             query = "SELECT m.*, u.user_id, u.username " +
@@ -1004,7 +1017,7 @@ public class DatabaseAccess {
         return scores;
     }
 
-    public ArrayList<Quiz> getPopularQuiz(int amountToGet){
+    public  static ArrayList<Quiz> getPopularQuiz(int amountToGet){
         ArrayList<Quiz> ls= new ArrayList<>();
         String query;
         if(amountToGet>0){
@@ -1046,7 +1059,7 @@ public class DatabaseAccess {
         }
         return ls;
     }
-    public ArrayList<Quiz> recentCreationsByUser(String username, int maxAmount){
+    public static  ArrayList<Quiz> recentCreationsByUser(String username, int maxAmount){
         int userId = getUserID(username);
         String query;
         ArrayList<Quiz> A = new ArrayList<>();
@@ -1087,7 +1100,7 @@ public class DatabaseAccess {
         }
         return A;
     }
-    public ArrayList<Achievement> getRecentAchievements(String username, int maxAmount) {
+    public  static ArrayList<Achievement> getRecentAchievements(String username, int maxAmount) {
         String query = "SELECT a.achievement_id, a.achievement_title, a.user_id, a.achievement_date " +
                 "FROM Achievements a " +
                 "JOIN Users u ON a.user_id = u.user_id " +
@@ -1117,7 +1130,7 @@ public class DatabaseAccess {
         return ac;
     }
 
-    public ArrayList<Activity> getFriendsActivity(String user, int maxActivities){
+    public static  ArrayList<Activity> getFriendsActivity(String user, int maxActivities){
         ArrayList<Activity> actArr = new ArrayList<>();
         ArrayList<User> allFriends = getFriendlist(user);
         ArrayList<Score> taken;
@@ -1139,7 +1152,7 @@ public class DatabaseAccess {
         }
         return actArr;
     }
-    public ArrayList<Score> getLastAttemptsOfUser(String username, int amount){
+    public static  ArrayList<Score> getLastAttemptsOfUser(String username, int amount){
         String query = "select * from Scores where  user_id = " +
                 getUserID(username) + " order by date_scored desc limit "+amount+" ;" ;
         ArrayList<Score>s=new ArrayList<>();
@@ -1162,7 +1175,7 @@ public class DatabaseAccess {
         }
         return s;
     }
-    public ArrayList<Score> getLastAttemptsOfUserOnQuiz(String username, int quizId, int amount){
+    public static  ArrayList<Score> getLastAttemptsOfUserOnQuiz(String username, int quizId, int amount){
         String query = "select * from Scores where quiz_id = "+ quizId+" and user_id = " +
                 getUserID(username) + " order by date_scored desc limit "+amount+" ;" ;
         ArrayList<Score>s=new ArrayList<>();
@@ -1185,7 +1198,7 @@ public class DatabaseAccess {
         }
         return s;
     }
-    public ArrayList<ScoreAndUser> getTopPerformersForLastDay(int quizID, int amount) {
+    public static  ArrayList<ScoreAndUser> getTopPerformersForLastDay(int quizID, int amount) {
         String query;
         if (amount == 0) {
             query = "SELECT u.user_id, " +
@@ -1267,7 +1280,7 @@ public class DatabaseAccess {
     }
 
 
-    public void recentQuizTakingActivitiesForUser(int userID, ArrayList<Score> scores,  ArrayList<Quiz> quizzes) {
+    public  static void recentQuizTakingActivitiesForUser(int userID, ArrayList<Score> scores,  ArrayList<Quiz> quizzes) {
         String query = "SELECT s.*, q.*, u1.username " +
                 "FROM scores s " +
                 "LEFT JOIN quizzes q ON s.quiz_id = q.quiz_id " +
@@ -1306,7 +1319,7 @@ public class DatabaseAccess {
         catch (SQLException e) { throw new RuntimeException(e); }
 
     }
-    public double getAverageTime(int quizID) {
+    public  static double getAverageTime(int quizID) {
         String query = "SELECT AVG(time) AS average_time FROM Scores WHERE quiz_id = " + quizID;
         double averageTime = 0.0;
 
@@ -1321,7 +1334,7 @@ public class DatabaseAccess {
 
         return averageTime;
     }
-    public double getAverageScore(int quizID) {
+    public static  double getAverageScore(int quizID) {
         String query = "SELECT AVG(score) AS average_score FROM Scores WHERE quiz_id = " + quizID;
         double averageScore = 0.0;
 
@@ -1344,7 +1357,7 @@ public class DatabaseAccess {
 
 
     /** Returns the achievements of a user in an arrayList format of strings */
-    public ArrayList<String> getUserAchievements(String username){
+    public static  ArrayList<String> getUserAchievements(String username){
         ArrayList<String> list = new ArrayList<>();
         User user = getUserInfo(username);
         int quizzesTaken = user.getQuizzes_taken();
@@ -1382,7 +1395,7 @@ public class DatabaseAccess {
 
     /** This method must be called after a user takes a quiz. It takes in specified parameters
      *  and updates the database accordingly */
-    public void quizFinished(int userID, int quizID, int score,
+    public  static void quizFinished(int userID, int quizID, int score,
                              Timestamp date, int secondsTaken, boolean practiceMode, int quizRating){
 
         // Update practice mode achievement
@@ -1529,7 +1542,7 @@ public class DatabaseAccess {
     }
 
     /** Returns quiz rating on a scale from 0 to 10 as a double*/
-    public double getQuizRating(int quizID){
+    public  static double getQuizRating(int quizID){
         String query = "Select * from Quiz_ratings where quiz_id = " + quizID;
         int totalRating = 0;
         try {
@@ -1570,8 +1583,8 @@ public class DatabaseAccess {
     public static final int QUESTION_CHECKBOX = 6;
     public static final int QUESTION_MATCHING = 7;
 
-    public void deleteQuizAndRelatedQuestions(int quizId) {
-        String deleteCheckboxAnswers = "DELETE FROM checkbox_answers WHERE checkbox_questions_id IN (SELECT question_id FROM checkbox_questions WHERE quiz_id = " + quizId + ");";
+    public  static void deleteQuizAndRelatedQuestions(int quizId) {
+        String deleteCheckboxAnswers = "DELETE FROM checkbox_answers WHERE quiz_id = " + quizId + ";";
         String deleteCheckboxQuestions = "DELETE FROM checkbox_questions WHERE quiz_id = " + quizId + ";";
         String deleteMultiAnswerAnswers = "DELETE FROM multi_answer_answers WHERE quiz_id = " + quizId + ";";
         String deleteMultiAnswerQuestions = "DELETE FROM multi_answer_questions WHERE quiz_id = " + quizId + ";";
@@ -1606,7 +1619,7 @@ public class DatabaseAccess {
     }
 
     /** Creates a quiz object in database and returns its quizID */
-    public int createQuizAndGetID(String quizName, String quizDescription,
+    public static  int createQuizAndGetID(String quizName, String quizDescription,
                                   int creatorID, String creatorUsername, int randomQuestion,
                                   int immediate, int practice, int onePage, Timestamp creationDate) {
         String query = "INSERT INTO Quizzes (quiz_name, quiz_description, quiz_creator_id, " +
@@ -1640,7 +1653,7 @@ public class DatabaseAccess {
         return quizID;
     }
 
-    public void createQuizWithID(int quizId,String quizName, String quizDescription,
+    public static  void createQuizWithID(int quizId,String quizName, String quizDescription,
                                   int creatorID, String creatorUsername, int randomQuestion,
                                   int immediate, int practice, int onePage, Timestamp creationDate) {
         String query = "INSERT INTO Quizzes (quiz_id,quiz_name, quiz_description, quiz_creator_id, " +
@@ -1676,7 +1689,7 @@ public class DatabaseAccess {
 
 
     /** Populates database with quiz questions */
-    public void populateQuiz(ArrayList<Question> questions){
+    public  static void populateQuiz(ArrayList<Question> questions){
         for (Question q : questions) {
             int type = q.getType();
             switch (type) {
@@ -1886,7 +1899,7 @@ public class DatabaseAccess {
         }
     }
 
-    public ArrayList<ScoreAndUser> getTopPerformers(int quizID, int amount) {
+    public  static ArrayList<ScoreAndUser> getTopPerformers(int quizID, int amount) {
         String query;
         if (amount == 0) {
             query = "SELECT u.user_id, " +
@@ -1965,7 +1978,7 @@ public class DatabaseAccess {
         return users;
     }
 
-    public ArrayList<ScoreAndUser> getRecentPerformers(int quizID, int amount) {
+    public static  ArrayList<ScoreAndUser> getRecentPerformers(int quizID, int amount) {
         String query;
         if (amount == 0) {
             query = "SELECT u.user_id, " +
@@ -2044,7 +2057,7 @@ public class DatabaseAccess {
         return users;
     }
 
-    public ArrayList<Quiz> getPopularQuizzesByUser(int userId, int amount) {
+    public  static ArrayList<Quiz> getPopularQuizzesByUser(int userId, int amount) {
         String query = "SELECT q.*, u.username " +
                 "FROM quizzes q " +
                 "LEFT JOIN users u ON q.quiz_creator_id = u.user_id " +
@@ -2059,7 +2072,7 @@ public class DatabaseAccess {
         catch (SQLException e) { throw new RuntimeException(e); }
     }
 
-    public ArrayList<Quiz> getRecentQuizzesByUser(int userId, int amount) {
+    public static  ArrayList<Quiz> getRecentQuizzesByUser(int userId, int amount) {
         String query = "SELECT q.*, u.username " +
                 "FROM quizzes q " +
                 "LEFT JOIN users u ON q.quiz_creator_id = u.user_id " +
@@ -2074,7 +2087,7 @@ public class DatabaseAccess {
         catch (SQLException e) { throw new RuntimeException(e); }
     }
 
-    private ArrayList<Quiz> getQuizzesFromResultSet(ResultSet rs) throws SQLException {
+    public  static ArrayList<Quiz> getQuizzesFromResultSet(ResultSet rs) throws SQLException {
         ArrayList<Quiz> quizzes = new ArrayList<>();
         while (rs.next()) {
             Quiz quiz = new Quiz(
@@ -2096,7 +2109,7 @@ public class DatabaseAccess {
     }
 
 
-    public void getMostSuccessfulScoresAndQuizzesForUser(ArrayList<Score> scores, ArrayList<Quiz> quizzes,int userId, int amount) {
+    public static  void getMostSuccessfulScoresAndQuizzesForUser(ArrayList<Score> scores, ArrayList<Quiz> quizzes,int userId, int amount) {
         String query = "SELECT s.*, q.*, u.username " +
                 "FROM scores s " +
                 "LEFT JOIN quizzes q ON s.quiz_id = q.quiz_id " +
@@ -2114,7 +2127,7 @@ public class DatabaseAccess {
         catch (SQLException e) {throw new RuntimeException(e);}
     }
 
-    private ArrayList<Score> getScoresFromResultSet(ResultSet rs) throws SQLException {
+    public static ArrayList<Score> getScoresFromResultSet(ResultSet rs) throws SQLException {
         ArrayList<Score> scores = new ArrayList<>();
         while (rs.next()) {
             Score score = new Score(
@@ -2130,7 +2143,7 @@ public class DatabaseAccess {
         return scores;
     }
 
-    public void getRecentScoresAndQuizzesForUser(ArrayList<Score> scores, ArrayList<Quiz> quizzes, int userId, int amount) {
+    public static  void getRecentScoresAndQuizzesForUser(ArrayList<Score> scores, ArrayList<Quiz> quizzes, int userId, int amount) {
         String query = "SELECT s.*, q.*, u.username " +
                 "FROM scores s " +
                 "LEFT JOIN quizzes q ON s.quiz_id = q.quiz_id " +
@@ -2148,7 +2161,7 @@ public class DatabaseAccess {
         catch (SQLException e) {throw new RuntimeException(e);}
     }
 
-    public ArrayList<Note> getNotesForChat(int fromId, int toId, int amount) {
+    public  static ArrayList<Note> getNotesForChat(int fromId, int toId, int amount) {
         String query = "SELECT m.*, u.username " +
                 "FROM messages m " +
                 "LEFT JOIN users u ON m.from_id = u.user_id " +
@@ -2164,7 +2177,7 @@ public class DatabaseAccess {
         catch (SQLException e) {throw new RuntimeException(e);}
     }
 
-    private ArrayList<Note> getNotesFromResultSet(ResultSet rs) throws SQLException {
+    public static  ArrayList<Note> getNotesFromResultSet(ResultSet rs) throws SQLException {
         ArrayList<Note> notes = new ArrayList<>();
         while (rs.next()) {
             Note note = new Note(

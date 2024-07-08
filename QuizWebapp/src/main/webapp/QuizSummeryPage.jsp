@@ -2,7 +2,9 @@
 <%@ page import="DBpackage.DatabaseAccess" %>
 <%@ page import="DBpackage.Score" %>
 <%@ page import="java.util.ArrayList" %>
-<%@ page import="DBpackage.ScoreAndUser" %><%--
+<%@ page import="DBpackage.ScoreAndUser" %>
+<%@ page import="DBpackage.DAOpackage.QuizDAO" %>
+<%@ page import="DBpackage.DAOpackage.UserDAO" %><%--
   Created by IntelliJ IDEA.
   User: Nicolas
   Date: 6/29/2024
@@ -14,17 +16,17 @@
     String user = (String) session.getAttribute("username");
     int userId = (Integer) session.getAttribute("userID");
 
-    DatabaseAccess dbAccess = (DatabaseAccess) application.getAttribute("DatabaseAccess");
-    Quiz quiz = dbAccess.getQuizInfo(Integer.parseInt(request.getParameter("quizId")));
+    //DatabaseAccess dbAccess = (DatabaseAccess) application.getAttribute("DatabaseAccess");
+    Quiz quiz = QuizDAO.getQuizInfo(Integer.parseInt(request.getParameter("quizId")));
     String quizName = quiz.getName();
     String quizDescription = quiz.getDescription();
     String quizCreator = quiz.getCreatorUsername();
     int quizCreatorID = quiz.getCreatorID();
 
-    ArrayList<Score> pastScores = dbAccess.getLastAttemptsOfUserOnQuiz(user, quiz.getQuiz_id(), 0);
-    ArrayList<ScoreAndUser> highestPerformers = dbAccess.getTopPerformers(quiz.getQuiz_id(), 10);
-    ArrayList<ScoreAndUser> lastDayHighestPerformers = dbAccess.getTopPerformersForLastDay(quiz.getQuiz_id(), 10);
-    ArrayList<ScoreAndUser> recentScores = dbAccess.getRecentPerformers(quiz.getQuiz_id(), 0);
+    ArrayList<Score> pastScores = QuizDAO.getLastAttemptsOfUserOnQuiz(user, quiz.getQuiz_id(), 0);
+    ArrayList<ScoreAndUser> highestPerformers = QuizDAO.getTopPerformers(quiz.getQuiz_id(), 10);
+    ArrayList<ScoreAndUser> lastDayHighestPerformers = UserDAO.getTopPerformersForLastDay(quiz.getQuiz_id(), 10);
+    ArrayList<ScoreAndUser> recentScores = QuizDAO.getRecentPerformers(quiz.getQuiz_id(), 0);
 %>
 <html>
 <head>

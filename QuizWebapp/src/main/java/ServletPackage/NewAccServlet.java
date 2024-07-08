@@ -1,5 +1,6 @@
 package ServletPackage;
 
+import DBpackage.DAOpackage.UserDAO;
 import DBpackage.DatabaseAccess;
 
 import javax.servlet.RequestDispatcher;
@@ -14,12 +15,12 @@ public class NewAccServlet extends HttpServlet {
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 
-        DatabaseAccess dbAccess = (DatabaseAccess) getServletContext().getAttribute("DatabaseAccess");
+        //DatabaseAccess dbAccess = (DatabaseAccess) getServletContext().getAttribute("DatabaseAccess");
 
         String username = request.getParameter("username");
         String password = request.getParameter("password");
 
-        boolean accountExists = dbAccess.accountExists(username);
+        boolean accountExists = UserDAO.accountExists(username);
 
         RequestDispatcher dispatcher;
         if (accountExists) {
@@ -28,8 +29,8 @@ public class NewAccServlet extends HttpServlet {
         } else {
             // Account creation successful, create new Account
             // Redirects to userPage when created
-            dbAccess.addUser(username,password, 0);
-            int userID = dbAccess.getUserInfo(username).getUser_id();
+            UserDAO.addUser(username,password, 0);
+            int userID = UserDAO.getUserInfo(username).getUser_id();
             HttpSession session = request.getSession();
             session.setAttribute("loginStatus", 1);
             session.setAttribute("userID", userID);

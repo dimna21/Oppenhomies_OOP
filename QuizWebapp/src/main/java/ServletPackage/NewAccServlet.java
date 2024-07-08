@@ -35,6 +35,7 @@ public class NewAccServlet extends HttpServlet {
             session.setAttribute("loginStatus", 1);
             session.setAttribute("userID", userID);
             session.setAttribute("username", username);
+            session.setAttribute("LoggedInUser", username);
             dispatcher = request.getRequestDispatcher("UserHomePage.jsp");
         }
         dispatcher.forward(request, response);

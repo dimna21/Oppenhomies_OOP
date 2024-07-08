@@ -92,7 +92,12 @@ INSERT INTO Friend_requests(from_id, to_id, notification) VALUES
                                                               (1,3,1),
                                                               (1,2,1),
                                                               (1,4,1),
-                                                              (1,5,1);
+                                                              (1,5,1),
+                                                              (3,1,1),
+                                                              (2,1,1),
+                                                              (4,1,1),
+                                                              (5,1,1);
+
 -- Create Quizzes table
 CREATE TABLE Quizzes (
                          quiz_id INT(6) AUTO_INCREMENT PRIMARY KEY,

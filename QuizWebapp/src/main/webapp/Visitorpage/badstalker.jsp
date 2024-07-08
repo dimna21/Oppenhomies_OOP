@@ -1,16 +1,20 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Khatuna.Tkebuchava
-  Date: 7/7/2024
-  Time: 12:19 AM
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
-    <title>NONONO</title>
+    <title>Account Not Found</title>
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/Homepage/LookerDesign.css">
 </head>
 <body>
-    <h1>No Such User Man</h1>
+<form action="<%= request.getContextPath() %>/LookUpServlet" method="post">
+    <h1> No Such Account</h1>
+    <div>
+        <label for="username">Enter Username:</label>
+        <input type="text" id="username" name="username">
+    </div>
+    <div>
+        <button type="submit" class="button">Search</button>
+    </div>
+</form>
+
 </body>
 </html>

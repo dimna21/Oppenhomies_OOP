@@ -88,7 +88,6 @@
     <div class="opciones">
         <a href="<%= request.getContextPath() %>/UserAuthentication/loginPage.jsp" class="button">Sign In</a>
         <a href="<%= request.getContextPath() %>/UserAuthentication/newAccount.jsp" class="button">Sign Up</a>
-        <a href="<%= request.getContextPath() %>/Homepage/Looker.jsp" class="button">Look Someone Up</a>
     </div>
 </div>
 

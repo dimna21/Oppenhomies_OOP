@@ -1,0 +1,127 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+#quizForm {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"], textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.question {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 4px;
+}
+
+.answers {
+    margin-top: 10px;
+}
+
+.answers div {
+    margin-bottom: 5px;
+}
+
+.editBtn, .saveBtn {
+    background-color: #008CBA;
+    margin-top: 10px;
+}
+
+.editBtn:hover, .saveBtn:hover {
+    background-color: #007B9A;
+}
+
+#questionType {
+    margin-bottom: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+input[type="file"] {
+    margin: 10px 0;
+    width: 100%;
+}
+
+#addQuestionBtn {
+    margin-top: 20px;
+    align-self: flex-start;
+}
+
+.question input[type="radio"] {
+    margin-right: 5px;
+}
+
+.answerCount {
+    margin-bottom: 10px;
+}
+
+#questionContainer {
+    margin-bottom: 20px;
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+}
+
+.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+#createQuizBtn {
+    background-color: #f44336;
+    margin-top: 20px;
+    align-self: center;
+    font-size: 18px;
+    padding: 15px 30px;
+}
+
+#createQuizBtn:hover {
+    background-color: #d32f2f;
+}
+
+.deleteBtn {
+    background-color: #f44336;
+    margin-left: 10px;
+}
+
+.deleteBtn:hover {
+    background-color: #d32f2f;
+}

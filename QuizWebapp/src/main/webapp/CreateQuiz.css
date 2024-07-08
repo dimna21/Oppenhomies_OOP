@@ -1,0 +1,225 @@
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+#quizForm {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    display: flex;
+    flex-direction: column;
+}
+
+input[type="text"], textarea, select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea {
+    height: 100px;
+    resize: vertical;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.question {
+    background-color: #f9f9f9;
+    padding: 15px;
+    margin-top: 20px;
+    border-radius: 4px;
+}
+
+.answers {
+    margin-top: 10px;
+}
+
+.answers div {
+    margin-bottom: 5px;
+}
+
+.editBtn, .saveBtn {
+    background-color: #008CBA;
+    margin-top: 10px;
+}
+
+.editBtn:hover, .saveBtn:hover {
+    background-color: #007B9A;
+}
+
+#questionType {
+    margin-bottom: 20px;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+input[type="file"] {
+    margin: 10px 0;
+    width: 100%;
+}
+
+#addQuestionBtn {
+    margin-top: 20px;
+    align-self: flex-start;
+}
+
+.question input[type="radio"] {
+    margin-right: 5px;
+}
+
+.answerCount {
+    margin-bottom: 10px;
+}
+
+#questionContainer {
+    margin-bottom: 20px;
+    align-self: flex-start;
+    display: flex;
+    align-items: center;
+}
+
+.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+#createQuizBtn {
+    background-color: #f44336;
+    margin-top: 20px;
+    align-self: center;
+    font-size: 18px;
+    padding: 15px 30px;
+}
+
+#createQuizBtn:hover {
+    background-color: #d32f2f;
+}
+
+.deleteBtn {
+    background-color: #f44336;
+    margin-left: 10px;
+}
+
+.deleteBtn:hover {
+    background-color: #d32f2f;
+}
+
+.checkbox-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.checkbox-container label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.checkbox-container .full-width {
+    width: 100%;
+}
+
+.checkbox-container .half-width {
+    width: calc(50% - 5px);
+}
+
+input[type="checkbox"] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #4CAF50;
+    border-radius: 4px;
+    outline: none;
+    transition: all 0.3s;
+    margin-left: 10px;
+    cursor: pointer;
+    order: 2;
+}
+
+.checkbox-container label span {
+    order: 1;
+    flex-grow: 1;
+}
+
+input[type="checkbox"]:checked {
+    background-color: #4CAF50;
+    border-color: #4CAF50;
+}
+
+input[type="checkbox"]:checked::before {
+    content: '\2714';
+    display: block;
+    text-align: center;
+    color: white;
+    font-size: 14px;
+    line-height: 20px;
+}
+
+input[type="checkbox"]:hover {
+    border-color: #45a049;
+}
+
+input[type="checkbox"]:disabled {
+    border-color: #ccc;
+    background-color: #f4f4f4;
+    cursor: not-allowed;
+}
+
+/* Existing styles... */
+
+/* Matching question specific styles */
+.question[data-type="matching"] .answers > div {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.question[data-type="matching"] .answers > div input[type="text"] {
+    width: 48%; /* Adjust as needed */
+    margin-bottom: 0;
+}
+
+/* You might want to adjust the general input styles for matching questions */
+.question[data-type="matching"] input[type="text"],
+.question[data-type="matching"] input[type="number"] {
+    margin-bottom: 10px;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 600px) {
+    .question[data-type="matching"] .answers > div {
+        flex-direction: column;
+    }
+
+    .question[data-type="matching"] .answers > div input[type="text"] {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+}

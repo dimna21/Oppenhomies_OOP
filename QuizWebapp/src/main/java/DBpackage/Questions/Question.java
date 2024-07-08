@@ -6,6 +6,20 @@ public class Question {
     private int subID;
     private int questionID;
 
+    @Override
+    public String toString() {
+        return "Question{" +
+                "type=" + type +
+                ", quizID=" + quizID +
+                ", subID=" + subID +
+                ", questionID=" + questionID +
+                '}';
+    }
+
+    public Question() {
+
+    }
+
     public Question(int questionID, int quizID, int subID, int type){
         this.questionID = questionID;
         this.type = type;

@@ -32,6 +32,10 @@ public class Quiz {
         this.times_taken = timesTaken;
     }
 
+    public Quiz() {
+
+    }
+
     public Quiz(int quiz_id, String name, String description, int creatorID, int randomQuestion,
                 int onePage, int immediate, int practice, java.sql.Timestamp creationDate,
                 int timesTaken){

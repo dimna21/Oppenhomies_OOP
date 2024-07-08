@@ -9,6 +9,10 @@ public class QuestionCheckbox extends Question{
     private ArrayList<String> answerList;
     private ArrayList<Integer> correctList;
 
+    public QuestionCheckbox() {
+
+    }
+
     public QuestionCheckbox(int questionID, int quizID,int subID, int type,String question, int ordered,
                             ArrayList<String> answers, ArrayList<Integer> correct){
         super(questionID, quizID, subID, type);

@@ -5,6 +5,11 @@ public class QuestionPicture extends Question{
     private String answer;
     private String imageURL;
 
+    public QuestionPicture() {
+
+    }
+
+
     public QuestionPicture(int questionID, int quizID,int subID, int type, String question, String answer, String imageURL) {
         super(questionID, quizID, subID, type);
         this.question = question;
@@ -35,5 +40,14 @@ public class QuestionPicture extends Question{
 
     public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
+    }
+
+    @Override
+    public String toString() {
+        return "QuestionPicture{" +
+                "question='" + question + '\'' +
+                ", answer='" + answer + '\'' +
+                ", imageURL='" + imageURL + '\'' +
+                '}';
     }
 }

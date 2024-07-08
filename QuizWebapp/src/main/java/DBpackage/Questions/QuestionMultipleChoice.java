@@ -11,6 +11,9 @@ public class QuestionMultipleChoice extends Question{
     private int ordered;
     private ArrayList<String> answerList;
 
+    public QuestionMultipleChoice() {
+
+    }
     public QuestionMultipleChoice(int questionID, int quizID,int subID, int type, String question, int ordered)  {
         super(questionID, quizID, subID, type);
         this.question = question;
@@ -55,5 +58,15 @@ public class QuestionMultipleChoice extends Question{
 
     public int getOrdered() {
         return ordered;
+    }
+
+    @Override
+    public String toString() {
+        return "QuestionMultipleChoice{" +
+                "question='" + question + '\'' +
+                ", correctAnswer='" + correctAnswer + '\'' +
+                ", ordered=" + ordered +
+                ", answerList=" + answerList +
+                '}';
     }
 }

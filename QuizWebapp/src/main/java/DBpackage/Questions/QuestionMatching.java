@@ -8,6 +8,8 @@ public class QuestionMatching extends Question{
     private ArrayList<String> words;
     private ArrayList<String> matchingWords;
 
+    public QuestionMatching() {}
+
     public QuestionMatching(int questionID, int quizID, int subID, int type,
                             String question, ArrayList<String> words, ArrayList<String> matchingWords) {
         super(questionID, quizID, subID, type);

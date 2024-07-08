@@ -27,7 +27,7 @@
     ArrayList<Quiz> quizzesForChallenges = new ArrayList<Quiz>();
     dbAccess.getChallengesForUser(userID, challenges, quizzesForChallenges);
 
-    ArrayList<FriendRequest> friendRequests = dbAccess.friendRequests(userID);
+    ArrayList<FriendRequest> friendRequests = dbAccess.waitingFriendRequests(userID);
     ArrayList<Note> notes = DatabaseAccess.getNotes(userID, 0);
 
     ArrayList<Activity> activities = dbAccess.getFriendsActivity(username, 0);
@@ -221,7 +221,9 @@
                 </div>
                 <div class="inbox-column">
                     <h3>Friend Requests</h3>
-                    <% for (FriendRequest friendRequest : friendRequests) { %>
+                    <%
+                        for (FriendRequest friendRequest : friendRequests) {
+                    %>
                     <div class="friend-request">
                         <div class="friend-request-details">
                             <p>From: <%= friendRequest.getFrom_username() %></p>
@@ -318,6 +320,13 @@
             <% } %>
         </div>
     </div>
+
+    <div class="LOOKUP-container">
+        <div class="LOOKUP">
+            <a href="<%= request.getContextPath() %>/Homepage/Looker.jsp" class="button">Look Someone Up</a>
+        </div>
+    </div>
+
 </div>
 
 <script>

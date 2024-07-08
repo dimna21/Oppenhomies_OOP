@@ -90,6 +90,7 @@
 <form id="quizForm" action="submitQuiz" method="post">
     <% for (int i = 0; i < questions.size(); i++) {
         Question question = questions.get(i);
+        System.out.println(question);
         int type = question.getType();
     %>
     <div id="question<%=i%>" class="question" <%=onePage != 1 ? "style='display:none;'" : ""%>>

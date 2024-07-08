@@ -1731,6 +1731,19 @@ public class DatabaseAccess {
     public  static void populateQuiz(ArrayList<Question> questions){
         for (Question q : questions) {
             int type = q.getType();
+
+            String executable0 = "INSERT INTO quiz_questions (quiz_id, sub_id, type)" +
+                    " VALUES (?, ?, ?)";
+            try (PreparedStatement pstmt = con.prepareStatement(executable0)) {
+                pstmt.setInt(1,q.getQuizID());
+                pstmt.setInt(2,q.getSubID());
+                pstmt.setInt(3,type);
+                int rowsUpdated = pstmt.executeUpdate();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                throw new RuntimeException("Error executing SQL query", e);
+            }
+
             switch (type) {
                 case QUESTION_TEXTBOX:
                     q = (QuestionTextbox) q;

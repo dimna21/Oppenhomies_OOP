@@ -24,6 +24,10 @@ public class FriendDAO {
         return DatabaseAccess.getFriendlist(username);
 
     }
+    public static ArrayList<FriendRequest> waitingFriendRequests(int userID) {
+        return DatabaseAccess.waitingFriendRequests(userID);
+
+    }
 
     public static ArrayList<Activity> getFriendsActivity(String user, int maxActivities) {
         return DatabaseAccess.getFriendsActivity(user,maxActivities);

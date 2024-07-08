@@ -1,6 +1,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="DBpackage.*" %>
-<%@ page import="java.util.HashMap" %><%--
+<%@ page import="java.util.HashMap" %>
+<%@ page import="DBpackage.DAOpackage.*" %><%--
   Created by IntelliJ IDEA.
   User: Nicolas
   Date: 7/6/2024
@@ -13,40 +14,40 @@
     String username = (String) session.getAttribute("username");
 
     int profileId = Integer.parseInt(request.getParameter("profileId"));
-    DatabaseAccess dbAccess = (DatabaseAccess) application.getAttribute("DatabaseAccess");
+    //DatabaseAccess dbAccess = (DatabaseAccess) application.getAttribute("DatabaseAccess");
     String profile = DatabaseAccess.getUsername(profileId);
 
-    ArrayList<Quiz> mostPopularQuizzes = dbAccess.getPopularQuizzesByUser(profileId, 0);
-    ArrayList<Quiz> recentQuizzes = dbAccess.getRecentQuizzesByUser(profileId, 0);
+    ArrayList<Quiz> mostPopularQuizzes = QuizDAO.getPopularQuizzesByUser(profileId, 0);
+    ArrayList<Quiz> recentQuizzes = QuizDAO.getRecentQuizzesByUser(profileId, 0);
 
     ArrayList<Score> mostSuccessfulScores = new ArrayList<Score>();
     ArrayList<Quiz> mostSuccessfulQuizzes = new ArrayList<Quiz>();
-    dbAccess.getMostSuccessfulScoresAndQuizzesForUser(mostSuccessfulScores, mostSuccessfulQuizzes, profileId, 0);
+    QuizDAO.getMostSuccessfulScoresAndQuizzesForUser(mostSuccessfulScores, mostSuccessfulQuizzes, profileId, 0);
     //System.out.println("MostSuccessfulScores: " + mostSuccessfulScores.size());
     //System.out.println("MostPopularQuizzes: " + mostSuccessfulQuizzes.size());
 
     ArrayList<Score> recentScoresTaken = new ArrayList<Score>();
     ArrayList<Quiz> recentQuizzesTaken = new ArrayList<Quiz>();
-    dbAccess.getRecentScoresAndQuizzesForUser(recentScoresTaken, recentQuizzesTaken, profileId, 0);
+    QuizDAO.getRecentScoresAndQuizzesForUser(recentScoresTaken, recentQuizzesTaken, profileId, 0);
     //System.out.println("RecentScoresTaken: " + recentScoresTaken.size());
     //System.out.println("RecentQuizzesTaken: " + recentQuizzesTaken.size());
 
-    ArrayList<Achievement> achievements = dbAccess.getRecentAchievements(profile, 0);
+    ArrayList<Achievement> achievements = AchievementDAO.getRecentAchievements(profile, 0);
     //System.out.println("Achievements: " + achievements.size());
 
-    ArrayList<Note> chat = dbAccess.getNotesForChat(userId, profileId, 0);
+    ArrayList<Note> chat = NoteDAO.getNotesForChat(userId, profileId, 0);
     //System.out.println("Chat: " + chat.size());
 
     String LoggedInUser = session.getAttribute("LoggedInUser").toString();
     String VisitedUser = session.getAttribute("VisitedUser").toString();
 
     boolean drugi = false;
-    ArrayList<User> friends = dbAccess.getFriendlist(LoggedInUser);
+    ArrayList<User> friends = FriendDAO.getFriendlist(LoggedInUser);
     for(User user : friends)
         if(user.getUsername().equals(VisitedUser)) drugi = true;
 
     boolean waiting = false;
-    ArrayList<FriendRequest> requests = dbAccess.waitingFriendRequests(dbAccess.getUserID(VisitedUser));
+    ArrayList<FriendRequest> requests = FriendDAO.waitingFriendRequests(UserDAO.getUserID(VisitedUser));
     for(FriendRequest friendRequest : requests)
         if (friendRequest.getFrom_username().equals(LoggedInUser)) waiting = true;
 

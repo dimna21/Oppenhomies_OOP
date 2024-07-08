@@ -17,6 +17,7 @@ DBpackage\DatabaseInfo.class
 DBpackage\hasher.class
 DBpackage\Questions\Question.class
 DBpackage\Quiz.class
+ServletPackage\AddFriendServlet.class
 DBpackage\Questions\QuestionFillBlank.class
 DBpackage\User.class
 DBpackage\Questions\QuestionMatching.class

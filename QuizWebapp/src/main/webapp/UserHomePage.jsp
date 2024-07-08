@@ -319,8 +319,8 @@
         </div>
     </div>
 
-    <div class="opciones-container">
-        <div class="opciones">
+    <div class="LOOKUP-container">
+        <div class="LOOKUP">
             <a href="<%= request.getContextPath() %>/Homepage/Looker.jsp" class="button">Look Someone Up</a>
         </div>
     </div>

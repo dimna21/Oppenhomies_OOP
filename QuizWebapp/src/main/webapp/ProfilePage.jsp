@@ -21,20 +21,39 @@
     ArrayList<Score> mostSuccessfulScores = new ArrayList<Score>();
     ArrayList<Quiz> mostSuccessfulQuizzes = new ArrayList<Quiz>();
     dbAccess.getMostSuccessfulScoresAndQuizzesForUser(mostSuccessfulScores, mostSuccessfulQuizzes, profileId, 0);
-    System.out.println("MostSuccessfulScores: " + mostSuccessfulScores.size());
-    System.out.println("MostPopularQuizzes: " + mostSuccessfulQuizzes.size());
+    //System.out.println("MostSuccessfulScores: " + mostSuccessfulScores.size());
+    //System.out.println("MostPopularQuizzes: " + mostSuccessfulQuizzes.size());
 
     ArrayList<Score> recentScoresTaken = new ArrayList<Score>();
     ArrayList<Quiz> recentQuizzesTaken = new ArrayList<Quiz>();
     dbAccess.getRecentScoresAndQuizzesForUser(recentScoresTaken, recentQuizzesTaken, profileId, 0);
-    System.out.println("RecentScoresTaken: " + recentScoresTaken.size());
-    System.out.println("RecentQuizzesTaken: " + recentQuizzesTaken.size());
+    //System.out.println("RecentScoresTaken: " + recentScoresTaken.size());
+    //System.out.println("RecentQuizzesTaken: " + recentQuizzesTaken.size());
 
     ArrayList<Achievement> achievements = dbAccess.getRecentAchievements(profile, 0);
-    System.out.println("Achievements: " + achievements.size());
+    //System.out.println("Achievements: " + achievements.size());
 
     ArrayList<Note> chat = dbAccess.getNotesForChat(userId, profileId, 0);
-    System.out.println("Chat: " + chat.size());
+    //System.out.println("Chat: " + chat.size());
+
+    String LoggedInUser = session.getAttribute("LoggedInUser").toString();
+    String VisitedUser = session.getAttribute("VisitedUser").toString();
+
+    boolean drugi = false;
+    ArrayList<User> friends = dbAccess.getFriendlist(LoggedInUser);
+    for(User user : friends)
+        if(user.getUsername().equals(VisitedUser)) drugi = true;
+
+    boolean waiting = false;
+    ArrayList<FriendRequest> requests = dbAccess.friendRequests(dbAccess.getUserID(VisitedUser));
+    System.out.println(requests.size());
+    for(FriendRequest friendRequest : requests) {
+        if (friendRequest.getFrom_username().equals(LoggedInUser)) waiting = true;
+        System.out.println(friendRequest.getFrom_username());
+    }
+    System.out.println(waiting);
+    System.out.println(LoggedInUser);
+    System.out.println(dbAccess.getUserID(VisitedUser));
 %>
 <html>
 <head>
@@ -45,6 +64,31 @@
 <body>
     <div class = "container">
         <h1 align="center"><%=profile%></h1>
+
+        <%if (drugi) {%>
+        <div class="FRIEND-container">
+            <div class="FRIEND">
+                <a href="ProfilePage.jsp" class="button">Friends</a>
+            </div>
+        </div>
+        <%}
+
+        else if (waiting) {%>
+        <div class="FRIEND-container">
+            <div class="FRIEND">
+                <a href="ProfilePage.jsp" class="button">Waiting For Answer</a>
+            </div>
+        </div>
+        <%}
+
+        else{ %>
+        <div class="FRIEND">
+            <form action="<%= request.getContextPath() %>/AddFriendServlet" method="post">
+                <button type="submit" class="link-button">Add Friend</button>
+            </form>
+        </div>
+        <%}%>
+
 
         <div class = "tab-container">
             <ul class = "tabs">
@@ -160,6 +204,7 @@
                 <% } %>
             </div>
         </div>
+
 
     </div>
 

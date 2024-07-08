@@ -157,3 +157,52 @@ form:nth-child(2) button {
 form:nth-child(2) button:hover {
     background-color: #007B9A;
 }
+
+.FRIEND-container {
+    background-color: #ffffff;
+    padding: 10px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin: 0 auto;
+    width: 150px;
+}
+
+/* Styling for the options */
+.FRIEND {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Styling for buttons */
+.FRIEND a {
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    background-color: #007bff;
+    padding: 10px 20px;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background-color 0.3s;
+    border: none;
+    cursor: pointer;
+}
+
+/* Hover effect for buttons */
+.FRIEND a:hover {
+    background-color: #0056b3;
+}
+
+/*.link-button {*/
+/*    background: none;*/
+/*    border: none;*/
+/*    color: #007bff;*/
+/*    text-decoration: underline;*/
+/*    cursor: pointer;*/
+/*    font-size: 16px;*/
+/*    padding: 0;*/
+/*}*/
+
+/*.link-button:hover {*/
+/*    color: #0056b3;*/
+/*}*/

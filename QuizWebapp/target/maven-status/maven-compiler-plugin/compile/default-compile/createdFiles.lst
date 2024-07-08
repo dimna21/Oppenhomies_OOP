@@ -17,6 +17,7 @@ DBpackage\FriendRequest.class
 DBpackage\Challenge.class
 DBpackage\Score.class
 DBpackage\Announcement.class
+ServletPackage\ChatServlet.class
 ServletPackage\RejectFriendRequestServlet.class
 DBpackage\Activity.class
 DBpackage\DatabaseAccess.class

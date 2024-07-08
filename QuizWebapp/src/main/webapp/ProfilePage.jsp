@@ -204,8 +204,7 @@
                                     <p><%= note.getText() %></p>
                                 </div>
                             </div>
-                        <% }
-                        else { %>
+                        <% } else { %>
                         <div class="profile-note">
                             <div class="note-details">
                                 <p>From: <%= note.getFromUsername() %></p>
@@ -215,6 +214,10 @@
                         <% } %>
                     </div>
                 <% } %>
+            </div>
+            <div id="chatInput">
+                <input type="text" id="messageInput" placeholder="Type your message...">
+                <button onclick="sendMessage()">Send</button>
             </div>
         </div>
 
@@ -233,6 +236,26 @@
                 $(this).addClass('active');
                 $("#"+tab_id).addClass('active');
             });
+        });
+
+        function sendMessage() {
+            var message = $("#messageInput").val();
+            $.ajax({
+                url: "ChatServlet",
+                method: "POST",
+                data: { message: message },
+                success: function(response) {
+                    location.reload();
+                }
+            });
+        }
+
+        // Allow sending message with Enter key
+        $("#messageInput").keypress(function(e) {
+            if(e.which == 13) {
+                sendMessage();
+                return false;
+            }
         });
     </script>
 </body>

@@ -1,0 +1,10 @@
+DBpackage\Achievement.class
+ServletPackage\AcceptFriendRequestServlet.class
+DBpackage\Challenge.class
+DBpackage\Announcement.class
+ServletPackage\RejectFriendRequestServlet.class
+DBpackage\Activity.class
+ServletPackage\CreateQuizServlet.class
+ServletPackage\AddFriendServlet.class
+ServletPackage\MakeAnnouncementServlet.class
+ServletPackage\SubmitQuizServlet.class

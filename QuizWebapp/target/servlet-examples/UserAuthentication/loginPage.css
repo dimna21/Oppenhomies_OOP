@@ -1,0 +1,164 @@
+/* General body styling */
+body {
+    background-color: #643B9F;
+    font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Changed font */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+/* Styling for the container */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Align items to the top of the container */
+    flex-direction: column; /* Stack items vertically */
+    background-color: #643B9F;
+    padding: 20px;
+    margin-bottom: 50px;
+}
+
+/* Styling for the mainFormDiv */
+.mainFormDiv {
+    background-color: #C8A4D4;
+    border: 2px solid #371F76;
+    width: 300px;
+    padding: 20px 40px;
+    margin: 10px auto; /* Center horizontally */
+    border-radius: 8px; /* Rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+}
+
+/* Styling for buttons */
+.button {
+    display: inline-block;
+    padding: 8px 20px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    text-align: center;
+    font-size: 16px; /* Increased font size */
+    line-height: normal;
+    margin-top: 10px;
+    transition: background-color 0.3s; /* Smooth transition */
+}
+
+.button:hover {
+    background-color: #0056b3;
+}
+
+/* Styling for input fields */
+input[type="text"],
+input[type="password"] {
+    width: calc(100% - 40px);
+    padding: 8px 20px; /* Consistent padding */
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 2px solid #007bff;
+    border-radius: 4px;
+    font-size: 14px;
+    background-color: #fff;
+    color: #000;
+    box-sizing: border-box;
+    transition: border-color 0.3s; /* Smooth transition */
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus {
+    outline: none;
+    border-color: #0056b3;
+}
+
+/* Styling for labels */
+label {
+    display: block;
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: bold; /* Bold labels */
+}
+
+/* Centered heading */
+h1 {
+    text-align: center;
+    font-size: 3em;
+    color: #000;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+/* Line beneath the heading */
+hr {
+    border: none;
+    border-top: 1px solid #000;
+    width: 50%;
+    margin: 10px auto;
+}
+
+/* Improved styles for main text */
+.main-text {
+    text-align: left;
+    font-size: 1.5em;
+    color: #000;
+    margin-bottom: 20px;
+}
+
+
+html {
+    height:100%;
+}
+
+body {
+    margin:0;
+}
+
+.bg {
+    animation:slide 3s ease-in-out infinite alternate;
+    background-image: linear-gradient(-60deg, #6c3 50%, #09f 50%);
+    bottom:0;
+    left:-50%;
+    opacity:.5;
+    position:fixed;
+    right:-50%;
+    top:0;
+    z-index:-1;
+}
+
+.bg2 {
+    animation-direction:alternate-reverse;
+    animation-duration:4s;
+}
+
+.bg3 {
+    animation-duration:5s;
+}
+
+.content {
+    background-color:rgba(255,255,255,.8);
+    border-radius:.25em;
+    box-shadow:0 0 .25em rgba(0,0,0,.25);
+    box-sizing:border-box;
+    left:50%;
+    padding:10vmin;
+    position:fixed;
+    text-align:center;
+    top:50%;
+    transform:translate(-50%, -50%);
+}
+
+h1 {
+    font-family:monospace;
+}
+
+@keyframes slide {
+    0% {
+        transform:translateX(-25%);
+    }
+    100% {
+        transform:translateX(25%);
+    }
+}

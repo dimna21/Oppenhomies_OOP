@@ -1,0 +1,156 @@
+/* Reset default styles */
+body, html {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container styling */
+.container {
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+/* Tabs styling */
+.tabs-container {
+    margin-top: 20px;
+}
+
+.tabs {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: space-around;
+    border-bottom: 1px solid #ccc;
+}
+
+.tab-link {
+    cursor: pointer;
+    padding: 10px 15px;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s;
+}
+
+.tab-link.active {
+    border-color: #4CAF50; /* Green */
+}
+
+.tab-content {
+    display: none;
+    padding: 20px 0;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+/* Quiz links */
+.quiz-link {
+    text-decoration: none;
+    color: #333;
+}
+
+.quiz-link:hover {
+    text-decoration: underline;
+}
+
+/* Achievements styling */
+.achievements-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.achievement-item {
+    width: calc(50% - 10px);
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+}
+
+.achievement {
+    display: flex;
+    align-items: center;
+}
+
+.achievement-image {
+    margin-right: 10px;
+}
+
+.achievement-details h3 {
+    margin: 0;
+}
+
+/* Notes styling */
+.note {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
+}
+
+.note-details {
+    padding-left: 10px;
+}
+
+/* Chat input styling */
+#chatInput {
+    margin-top: 20px;
+}
+
+#chatInput input[type="text"],
+#chatInput button {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#chatInput button {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#chatInput button:hover {
+    background-color: #45a049; /* Darker green */
+}
+
+/* Friend button styling */
+.fixed-button-container {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+
+.fixed-button {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.fixed-button:hover {
+    background-color: #45a049; /* Darker green */
+}
+
+.waitfa {
+    font-size: 20px;
+    color: #6e1f04;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    text-align: left;
+}

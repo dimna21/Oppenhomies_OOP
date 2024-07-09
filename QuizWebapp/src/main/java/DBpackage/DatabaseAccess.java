@@ -142,6 +142,24 @@ public class DatabaseAccess {
         return friendRequests;
     }
 
+    public static FriendRequest getLatestFriendRequest(){
+        String q = "SELECT * FROM Friend_requests order by request_id desc";
+        FriendRequest req = null;
+        try {
+            ResultSet rs = stmt.executeQuery(q);
+            if(rs.next()){
+                int id = rs.getInt("request_id");
+                int from = rs.getInt("from_id");
+                int to = rs.getInt("to_id");
+                int notif = rs.getInt("notification");
+                req = new FriendRequest(id, from, to, notif, getUsername(from), getUsername(to));
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return req;
+    }
+
     public static ArrayList<FriendRequest> waitingFriendRequests(int userID){
         ArrayList<FriendRequest> friendRequests= new ArrayList<>();
 

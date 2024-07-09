@@ -31,9 +31,10 @@ public class FriendDAO {
 
     public static ArrayList<Activity> getFriendsActivity(String user, int maxActivities) {
         return DatabaseAccess.getFriendsActivity(user,maxActivities);
-
-
     }
 
+    public static FriendRequest getLatestFriendRequest() {
+        return DatabaseAccess.getLatestFriendRequest();
+    }
 
 }

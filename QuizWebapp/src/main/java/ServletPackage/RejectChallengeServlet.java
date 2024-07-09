@@ -36,8 +36,6 @@ public class RejectChallengeServlet extends HttpServlet {
                 quizId = challenge.getQuiz_id();
             }
         }
-        System.out.println(Sender);
-        System.out.println(quizId);
 
 
         int SenderID = dbAccess.getUserInfo(Sender).getUser_id();

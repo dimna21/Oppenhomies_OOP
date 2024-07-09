@@ -14,21 +14,26 @@ import java.util.ArrayList;
 import DBpackage.DAOpackage.FriendDAO;
 import DBpackage.DAOpackage.UserDAO;
 import DBpackage.DatabaseAccess;
+import DBpackage.FriendRequest;
+
 public class AddFriendServlet extends HttpServlet {
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-        //DatabaseAccess dbAccess = (DatabaseAccess) getServletContext().getAttribute("DatabaseAccess");
         HttpSession session = req.getSession();
+        FriendRequest fr = FriendDAO.getLatestFriendRequest();
+
 
         String VisitedUser = session.getAttribute("VisitedUser").toString();
         String LoggedInUser = session.getAttribute("LoggedInUser").toString();
         int userID = UserDAO.getUserInfo(VisitedUser).getUser_id();
 
-        try {
-            FriendDAO.sendFriendRequest(LoggedInUser, VisitedUser);
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
+        if(!(fr.getFrom_username().equals(LoggedInUser) && fr.getTo_username().equals(VisitedUser))) {
+            try {
+                FriendDAO.sendFriendRequest(LoggedInUser, VisitedUser);
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
         }
 
         RequestDispatcher dispatcher;

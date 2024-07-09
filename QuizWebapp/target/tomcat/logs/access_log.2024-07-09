@@ -118,3 +118,11 @@
 0:0:0:0:0:0:0:1 - - [09/Jul/2024:14:12:41 +0400] "GET /QuizSummeryPage.css HTTP/1.1" 304 - http-bio-8085-exec-1 1
 0:0:0:0:0:0:0:1 - - [09/Jul/2024:14:13:17 +0400] "GET /QuizSummeryPage.jsp?quizId=2 HTTP/1.1" 200 6076 http-bio-8085-exec-1 14
 0:0:0:0:0:0:0:1 - - [09/Jul/2024:14:13:24 +0400] "POST /Quiz.jsp?quizId=2 HTTP/1.1" 500 3173 http-bio-8085-exec-1 63
+0:0:0:0:0:0:0:1 - - [09/Jul/2024:15:54:10 +0400] "GET / HTTP/1.1" 404 - http-bio-8085-exec-1 0
+0:0:0:0:0:0:0:1 - - [09/Jul/2024:15:54:20 +0400] "GET / HTTP/1.1" 404 - http-bio-8085-exec-4 0
+127.0.0.1 - - [09/Jul/2024:15:56:05 +0400] "GET / HTTP/1.1" 404 - http-bio-8086-exec-1 0
+0:0:0:0:0:0:0:1 - - [09/Jul/2024:15:57:24 +0400] "GET / HTTP/1.1" 404 - http-bio-8086-exec-1 0
+0:0:0:0:0:0:0:1 - - [09/Jul/2024:15:59:34 +0400] "GET / HTTP/1.1" 404 - http-bio-8086-exec-1 0
+127.0.0.1 - - [09/Jul/2024:16:00:37 +0400] "GET / HTTP/1.1" 200 9921 http-bio-8086-exec-1 365
+127.0.0.1 - - [09/Jul/2024:16:00:37 +0400] "GET /Homepage/WellWellWell.css HTTP/1.1" 200 4374 http-bio-8086-exec-4 5
+127.0.0.1 - - [09/Jul/2024:16:00:37 +0400] "GET /favicon.ico HTTP/1.1" 404 973 http-bio-8086-exec-5 2

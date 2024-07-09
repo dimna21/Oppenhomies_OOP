@@ -322,6 +322,7 @@
     <div class="LOOKUP-container">
         <div class="LOOKUP">
             <a href="<%= request.getContextPath() %>/Homepage/Looker.jsp" class="button">Look Someone Up</a>
+            <a href="<%= request.getContextPath() %>/MyProfile.jsp" class="button">My profile</a>
         </div>
     </div>
 

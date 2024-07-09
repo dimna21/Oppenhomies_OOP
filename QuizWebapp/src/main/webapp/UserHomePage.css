@@ -413,7 +413,7 @@ form[action*="Reject"] button[type="submit"]:hover {
 
 .user-info {
     position: fixed;
-    top: 20px;
+    top: 25px;
     right: 20px;
     display: flex;
     align-items: center;
@@ -422,7 +422,7 @@ form[action*="Reject"] button[type="submit"]:hover {
     border-radius: 8px;
     padding: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    height: 30px
+    height: 35px
 }
 
 .user-info .user-name {
@@ -486,10 +486,11 @@ form[action*="Reject"] button[type="submit"]:hover {
 }
 
 .LOOKUP-container {
+    background-color: #ffffff;
+    border: 2px solid #371F76;
     position: fixed;
     top: 20px;
     left: 20px;
-    background-color: #ffffff;
     padding: 10px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);

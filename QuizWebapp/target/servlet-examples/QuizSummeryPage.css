@@ -232,3 +232,41 @@ form:nth-child(2) button:hover {
     top: 25px;
     right: 25px;
 }
+.histogram-container {
+    width: 80%;
+    margin: 20px auto;
+    text-align: center;
+}
+
+.histogram {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: flex-end;
+    border: 1px solid #ccc;
+    padding: 10px;
+}
+
+.bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 5px;
+}
+
+.bar-label {
+    font-size: 12px;
+    margin-bottom: 5px;
+}
+
+.bar-fill {
+    background-color: #3498db; /* Blue color for bars */
+    height: 150px; /* Fixed height for bars */
+    width: 50px; /* Initial width of bars */
+    transition: width 0.5s ease-in-out; /* Smooth transition effect */
+}
+
+.bar-count {
+    margin-top: 5px;
+    font-size: 12px;
+}

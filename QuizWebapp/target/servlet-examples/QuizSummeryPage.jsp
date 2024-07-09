@@ -30,6 +30,9 @@
     double averageTime = QuizDAO.getAverageTime(quiz.getQuiz_id());
     double averageScore = QuizDAO.getAverageScore(quiz.getQuiz_id());
     double quizRating = QuizDAO.getQuizRating(quiz.getQuiz_id());
+    int amountTaken = QuizDAO.amountOfTimesTaken(quiz.getQuiz_id());
+    int differentTake = QuizDAO.amountOfDifferentUsersTaken(quiz.getQuiz_id());
+    ArrayList<Integer> hist = QuizDAO.getScoreRangeCounts(quiz.getQuiz_id());
 
 %>
 <html>
@@ -53,7 +56,7 @@
                 <li class = "tab-link active" data-tab = "tab1">Your Past Scores</li>
                 <li class = "tab-link" data-tab = "tab2">Highest Performers</li>
                 <li class = "tab-link" data-tab = "tab3">Yesterday's Highest Performers</li>
-                <li class = "tab-link" data-tab = "tab4">Recent Scores for</li>
+                <li class = "tab-link" data-tab = "tab4">Recent Scores</li>
                 <li class = "tab-link" data-tab = "tab5">Statistics</li>
             </ul>
 
@@ -120,6 +123,32 @@
                         <h3><%="Average time: " + averageTime + " Seconds"%></h3>
                         <h3><%="Average score: " + averageScore%></h3>
                         <h3><%="Average rating: " + quizRating%></h3>
+                        <h3><%="Amount of times taken: " + amountTaken%></h3>
+                        <h3><%="Amount of different users taken: " + differentTake%></h3>
+                        <div class="histogram-container">
+                            <h2>Score Distribution for Quiz ID: <%= quiz.getQuiz_id() %></h2>
+                            <div class="histogram">
+                                <% int maxAmount = 1;
+                                for(int a : hist){if(a>maxAmount)maxAmount=a;}%>
+                                <%-- Iterate through score ranges and counts --%>
+                                <% int rangeIndex = 0;
+                                    for (Integer count : hist) { %>
+                                <div class="bar">
+                                    <div class="bar-label">
+                                        <%-- Determine label based on rangeIndex --%>
+                                        <%
+                                            int lowerBound = rangeIndex * 10+1;
+                                            int upperBound = (rangeIndex + 1) * 10 ;
+                                            String label =(lowerBound + "-" + upperBound);
+                                            out.print(label);
+                                        %>
+                                    </div>                                    <div class="bar-fill" style="height: <%= 100.0 *count/maxAmount  %>px;"></div>
+                                    <div class="bar-count"> <%= count %> </div>
+                                </div>
+                                <% rangeIndex++;
+                                } %>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -4,19 +4,30 @@
 <%@ page import="java.util.Collections" %>
 <%@ page import="DBpackage.Questions.*" %>
 <%@ page import="DBpackage.DAOpackage.QuizDAO" %>
+<%@ page import="java.sql.Timestamp" %>
 
 <%
+    int practice = 0;
+    if (request.getParameter("practice") != null) {
+        practice = Integer.parseInt( request.getParameter("practice"));
+    }
+
+    session.setAttribute("practice", practice);
     //DatabaseAccess dbAccess = (DatabaseAccess) application.getAttribute("DatabaseAccess");
+    long startTimeMillis = System.currentTimeMillis();
+    // Store in session
+    session.setAttribute("quizStartTime", startTimeMillis);
+
     int quizId = Integer.parseInt(request.getParameter("quizId"));
     Quiz quiz = QuizDAO.getQuizInfo(quizId);
     ArrayList<Question> questions = QuizDAO.getQuizQuestions(quizId);
-    ArrayList<Integer> originalIndices = new ArrayList<>();
+    ArrayList<Integer> originalIndices = new ArrayList<Integer>();
     for (int i = 0; i < questions.size(); i++) {
         originalIndices.add(i);
     }
     if(quiz.getRandomQuestion() == 1) {
         Collections.shuffle(originalIndices);
-        ArrayList<Question> shuffledQuestions = new ArrayList<>(questions.size());
+        ArrayList<Question> shuffledQuestions = new ArrayList<Question>(questions.size());
         for(int i=0; i<questions.size(); i++) {
             shuffledQuestions.add(questions.get(originalIndices.get(i)));
         }
@@ -75,9 +86,50 @@
             $('#nextBtn').prop('disabled', currentQuestion === totalQuestions - 1);
         }
 
-        function checkAnswer(questionId) {
-            // AJAX call to check answer
-            // Show result if immediate == 1
+        function checkAnswer(questionId, originalIndex) {
+            let answer;
+            const questionElement = document.getElementById('question' + questionId);
+            const questionType = questionElement.getAttribute('data-question-type');
+
+            // Get the answer based on the question type
+            switch (questionType) {
+                case 1:
+                case 2:
+                case 4:
+                    answer = document.getElementById('question' + originalIndex + '-answer').value;
+                    break;
+                case 3:
+                    answer = $('input[name="answer[' + originalIndex + ']"]:checked').val();
+                    break;
+                case 5:
+                    answer = $('input[name^="answer[' + originalIndex + ']"]').map(function() {
+                        return this.value;
+                    }).get();
+                    break;
+                case 6:
+                    answer = $('input[name^="answer[' + originalIndex + ']"]:checked').map(function() {
+                        return this.value;
+                    }).get();
+                    break;
+                case 7:
+                    answer = $('#question' + originalIndex + '-answer').val();
+                    break;
+            }
+
+            $.ajax({
+                url: 'CheckAnswerServlet',
+                type: 'POST',
+                data: {
+                    quizId: <%=quizId%>,
+                    questionId: questionId,
+                    questionIndex: originalIndex,
+                    answer: JSON.stringify(answer),
+                    questionType: questionType
+                },
+                success: function(response) {
+                    $('#result' + questionId).html(response);
+                }
+            });
         }
 
         $(document).ready(function() {
@@ -212,7 +264,7 @@
         int originalIndex = originalIndices.get(i);
         int type = question.getType();
     %>
-    <div id="question<%=i%>" class="question" data-original-index="<%=originalIndex%>" <%=onePage != 1 ? "style='display:none;'" : ""%>>
+    <div id="question<%=i%>" class="question" data-original-index="<%=originalIndex%>" data-question-type="<%=type%>" <%=onePage != 1 ? "style='display:none;'" : ""%>>
         <h3>Question <%=i+1%></h3>
 
         <% if (type == QuestionTypeConstants.QUESTION_TEXTBOX) { %>
@@ -278,9 +330,10 @@
         <% } %>
 
         <% if (immediate == 1 && onePage == 1) { %>
-        <button type="button" onclick="checkAnswer(<%=question.getQuestionID()%>)">Check Answer</button>
+        <button type="button" onclick="checkAnswer(<%=question.getQuestionID()%>,  <%=originalIndex%>)">Check Answer</button>
         <div id="result<%=question.getQuestionID()%>" class="feedback"></div>
         <% } %>
+
     </div>
     <% } %>
 
@@ -293,3 +346,6 @@
 </form>
 </body>
 </html>
+<div class="bg"></div>
+<div class="bg bg2"></div>
+<div class="bg bg3"></div>

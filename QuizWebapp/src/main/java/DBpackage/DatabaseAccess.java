@@ -923,6 +923,17 @@ public class DatabaseAccess {
         }
     }
 
+    public  static void answerIncomingChallenge(int userAnswering, int answeringTo, int quizID, int status) throws SQLException {
+        String query = "UPDATE Challenge " +
+                "SET notification = " + status +
+                " WHERE from_id = " + answeringTo + " AND to_id = " + userAnswering + " AND quiz_id = " + quizID;
+        try (Statement stmt = con.createStatement()) {
+            int rowsUpdated = stmt.executeUpdate(query);
+        } catch (SQLException e) {
+            throw new RuntimeException();
+        }
+    }
+
     /** Deletes a user's account if the action is performed by an admin
      * and returns a corresponding boolean
      */

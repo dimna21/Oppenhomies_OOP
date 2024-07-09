@@ -67,7 +67,7 @@
 </head>
 <body>
     <div class="fixed-button-container">
-        <a href="../UserHomePage.jsp" class="fixed-button">Home</a>
+        <a href="UserHomePage.jsp" class="fixed-button">Home</a>
     </div>
     <div class = "container">
         <h1 align="center"><%=profile%></h1>
@@ -110,7 +110,7 @@
 
         <div id = "tab1" class="tab-content active">
             <h2><%=profile%>'s Most Popular Quizzes</h2>
-            <div>
+            <div class = "popuquiz">
                 <% for(Quiz quiz: mostPopularQuizzes) {%>
                 <a href="QuizSummeryPage.jsp?quizId=<%=quiz.getQuiz_id()%>" class="quiz-link">
                     <div class="popular-quizzes">
@@ -125,7 +125,7 @@
 
         <div id="tab2" class="tab-content">
             <h2>Recently Created Quizzes</h2>
-            <div>
+            <div class = "rescre">
                 <% for(Quiz quiz: recentQuizzes) {%>
                 <a href="QuizSummeryPage.jsp?quizId=<%=quiz.getQuiz_id()%>" class="quiz-link">
                     <div class="recently-created-quizzes">
@@ -223,7 +223,9 @@
                 <button onclick="sendMessage()">Send</button>
             </div>
         </div>
-
+        </div>
+        <div>
+            <a href="Sender.jsp" class="challenge-button">Send Challenge</a>
         </div>
     </div>
 
@@ -268,3 +270,6 @@
     </div>
 </body>
 </html>
+<div class="bg"></div>
+<div class="bg bg2"></div>
+<div class="bg bg3"></div>

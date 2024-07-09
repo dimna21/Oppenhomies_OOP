@@ -67,7 +67,7 @@
 </head>
 <body>
     <div class="fixed-button-container">
-        <a href="../UserHomePage.jsp" class="fixed-button">Home</a>
+        <a href="UserHomePage.jsp" class="fixed-button">Home</a>
     </div>
     <div class = "container">
         <h1 align="center"><%=profile%></h1>
@@ -223,7 +223,9 @@
                 <button onclick="sendMessage()">Send</button>
             </div>
         </div>
-
+        </div>
+        <div>
+            <a href="Sender.jsp" class="challenge-button">Send Challenge</a>
         </div>
     </div>
 

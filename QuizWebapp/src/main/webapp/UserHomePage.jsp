@@ -104,6 +104,7 @@
                         <p><%=quiz.getDescription()%></p>
                         <p><%="Creation Date: " + quiz.getCreationDate()%></p>
                         <p><%="Author: " + quiz.getCreatorUsername()%> </p>
+                        <p><%="Quiz ID: " + quiz.getQuiz_id()%></p>
                     </div>
                 </a>
                 <%}%>
@@ -120,6 +121,7 @@
                         <p><%=quiz.getDescription()%></p>
                         <p><%="Creation Date: " + quiz.getCreationDate()%></p>
                         <p><%="Author: " + quiz.getCreatorUsername()%> </p>
+                        <p><%="Quiz ID: " + quiz.getQuiz_id()%></p>
                     </div>
                 </a>
                 <%}%>
@@ -139,6 +141,7 @@
                         <p><%=q.getDescription()%></p>
                         <p><%="Creation Date: " + q.getCreationDate()%></p>
                         <p><%="Author: " + q.getCreatorUsername()%> </p>
+                        <p><%="Quiz ID: " + q.getQuiz_id()%></p>
                         <div class="score-info">
                             <p>Score: <%= s.getScore() %></p>
                         </div>
@@ -166,6 +169,7 @@
                         <p><%=quiz.getDescription()%></p>
                         <p><%="Creation Date: " + quiz.getCreationDate()%></p>
                         <p><%="Author: " + quiz.getCreatorUsername()%> </p>
+                        <p><%="Quiz ID: " + quiz.getQuiz_id()%></p>
                     </div>
                 </a>
                 <%}

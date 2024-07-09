@@ -7,34 +7,26 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.sql.SQLException;
 
-import DBpackage.DAOpackage.FriendDAO;
+import DBpackage.DAOpackage.ChallengeDAO;
 import DBpackage.DAOpackage.UserDAO;
-import DBpackage.FriendRequest;
 
-public class AddFriendServlet extends HttpServlet {
+public class SendChallengeServlet extends HttpServlet {
     @Override
-    public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         HttpSession session = req.getSession();
-        FriendRequest fr = FriendDAO.getLatestFriendRequest();
+        String quizId = req.getParameter("Quiz ID");
+        int QUIZID = Integer.parseInt(quizId);
 
 
         String VisitedUser = session.getAttribute("VisitedUser").toString();
         String LoggedInUser = session.getAttribute("LoggedInUser").toString();
         int userID = UserDAO.getUserInfo(VisitedUser).getUser_id();
 
-        if(!(fr.getFrom_username().equals(LoggedInUser) && fr.getTo_username().equals(VisitedUser))) {
-            try {
-                FriendDAO.sendFriendRequest(LoggedInUser, VisitedUser);
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
-            }
-        }
+        ChallengeDAO.sendChallenge(LoggedInUser, VisitedUser, QUIZID);
 
         RequestDispatcher dispatcher;
         dispatcher = req.getRequestDispatcher("ProfilePage.jsp?profileId=" + userID);
-        dispatcher.forward(req, res);
+        dispatcher.forward(req, resp);
     }
 }

@@ -53,6 +53,11 @@
     <servlet-class>ServletPackage.RejectChallengeServlet</servlet-class>
   </servlet>
 
+  <servlet>
+    <servlet-name>SendChallengeServlet</servlet-name>
+    <servlet-class>ServletPackage.SendChallengeServlet</servlet-class>
+  </servlet>
+
   <servlet-mapping>
     <servlet-name>LoginServlet</servlet-name>
     <url-pattern>/LoginServlet</url-pattern>
@@ -96,6 +101,11 @@
   <servlet-mapping>
     <servlet-name>RejectChallengeServlet</servlet-name>
     <url-pattern>/RejectChallengeServlet</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>SendChallengeServlet</servlet-name>
+    <url-pattern>/SendChallengeServlet</url-pattern>
   </servlet-mapping>
 
   <welcome-file-list>

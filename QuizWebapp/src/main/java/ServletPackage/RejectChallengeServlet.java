@@ -11,6 +11,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import DBpackage.Challenge;
+import DBpackage.DAOpackage.ChallengeDAO;
 import DBpackage.DatabaseAccess;
 import DBpackage.Quiz;
 
@@ -27,6 +28,7 @@ public class RejectChallengeServlet extends HttpServlet {
 
         int challengeId = Integer.parseInt(req.getParameter("challengeId"));
         int quizId = 0;
+
         ArrayList<Challenge> challenges = new ArrayList<Challenge>();
         ArrayList<Quiz> quizzes = new ArrayList<Quiz>();
         dbAccess.getWaitingChallengesForUser(userID, challenges, quizzes);
@@ -41,7 +43,7 @@ public class RejectChallengeServlet extends HttpServlet {
         int SenderID = dbAccess.getUserInfo(Sender).getUser_id();
 
         try {
-            dbAccess.answerChallenge(userID, SenderID, 2);
+            dbAccess.answerIncomingChallenge(userID, SenderID, quizId, 2);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

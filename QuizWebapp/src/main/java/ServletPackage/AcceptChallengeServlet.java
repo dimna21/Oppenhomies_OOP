@@ -37,11 +37,10 @@ public class AcceptChallengeServlet extends HttpServlet {
             }
         }
 
-
         int SenderID = dbAccess.getUserInfo(Sender).getUser_id();
 
         try {
-            dbAccess.answerChallenge(userID, SenderID, 1);
+            dbAccess.answerIncomingChallenge(userID, SenderID, quizId, 1);
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }

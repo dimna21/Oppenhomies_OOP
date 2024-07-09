@@ -19,5 +19,8 @@ public class ChallengeDAO {
 
     }
 
-
+    public static void getWaitingChallengesForUser(int userID, ArrayList<Challenge> challenges, ArrayList<Quiz> quizzes) {
+        DatabaseAccess.getWaitingChallengesForUser(userID, challenges, quizzes);
     }
+
+}

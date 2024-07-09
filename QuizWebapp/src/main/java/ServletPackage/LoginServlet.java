@@ -32,6 +32,7 @@ public class LoginServlet extends HttpServlet {
             session.setAttribute("userID", userID);
             session.setAttribute("username", username);
             session.setAttribute("LoggedInUser", username);
+            session.setAttribute("password", password);
 
             dispatcher = req.getRequestDispatcher("UserHomePage.jsp");
         }else{

@@ -138,6 +138,7 @@
                                         <%-- Determine label based on rangeIndex --%>
                                         <%
                                             int lowerBound = rangeIndex * 10+1;
+                                            if(rangeIndex == 0)lowerBound=0;
                                             int upperBound = (rangeIndex + 1) * 10 ;
                                             String label =(lowerBound + "-" + upperBound);
                                             out.print(label);

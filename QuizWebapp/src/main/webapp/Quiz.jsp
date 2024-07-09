@@ -10,13 +10,13 @@
     int quizId = Integer.parseInt(request.getParameter("quizId"));
     Quiz quiz = QuizDAO.getQuizInfo(quizId);
     ArrayList<Question> questions = QuizDAO.getQuizQuestions(quizId);
-    ArrayList<Integer> originalIndices = new ArrayList<>();
+    ArrayList<Integer> originalIndices = new ArrayList<Integer>();
     for (int i = 0; i < questions.size(); i++) {
         originalIndices.add(i);
     }
     if(quiz.getRandomQuestion() == 1) {
         Collections.shuffle(originalIndices);
-        ArrayList<Question> shuffledQuestions = new ArrayList<>(questions.size());
+        ArrayList<Question> shuffledQuestions = new ArrayList<Question>(questions.size());
         for(int i=0; i<questions.size(); i++) {
             shuffledQuestions.add(questions.get(originalIndices.get(i)));
         }
@@ -293,3 +293,6 @@
 </form>
 </body>
 </html>
+<div class="bg"></div>
+<div class="bg bg2"></div>
+<div class="bg bg3"></div>

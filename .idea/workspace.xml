@@ -10,53 +10,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fd04e7a7-2cdc-475e-a051-561b58ee9076" name="Changes" comment="Finalized FriendRequests">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/jsLibraryMappings.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/06bc0328-938f-4e4f-8e0a-9dfb17b901e1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/06bc0328-938f-4e4f-8e0a-9dfb17b901e1.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DatabaseInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DatabaseInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/CreateQuiz.css" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/CreateQuiz.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/CreateQuiz.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/CreateQuiz.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/ProfilePage.css" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/ProfilePage.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/ProfilePage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/ProfilePage.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DAOpackage/AchievementDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DAOpackage/AchievementDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DAOpackage/AnnouncementDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DAOpackage/AnnouncementDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DAOpackage/ChallengeDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DAOpackage/ChallengeDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DAOpackage/FriendDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DAOpackage/FriendDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DAOpackage/NoteDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DAOpackage/NoteDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DAOpackage/QuizDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DAOpackage/QuizDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DAOpackage/StatisticDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DAOpackage/StatisticDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DAOpackage/UserDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DAOpackage/UserDAO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DatabaseAccess.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DatabaseAccess.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DatabaseInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DatabaseInfo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/FriendRequest.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/FriendRequest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Note.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Note.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Questions/Question.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Questions/Question.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Questions/QuestionCheckbox.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Questions/QuestionCheckbox.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Questions/QuestionFillBlank.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Questions/QuestionFillBlank.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Questions/QuestionMatching.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Questions/QuestionMatching.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Questions/QuestionMultiAnswer.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Questions/QuestionMultiAnswer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Questions/QuestionMultipleChoice.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Questions/QuestionMultipleChoice.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Questions/QuestionPicture.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Questions/QuestionPicture.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Questions/QuestionTextbox.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Questions/QuestionTextbox.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Questions/QuestionTypeConstants.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Questions/QuestionTypeConstants.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Quiz.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Quiz.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Score.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/Score.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/ScoreAndUser.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/ScoreAndUser.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/hasher.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/hasher.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/ServletPackage/AcceptChallengeServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/ServletPackage/AcceptChallengeServlet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/ServletPackage/ChatServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/ServletPackage/ChatServlet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/ServletPackage/ListenerClass.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/ServletPackage/ListenerClass.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/ServletPackage/LoginServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/ServletPackage/LoginServlet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/ServletPackage/LogoutServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/ServletPackage/LogoutServlet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/ServletPackage/LookUpServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/ServletPackage/LookUpServlet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/ServletPackage/NewAccServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/ServletPackage/NewAccServlet.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/ServletPackage/RejectChallengeServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/ServletPackage/RejectChallengeServlet.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/Homepage/WellWellWell.css" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/Homepage/WellWellWell.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/Quiz.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/Quiz.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/QuizPage.css" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/QuizPage.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/logs/access_log.2024-07-09" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/logs/access_log.2024-07-09" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/SESSIONS.ser" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/QuizSummeryPage_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/QuizSummeryPage_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserAuthentication/loginPage_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserAuthentication/loginPage_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserHomePage_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserHomePage_jsp.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserHomePage_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserHomePage_jsp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -76,7 +38,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="feature/user-authentication" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -290,7 +252,15 @@
       <option name="project" value="LOCAL" />
       <updated>1720462953595</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="STILI">
+      <option name="closed" value="true" />
+      <created>1720520033402</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1720520033402</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -307,6 +277,7 @@
     <MESSAGE value="added basic friend request" />
     <MESSAGE value="dummy push" />
     <MESSAGE value="Finalized FriendRequests" />
-    <option name="LAST_COMMIT_MESSAGE" value="Finalized FriendRequests" />
+    <MESSAGE value="STILI" />
+    <option name="LAST_COMMIT_MESSAGE" value="STILI" />
   </component>
 </project>

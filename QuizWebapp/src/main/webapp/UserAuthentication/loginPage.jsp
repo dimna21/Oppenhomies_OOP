@@ -12,7 +12,6 @@
   <link rel="stylesheet" type="text/css" href="authen.css?v=2.0">
 </head>
 <body>
-<div class="container">
   <div class="mainFormDiv">
     <div class="main-text"><strong>Hello, Please Log In</strong></div>
 
@@ -30,7 +29,6 @@
       </div>
     </form>
   </div>
-</div>
 
 
 </body>

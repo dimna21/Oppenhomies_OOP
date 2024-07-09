@@ -315,7 +315,7 @@ INSERT INTO Multiple_choice_answers (quiz_id, sub_id, order_number, answer, corr
 
 -- Add a picture question to the Picture_questions table
 INSERT INTO Picture_questions (quiz_id, sub_id, question, answer, image_url) VALUES
-    (6, 4, 'What is the name of this famous landmark?', 'Eiffel Tower', 'http://example.com/images/eiffel_tower.jpg');
+    (6, 4, 'What is the name of this famous landmark?', 'Eiffel Tower', 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg/500px-Tour_Eiffel_Wikimedia_Commons_%28cropped%29.jpg');
 -- -----------------------------
 INSERT INTO checkbox_questions (quiz_id, sub_id, question) VALUES
     (6, 5, 'What are the primary colors?'),

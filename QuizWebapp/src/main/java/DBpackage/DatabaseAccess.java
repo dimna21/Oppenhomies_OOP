@@ -2205,7 +2205,7 @@ public class DatabaseAccess {
                     "FROM Users u " +
                     "JOIN Scores s ON u.user_id = s.user_id " +
                     "WHERE s.quiz_id = " + quizID + " " +
-                    "ORDER BY s.time DESC ;" ;
+                    "ORDER BY s.date_scored DESC ;" ;
         } else {
             query = "SELECT u.user_id, " +
                     "u.username, " +
@@ -2226,7 +2226,7 @@ public class DatabaseAccess {
                     "FROM Users u " +
                     "JOIN Scores s ON u.user_id = s.user_id " +
                     "WHERE s.quiz_id = " + quizID + " " +
-                    "ORDER BY s.time DESC " +
+                    "ORDER BY s.date_scored DESC " +
                     "LIMIT " + amount;
         }
 

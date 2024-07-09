@@ -2,9 +2,10 @@
 <html>
 <head>
     <title>Account Not Found</title>
-    <link rel="stylesheet" href="<%= request.getContextPath() %>/Homepage/LookerDesign.css">
+    <link rel="stylesheet" href="<%= request.getContextPath() %>/Visitorpage/badstalker.css">
 </head>
 <body>
+<button type="button" class="home-button" onclick="window.location.href='<%= request.getContextPath() %>/UserHomePage.jsp'">Back to Homepage</button>
 <form action="<%= request.getContextPath() %>/LookUpServlet" method="post">
     <h1> No Such Account</h1>
     <div>
@@ -18,3 +19,7 @@
 
 </body>
 </html>
+
+<div class="bg"></div>
+<div class="bg bg2"></div>
+<div class="bg bg3"></div>

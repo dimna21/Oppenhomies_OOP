@@ -1,288 +1,77 @@
-body {
-    font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* Reset default styles */
+body, html {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
     margin: 0;
     padding: 0;
-    line-height: 1.6;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    overflow: auto;
-    background: linear-gradient(315deg, rgba(101,0,94,1) 3%, rgba(60,132,206,1) 38%, rgba(48,238,226,1) 68%, rgba(255,25,25,1) 98%);
-    animation: gradient 15s ease infinite;
-    background-size: 400% 400%;
-
-
 }
 
-@keyframes gradient {
-    0% {
-        background-position: 0% 0%;
-    }
-    50% {
-        background-position: 100% 100%;
-    }
-    100% {
-        background-position: 0% 0%;
-    }
-}
-
-.wave {
-    background: rgb(255 255 255 / 25%);
-    border-radius: 1000% 1000% 0 0;
-    position: fixed;
-    width: 200%;
-    height: 12em;
-    animation: wave 10s -3s linear infinite;
-    transform: translate3d(0, 0, 0);
-    opacity: 0.8;
-    bottom: 0;
-    left: 0;
-    z-index: -1;
-}
-
-.wave:nth-of-type(2) {
-    bottom: -1.25em;
-    animation: wave 18s linear reverse infinite;
-    opacity: 0.8;
-}
-
-.wave:nth-of-type(3) {
-    bottom: -2.5em;
-    animation: wave 20s -1s reverse infinite;
-    opacity: 0.9;
-}
-
-@keyframes wave {
-    2% {
-        transform: translateX(-1%);
-    }
-
-    25% {
-        transform: translateX(-25%);
-    }
-
-    50% {
-        transform: translateX(-50%);
-    }
-
-    75% {
-        transform: translateX(-25%);
-    }
-
-    100% {
-        transform: translateX(-1%);
-    }
-}
-/* Styling for the container */
+/* Container styling */
 .container {
-    width: 80%;
-    margin: auto;
-    overflow: hidden;
+    max-width: 800px;
+    margin: 20px auto;
+    background-color: #fff;
     padding: 20px;
-    background-color: #795695;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-/* Styling for headings */
-h1, h2, h3 {
-    color: #000;
-    font-weight: bold;
-}
-
-h1 {
-    text-align: center;
-    font-size: 3em;
-    color: #000;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-
-/* Styling for tabs container */
+/* Tabs styling */
 .tabs-container {
-    background: #C8A4D4;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    margin-top: 20px;
 }
 
-/* Styling for tabs */
 .tabs {
     list-style-type: none;
     padding: 0;
     margin: 0;
-    overflow: hidden;
-    background-color: #AC94F4;
+    display: flex;
+    justify-content: space-around;
     border-bottom: 1px solid #ccc;
 }
 
 .tab-link {
-    float: left;
-    display: block;
-    color: #333;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    transition: background-color 0.3s;
     cursor: pointer;
+    padding: 10px 15px;
     border-bottom: 2px solid transparent;
-}
-
-.tab-link:hover {
-    background-color: #ddd;
+    transition: border-color 0.3s;
 }
 
 .tab-link.active {
-    background-color: #C8A2C9;
-    border-bottom: 2px solid #ccc;
+    border-color: #4CAF50; /* Green */
 }
 
-/* Styling for tab content */
 .tab-content {
     display: none;
-    padding: 20px;
+    padding: 20px 0;
 }
 
 .tab-content.active {
     display: block;
 }
 
-.popular-quizzes, .recently-created-quizzes, .achievements {
-    background-color: #f9f9f9;
-    margin: 10px 0;
-    padding: 15px;
-    border-radius: 5px;
-    transition: background-color 0.3s;
-}
-
-.popular-quizzes:hover, .recently-created-quizzes:hover, .achievements:hover {
-    background-color: #e9e9e9;
-}
-
-p {
-    color: #888;
-    margin: 5px 0;
-}
-
+/* Quiz links */
 .quiz-link {
     text-decoration: none;
-    color: inherit;
-    display: block;
+    color: #333;
 }
 
-/* Chat Styles */
-.note {
-    margin-bottom: 15px;
-    display: flex;
-    flex-direction: column;
+.quiz-link:hover {
+    text-decoration: underline;
 }
 
-.user-note, .profile-note {
-    max-width: 70%;
-    padding: 10px;
-    border-radius: 10px;
-    margin-bottom: 10px;
-}
-
-.user-note {
-    align-self: flex-end;
-    background-color: #DCF8C6;
-}
-
-.profile-note {
-    align-self: flex-start;
-    background-color: #ECECEC;
-}
-
-.note-details p {
-    margin: 5px 0;
-}
-
-.note-details p:first-child {
-    font-weight: bold;
-}
-
-/* Button Styles */
-.button-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-}
-
-.button-container form {
-    margin: 0 10px;
-}
-
-button {
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 10px 20px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: background-color 0.3s;
-}
-
-button:hover {
-    background-color: #45a049;
-}
-
-form:nth-child(2) button {
-    background-color: #008CBA;
-}
-
-form:nth-child(2) button:hover {
-    background-color: #007B9A;
-}
-
-.FRIEND-container {
-    background-color: #795695;
-    padding: 10px;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    margin: 0 auto;
-    width: 150px;
-}
-
-/* Styling for the options */
-.FRIEND {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: #000
-}
-
-/* Styling for buttons */
-.FRIEND a {
-    display: inline-block;
-    text-decoration: none;
-    color: #fff;
-    background-color: #007bff;
-    padding: 10px 20px;
-    border-radius: 4px;
-    font-size: 16px;
-    transition: background-color 0.3s;
-    border: none;
-    cursor: pointer;
-}
-
-/* Hover effect for buttons */
-.FRIEND a:hover {
-    background-color: #0056b3;
-}
+/* Achievements styling */
 .achievements-container {
-    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
 }
 
 .achievement-item {
-    background: #fff;
-    border: 2px solid #371F76;
-    border-radius: 8px;
-    margin-bottom: 15px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px 40px;
+    width: calc(50% - 10px);
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
 }
 
 .achievement {
@@ -291,38 +80,77 @@ form:nth-child(2) button:hover {
 }
 
 .achievement-image {
-    flex-shrink: 0;
-    margin-right: 20px;
+    margin-right: 10px;
 }
 
-.achievement-details {
-    flex-grow: 1;
+.achievement-details h3 {
+    margin: 0;
 }
 
-.achievement h3, .achievement p {
-    margin-bottom: 5px;
+/* Notes styling */
+.note {
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #f0f0f0;
 }
 
-.achievement-image img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    border: 2px solid #371F76;
+.note-details {
+    padding-left: 10px;
 }
 
-.waitfa{
-    color: #000000;
+/* Chat input styling */
+#chatInput {
+    margin-top: 20px;
 }
-/*.link-button {*/
-/*    background: none;*/
-/*    border: none;*/
-/*    color: #007bff;*/
-/*    text-decoration: underline;*/
-/*    cursor: pointer;*/
-/*    font-size: 16px;*/
-/*    padding: 0;*/
-/*}*/
 
-/*.link-button:hover {*/
-/*    color: #0056b3;*/
-/*}*/
+#chatInput input[type="text"],
+#chatInput button {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+#chatInput button {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#chatInput button:hover {
+    background-color: #45a049; /* Darker green */
+}
+
+/* Friend button styling */
+.fixed-button-container {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+}
+
+.fixed-button {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.fixed-button:hover {
+    background-color: #45a049; /* Darker green */
+}
+
+.waitfa {
+    font-size: 20px;
+    color: #6e1f04;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    text-align: left;
+}

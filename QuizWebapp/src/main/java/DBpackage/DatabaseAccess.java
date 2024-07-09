@@ -1735,6 +1735,7 @@ public class DatabaseAccess {
     public  static void populateQuiz(ArrayList<Question> questions){
         for (Question q : questions) {
             int type = q.getType();
+
             switch (type) {
                 case QUESTION_TEXTBOX:
                     q = (QuestionTextbox) q;

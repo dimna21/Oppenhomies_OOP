@@ -365,20 +365,19 @@
         });
 
 
-        $('#saveAnnouncement').click(function() {
-            var title = $('#announcementTitle').val();
-            var text = $('#announcementText').val();
+        $("#saveAnnouncement").click(function() {
+            var title = $("#announcementTitle").val();
+            var text = $("#announcementText").val();
 
-            var newAnnouncement = '<div class="announcement">' +
-                '<h3>' + title + '</h3>' +
-                '<p>' + text + '</p>' +
-                '<p>Just now - ' + '<%=username%>' + '</p>' +
-                '</div>';
-            $('#announcementsList').prepend(newAnnouncement);
-
-            $('#announcementTitle').val('');
-            $('#announcementText').val('');
-            $('#announcementForm').slideUp();
+            $.post("MakeAnnouncementServlet", {
+                title: title,
+                text: text
+            }, function(response) {
+                alert(response);
+                if (response === "Announcement created successfully") {
+                    location.reload(); // Refresh the page to show the new announcement
+                }
+            });
         });
     });
 </script>

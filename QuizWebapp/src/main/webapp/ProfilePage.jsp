@@ -66,6 +66,9 @@
     <link rel="stylesheet" type="text/css" href="ProfilePage.css">
 </head>
 <body>
+    <div class="fixed-button-container">
+        <a href="../UserHomePage.jsp" class="fixed-button">Home</a>
+    </div>
     <div class = "container">
         <h1 align="center"><%=profile%></h1>
 

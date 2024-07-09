@@ -21,3 +21,14 @@
 0:0:0:0:0:0:0:1 - - [09/Jul/2024:04:29:55 +0400] "POST /LoginServlet HTTP/1.1" 200 27283 http-bio-8085-exec-6 15
 0:0:0:0:0:0:0:1 - - [09/Jul/2024:04:29:59 +0400] "POST /AcceptChallengeServlet HTTP/1.1" 200 7416 http-bio-8085-exec-6 8
 0:0:0:0:0:0:0:1 - - [09/Jul/2024:04:30:03 +0400] "POST /LoginServlet HTTP/1.1" 200 26201 http-bio-8085-exec-6 15
+0:0:0:0:0:0:0:1 - - [09/Jul/2024:12:15:24 +0400] "GET / HTTP/1.1" 200 8283 http-bio-8085-exec-1 460
+0:0:0:0:0:0:0:1 - - [09/Jul/2024:12:15:24 +0400] "GET /Homepage/WellWellWell.css HTTP/1.1" 200 4287 http-bio-8085-exec-3 3
+0:0:0:0:0:0:0:1 - - [09/Jul/2024:12:15:25 +0400] "GET /favicon.ico HTTP/1.1" 404 973 http-bio-8085-exec-4 1
+0:0:0:0:0:0:0:1 - - [09/Jul/2024:12:15:26 +0400] "GET /UserAuthentication/loginPage.jsp HTTP/1.1" 200 873 http-bio-8085-exec-5 53
+0:0:0:0:0:0:0:1 - - [09/Jul/2024:12:15:26 +0400] "GET /UserAuthentication/authen.css?v=2.0 HTTP/1.1" 200 3419 http-bio-8085-exec-6 1
+0:0:0:0:0:0:0:1 - - [09/Jul/2024:12:15:32 +0400] "POST /LoginServlet HTTP/1.1" 200 30537 http-bio-8085-exec-7 249
+0:0:0:0:0:0:0:1 - - [09/Jul/2024:12:15:32 +0400] "GET /UserHomePage.css?v=2.0 HTTP/1.1" 200 10601 http-bio-8085-exec-8 6
+0:0:0:0:0:0:0:1 - - [09/Jul/2024:12:15:32 +0400] "GET /Pictures/Achievements/Practice%20makes%20perfect.png HTTP/1.1" 200 1509862 http-bio-8085-exec-2 38
+0:0:0:0:0:0:0:1 - - [09/Jul/2024:12:15:32 +0400] "GET /Pictures/Achievements/Quiz%20machine.png HTTP/1.1" 200 1117227 http-bio-8085-exec-9 6
+0:0:0:0:0:0:0:1 - - [09/Jul/2024:12:15:41 +0400] "POST /RejectChallengeServlet HTTP/1.1" 200 29453 http-bio-8085-exec-9 83
+0:0:0:0:0:0:0:1 - - [09/Jul/2024:12:15:44 +0400] "POST /RejectChallengeServlet HTTP/1.1" 200 28370 http-bio-8085-exec-3 100

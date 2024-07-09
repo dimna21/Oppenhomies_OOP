@@ -39,12 +39,15 @@
     <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/QuizSummeryPage.css">
 </head>
 <body>
+    <div class = "LinkBack">
+        <a href="UserHomePage.jsp" class="back-to-home">Home</a>
+    </div>
     <div class = quizMaker>
-        <h3>quiz author : <%=quizCreator%></h3>
+        <h3>Author: <%=quizCreator%></h3>
     </div>
     <div class = "container">
         <h1 align = "center"><%=quizName%></h1>
-        <h2> <%=quizDescription%> </h2>
+        <h2 align = "center"><%=quizDescription%> </h2>
         <div class = "tabs-container">
             <ul class = "tabs">
                 <li class = "tab-link active" data-tab = "tab1">Your Past Scores</li>
@@ -114,9 +117,9 @@
                 <h2>Statistics</h2>
                 <div class = "performer">
                     <div>
-                        <h3><%="average time: " + averageTime%></h3>
-                        <h3><%="average score: " + averageScore%></h3>
-                        <h3><%="average rating: " + quizRating%></h3>
+                        <h3><%="Average time: " + averageTime + " Seconds"%></h3>
+                        <h3><%="Average score: " + averageScore%></h3>
+                        <h3><%="Average rating: " + quizRating%></h3>
                     </div>
                 </div>
             </div>

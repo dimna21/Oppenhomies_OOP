@@ -5,6 +5,7 @@
 <%@ page import="DBpackage.Questions.*" %>
 <%@ page import="DBpackage.DAOpackage.QuizDAO" %>
 <%@ page import="java.sql.Timestamp" %>
+<%@ page import="java.util.Arrays" %>
 
 <%
     int practice = 0;
@@ -52,6 +53,8 @@
     <script>
         let currentQuestion = 0;
         const totalQuestions = <%=questions.size()%>;
+        const originalIndices = <%=Arrays.toString(originalIndices.toArray())%>;
+        const immediate = <%=immediate%>;
 
         function updateQuestionOrder() {
             var order = [];
@@ -65,6 +68,34 @@
             $('.question').hide();
             $('#question' + index).show();
             updateNavButtons();
+        }
+
+        function checkAndNextQuestion() {
+            if (currentQuestion < totalQuestions - 1) {
+                checkAnswer(currentQuestion, originalIndices[currentQuestion])
+                    .then((response) => {
+                        showFeedbackPopup(response);
+                        setTimeout(() => {
+                            currentQuestion++;
+                            showQuestion(currentQuestion);
+                        }, 2000); // Wait 2 seconds before moving to the next question
+                    })
+                    .catch(error => {
+                        console.error("Error checking answer:", error);
+                    });
+            } else {
+                // If it's the last question, check the answer and submit the quiz
+                checkAnswer(currentQuestion, originalIndices[currentQuestion])
+                    .then((response) => {
+                        showFeedbackPopup(response);
+                        setTimeout(() => {
+                            $('#quizForm').submit();
+                        }, 2000); // Wait 2 seconds before submitting the quiz
+                    })
+                    .catch(error => {
+                        console.error("Error checking answer:", error);
+                    });
+            }
         }
 
         function nextQuestion() {
@@ -81,55 +112,96 @@
             }
         }
 
+
+
         function updateNavButtons() {
-            $('#prevBtn').prop('disabled', currentQuestion === 0);
-            $('#nextBtn').prop('disabled', currentQuestion === totalQuestions - 1);
+            if (immediate == 1) {
+                $('#nextBtn').prop('disabled', currentQuestion === totalQuestions - 1);
+                $('#nextBtn').text(currentQuestion === totalQuestions - 1 ? 'Submit' : 'Next');
+            } else {
+                $('#prevBtn').prop('disabled', currentQuestion === 0);
+                $('#nextBtn').prop('disabled', currentQuestion === totalQuestions - 1);
+            }
         }
 
-        function checkAnswer(questionId, originalIndex) {
-            let answer;
-            const questionElement = document.getElementById('question' + questionId);
-            const questionType = questionElement.getAttribute('data-question-type');
+        function checkAnswer(questionIndex, originalIndex) {
+            return new Promise((resolve, reject) => {
+                let answer;
+                const questionElement = document.getElementById('question' + questionIndex);
+                const questionType = questionElement.getAttribute('data-question-type');
 
-            // Get the answer based on the question type
-            switch (questionType) {
-                case 1:
-                case 2:
-                case 4:
-                    answer = document.getElementById('question' + originalIndex + '-answer').value;
-                    break;
-                case 3:
-                    answer = $('input[name="answer[' + originalIndex + ']"]:checked').val();
-                    break;
-                case 5:
-                    answer = $('input[name^="answer[' + originalIndex + ']"]').map(function() {
-                        return this.value;
-                    }).get();
-                    break;
-                case 6:
-                    answer = $('input[name^="answer[' + originalIndex + ']"]:checked').map(function() {
-                        return this.value;
-                    }).get();
-                    break;
-                case 7:
-                    answer = $('#question' + originalIndex + '-answer').val();
-                    break;
-            }
-
-            $.ajax({
-                url: 'CheckAnswerServlet',
-                type: 'POST',
-                data: {
-                    quizId: <%=quizId%>,
-                    questionId: questionId,
-                    questionIndex: originalIndex,
-                    answer: JSON.stringify(answer),
-                    questionType: questionType
-                },
-                success: function(response) {
-                    $('#result' + questionId).html(response);
+                // Get the answer based on the question type
+                switch (parseInt(questionType)) {
+                    case <%=DatabaseAccess.QUESTION_TEXTBOX%>:
+                    case <%=DatabaseAccess.QUESTION_FILL_BLANK%>:
+                    case <%=DatabaseAccess.QUESTION_PICTURE%>:
+                        answer = document.getElementById('question' + originalIndex + '-answer').value;
+                        break;
+                    case <%=DatabaseAccess.QUESTION_MULTIPLE_CHOICE%>:
+                        answer = $('input[name="answer[' + originalIndex + ']"]:checked').val();
+                        break;
+                    case <%=DatabaseAccess.QUESTION_MULTIANSWER%>:
+                        // Collect all text inputs for multi-answer questions
+                        answer = $('input[name^="answer[' + originalIndex + ']"]').map(function() {
+                            return this.value.trim();
+                        }).get();
+                        break;
+                    case <%=DatabaseAccess.QUESTION_CHECKBOX%>:
+                        // Collect values of checked checkboxes
+                        answer = $('input[name^="answer[' + originalIndex + ']"]:checked').map(function() {
+                            return this.value;
+                        }).get();
+                        break;
+                    case <%=DatabaseAccess.QUESTION_MATCHING%>:
+                        answer = $('#question' + originalIndex + '-answer').val();
+                        break;
                 }
+
+                $.ajax({
+                    url: 'CheckAnswerServlet',
+                    type: 'POST',
+                    data: {
+                        quizId: <%=quizId%>,
+                        questionIndex: originalIndex,
+                        answer: JSON.stringify(answer),
+                        questionType: questionType
+                    },
+                    success: function(response) {
+                        resolve(response);
+                    },
+                    error: function(xhr, status, error) {
+                        console.error("Error checking answer:", error);
+                        reject(error);
+                    }
+                });
             });
+        }
+
+        function showFeedbackPopup(feedback) {
+            // Create a popup element
+            const popup = $('<div>', {
+                class: 'feedback-popup',
+                html: feedback
+            }).appendTo('body');
+
+            // Style the popup
+            popup.css({
+                position: 'fixed',
+                top: '50%',
+                left: '50%',
+                transform: 'translate(-50%, -50%)',
+                padding: '20px',
+                background: 'white',
+                border: '1px solid black',
+                borderRadius: '5px',
+                boxShadow: '0 0 10px rgba(0,0,0,0.5)',
+                zIndex: 1000
+            });
+
+            // Remove the popup after 2 seconds
+            setTimeout(() => {
+                popup.remove();
+            }, 2000);
         }
 
         $(document).ready(function() {
@@ -338,8 +410,12 @@
     <% } %>
 
     <% if (onePage != 1) { %>
-    <button type="button" id="prevBtn" onclick="prevQuestion()">Previous</button>
-    <button type="button" id="nextBtn" onclick="nextQuestion()">Next</button>
+        <% if (immediate == 1) { %>
+            <button type="button" id="nextBtn" onclick="checkAndNextQuestion()">Next</button>
+        <% } else { %>
+            <button type="button" id="prevBtn" onclick="prevQuestion()">Previous</button>
+            <button type="button" id="nextBtn" onclick="nextQuestion()">Next</button>
+        <% } %>
     <% } %>
 
     <input type="submit" value="Submit Quiz">

@@ -18,6 +18,7 @@ public class CheckAnswerServlet extends HttpServlet {
         int quizId = Integer.parseInt(request.getParameter("quizId"));
         int questionIndex = Integer.parseInt(request.getParameter("questionIndex"));
         String answerJson = request.getParameter("answer");
+        System.out.println(answerJson);
         String questionType = request.getParameter("questionType");
 
         ArrayList<Question> questions = QuizDAO.getQuizQuestions(quizId);

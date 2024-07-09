@@ -1,14 +1,17 @@
 package ServletPackage;
 
 import DBpackage.DAOpackage.QuizDAO;
+import DBpackage.DAOpackage.UserDAO;
 import DBpackage.DatabaseAccess;
 import DBpackage.Questions.*;
 import DBpackage.Quiz;
+import DBpackage.Score;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.*;
 
@@ -52,12 +55,26 @@ public class SubmitQuizServlet extends HttpServlet {
             maxScore += maxMark;
         }
 
+        HttpSession session = request.getSession();
+        long startTimeMillis = (long) session.getAttribute("quizStartTime");
+        long endTimeMillis = System.currentTimeMillis();
+        System.out.println(endTimeMillis);
+        long timeTakenSeconds = (endTimeMillis - startTimeMillis) / 1000;
+        int userId = (Integer) session.getAttribute("userID");
+        java.util.Date now = new java.util.Date();
+        java.sql.Timestamp currDate = new java.sql.Timestamp(now.getTime());
+        int practice = (int) session.getAttribute("practice");
+        boolean practiceMode = (practice == 1);
+
         int percentageScore = (int) Math.round((double) userScore / maxScore * 100);
-        System.out.println(percentageScore);
-        response.sendRedirect("QuizResultPage.jsp?score="+percentageScore);
+        UserDAO.quizFinished(userId, quizId, percentageScore,currDate, (int) timeTakenSeconds, practiceMode, 10);
+        session.setAttribute("timespan", timeTakenSeconds);
+        session.setAttribute("quizId", quizId);
+        session.setAttribute("score", percentageScore);
+        response.sendRedirect("QuizResultPage.jsp?score="+percentageScore+"&quizId="+quizId);
     }
 
-    private int[] checkAnswer(Question question, String[] userAnswers) {
+    public static int[] checkAnswer(Question question, String[] userAnswers) {
         int[] result;
         switch (question.getType()) {
             case DatabaseAccess.QUESTION_TEXTBOX:
@@ -83,7 +100,7 @@ public class SubmitQuizServlet extends HttpServlet {
         return result;
     }
 
-    private int[] checkMatchingAnswer(Question question, String matchingJson) {
+    private static int[] checkMatchingAnswer(Question question, String matchingJson) {
 
         // Parse the JSON string of matchings manually
         matchingJson = matchingJson.substring(1, matchingJson.length() - 1); // Remove outer brackets
@@ -109,7 +126,7 @@ public class SubmitQuizServlet extends HttpServlet {
         return new int[]{correctMatches, maxScore};
     }
 
-    private int[] checkCheckboxAnswer(Question question, String[] userAnswers) {
+    private static int[] checkCheckboxAnswer(Question question, String[] userAnswers) {
         QuestionCheckbox q = (QuestionCheckbox) question;
         ArrayList<Integer> correctList = q.getCorrectList();
         int maxScore = 0;
@@ -134,7 +151,7 @@ public class SubmitQuizServlet extends HttpServlet {
         return new int[]{userScore, maxScore};
     }
 
-    private int[] checkMultiAnswerQuestion(Question question, String[] userAnswers) {
+    private static int[] checkMultiAnswerQuestion(Question question, String[] userAnswers) {
         QuestionMultiAnswer q = (QuestionMultiAnswer) question;
         int maxScore = q.getAnswerList().size();
         ArrayList<String> correctAnswers = q.getAnswerList();
@@ -160,7 +177,7 @@ public class SubmitQuizServlet extends HttpServlet {
     }
 
 
-    private int[] checkMultipleChoiceAnswer(Question question, String userAnswer) {
+    private static int[] checkMultipleChoiceAnswer(Question question, String userAnswer) {
         int maxScore = 1;
         int selectedIndex = Integer.parseInt(userAnswer);
         userAnswer = ((QuestionMultipleChoice)question).getAnswerList().get(selectedIndex);
@@ -170,7 +187,7 @@ public class SubmitQuizServlet extends HttpServlet {
         return new int[]{0, maxScore};
     }
 
-    private int[] checkTextAnswer(Question question, String userAnswer) {
+    private static int[] checkTextAnswer(Question question, String userAnswer) {
         int maxScore = 1;
         String answer = "";
         switch(question.getType()) {

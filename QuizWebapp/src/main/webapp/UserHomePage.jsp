@@ -347,6 +347,7 @@
                         <p><%= q.getDescription() %></p>
                         <p><%="Creation Date: " + q.getCreationDate() %></p>
                         <p><%="Author: " + q.getCreatorUsername() %></p>
+                        <p><%="Quiz ID: " + q.getQuiz_id()%></p>
                     </div>
                 </a>
                 <% } %>

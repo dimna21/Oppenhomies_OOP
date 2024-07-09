@@ -31,7 +31,7 @@
 //
 //        // For now, we will just forward the user to the quiz page
 //        request.setAttribute("quizId", quizId);
-//
+//        request.setAttribute("totalScore",);
 //        request.getRequestDispatcher("QuizPage.jsp").forward(request, response);
 //    }
 //}

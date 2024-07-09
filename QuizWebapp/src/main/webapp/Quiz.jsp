@@ -42,12 +42,12 @@
         let currentQuestion = 0;
         const totalQuestions = <%=questions.size()%>;
 
-        function updateQuestions() {
+        function updateQuestionOrder() {
             var order = [];
             $('.question').each(function() {
                 order.push($(this).data('original-index'));
             });
-            $('#questions').val(JSON.stringify(order));
+            $('#questionOrder').val(JSON.stringify(order));
         }
 
         function showQuestion(index) {
@@ -86,7 +86,7 @@
             <% } %>
 
             setupDragAndDrop();
-            updateQuestions();
+            updateQuestionOrder();
         });
 
         function setupDragAndDrop() {
@@ -193,8 +193,9 @@
             }).insertAfter(this);
         });
 
-        $('#quizForm').submit(function() {
+        $('#quizForm').submit(function(e) {
             updateQuestionOrder();
+            console.log($('#questionOrder').val());
             return true;
         });
     </script>
@@ -250,7 +251,7 @@
         <%ArrayList<String> cbAnswers = ((QuestionCheckbox)question).getAnswerList();%>
         <% for(int j = 0; j < cbAnswers.size(); j++) { %>
         <div class="option-group">
-            <input type="checkbox" name="answer[<%=originalIndex%>][]" id="question<%=originalIndex%>-answer<%=j%>" value="<%=j%>">
+            <input type="checkbox" name="answer[<%=originalIndex%>][<%=j%>]" id="question<%=originalIndex%>-answer<%=j%>" value="<%=j%>">
             <label for="question<%=originalIndex%>-answer<%=j%>"><%=cbAnswers.get(j)%></label>
         </div>
         <% } %>

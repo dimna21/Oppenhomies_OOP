@@ -11,10 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.*;
-import java.util.stream.Collectors;
-
-import static DBpackage.Questions.QuestionTypeConstants.*;
-import static DBpackage.Questions.QuestionTypeConstants.QUESTION_TEXTBOX;
 
 @WebServlet("/SubmitQuizServlet")
 public class SubmitQuizServlet extends HttpServlet {

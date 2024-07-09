@@ -696,6 +696,7 @@ public class DatabaseAccess {
         }
         return ans;
     }
+
     /** Returns top N quizzes by popularity  */
     public static  ArrayList<Quiz> getQuizzesByPopularity(int amountToGet) {
         ArrayList<Quiz> quizzes= new ArrayList<>();
@@ -2412,6 +2413,7 @@ public class DatabaseAccess {
         catch (SQLException e) {throw new RuntimeException(e);}
     }
 
+    /**Returns notes from result set if needed*/
     public static  ArrayList<Note> getNotesFromResultSet(ResultSet rs) throws SQLException {
         ArrayList<Note> notes = new ArrayList<>();
         while (rs.next()) {
@@ -2427,6 +2429,7 @@ public class DatabaseAccess {
         }
         return notes;
     }
+
     /**Returns quizzes with a similar name to an input for search purposes*/
     public static ArrayList<Quiz> getQuizBySimilarName(String name) {
         ArrayList<Quiz> quizzes = new ArrayList<>();

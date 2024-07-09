@@ -23,4 +23,9 @@ public class ChallengeDAO {
         DatabaseAccess.getWaitingChallengesForUser(userID, challenges, quizzes);
     }
 
+    public static void answerChallenge(int userAnswering, int answeringTo, int quizid, int status) throws SQLException {
+        DatabaseAccess.answerIncomingChallenge(userAnswering, answeringTo, quizid, status);
+
+    }
+
 }

@@ -88,9 +88,9 @@
         <%}
 
         else{ %>
-        <div class="FRIEND">
+        <div class="FRIEND-container">
             <form action="<%= request.getContextPath() %>/AddFriendServlet" method="post">
-                <button type="submit" class="link-button">Add Friend</button>
+                <button type="submit" class="fixed-button">Add Friend</button>
             </form>
         </div>
         <%}%>

@@ -159,6 +159,23 @@ body, html {
     background-color: #45a049; /* Darker green */
 }
 
+.fbb {
+    background-color: #4CAF50; /* Green */
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    border-color: #4CAF50;
+    transition: background-color 0.3s;
+}
+
+.fbb:hover {
+    background-color: #45a049; /* Darker green */
+}
+
 .waitfa {
     font-size: 20px;
     color: #6e1f04;
@@ -224,7 +241,7 @@ h1 {
 .challenge-button {
     position: fixed;
     top: 20px;
-    left: 20%;
+    left: 10%;
     transform: translateX(-50%);
     padding: 10px 20px;
     font-size: 16px;

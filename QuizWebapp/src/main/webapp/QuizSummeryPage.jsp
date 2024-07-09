@@ -123,11 +123,11 @@
         </div>
 
         <div class="button-container">
-            <form action="TakeQuizServlet" method="post">
+            <form action="Quiz.jsp?quizId=<%=quiz.getQuiz_id()%>" method="post">
                 <button type="submit">Take</button>
             </form>
             <% if(quiz.isPractice() > 0) { %>
-            <form action="TakeQuizServlet" method="post">
+            <form action="Quiz.jsp?quizId=<%=quiz.getQuiz_id()%>&practice=1" method="post">
                 <button type="submit">Practice</button>
             </form>
             <% } %>

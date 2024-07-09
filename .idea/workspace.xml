@@ -11,17 +11,11 @@
   <component name="ChangeListManager">
     <list default="true" id="fd04e7a7-2cdc-475e-a051-561b58ee9076" name="Changes" comment="Finalized FriendRequests">
       <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/5066d2b7-9aa9-4211-91b9-c465d48301ad.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/UserHomePage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/UserHomePage.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DatabaseAccess.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DatabaseAccess.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DatabaseInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DatabaseInfo.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/SESSIONS.ser" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/Homepage/Wellcome_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/Homepage/Wellcome_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserAuthentication/loginPage_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserAuthentication/loginPage_jsp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserHomePage_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserHomePage_jsp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/logs/access_log.2024-07-09" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/logs/access_log.2024-07-09" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/SESSIONS.ser" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/SESSIONS.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/QuizSummeryPage_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/QuizSummeryPage_jsp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserHomePage_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/UserHomePage_jsp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />

@@ -40,6 +40,12 @@
     achievPictureMap.put("Prolific author", "Pictures/Achievements/Prolific author.png");
     achievPictureMap.put("Quiz machine", "Pictures/Achievements/Quiz machine.png");
     achievPictureMap.put("Practice makes perfect", "Pictures/Achievements/Practice makes perfect.png");
+
+    String searchQuery = request.getParameter("searchQuery");
+    ArrayList<Quiz> searchResults = new ArrayList<Quiz>();
+    if (searchQuery != null && !searchQuery.trim().isEmpty()) {
+        searchResults = QuizDAO.getQuizBySimilarName(searchQuery);
+    }
 %>
 <html>
 <head>
@@ -69,6 +75,7 @@
             <li class="tab-link" data-tab="tab6">Your Achievements</li>
             <li class="tab-link" data-tab="tab7">Inbox</li>
             <li class="tab-link" data-tab="tab8">Activities of Your Friends</li>
+            <li class="tab-link" data-tab="tab9">Search for quizzes</li>
         </ul>
 
         <div id="tab1" class="tab-content active">
@@ -318,7 +325,30 @@
             <% } %>
         </div>
     </div>
-
+    <div class="tab9">
+        <h2>Search Quizzes</h2>
+        <form action="UserHomePage.jsp" method="get">
+            <input type="text" name="searchQuery" placeholder="Enter quiz name" value="<%= searchQuery != null ? searchQuery : "" %>">
+            <button type="submit">Search</button>
+        </form>
+        <div class="search-results">
+            <% if (searchResults.size() > 0) { %>
+            <h3>Search Results:</h3>
+            <% for (Quiz q : searchResults) { %>
+            <a href="QuizSummeryPage.jsp?quizId=<%= q.getQuiz_id() %>" class="quiz-link">
+                <div class="quiz-result">
+                    <h3><%= q.getName() %></h3>
+                    <p><%= q.getDescription() %></p>
+                    <p><%="Creation Date: " + q.getCreationDate() %></p>
+                    <p><%="Author: " + q.getCreatorUsername() %></p>
+                </div>
+            </a>
+            <% } %>
+            <% } else if (searchQuery != null) { %>
+            <p>No results found for "<%= searchQuery %>"</p>
+            <% } %>
+        </div>
+    </div>
     <div class="LOOKUP-container">
         <div class="LOOKUP">
             <a href="<%= request.getContextPath() %>/Homepage/Looker.jsp" class="button">Look Someone Up</a>

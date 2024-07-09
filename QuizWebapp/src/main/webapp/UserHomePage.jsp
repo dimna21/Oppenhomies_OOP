@@ -50,6 +50,9 @@
 <body>
 <div class="container">
     <div class="user-info">
+        <div class="profile-picture">
+            <img src="<%= user.getProfile_pic_url() %>" alt="Profile Picture">
+        </div>
         <div class="user-name"><%=username%></div>
         <form action="CreateQuiz.jsp" method="post">
             <button type="submit">Create Quiz</button>

@@ -30,9 +30,7 @@ h3 {
 }
 
 /* Input Styles */
-input[type="text"],
-input[type="radio"],
-input[type="checkbox"] {
+input[type="text"], input[type="radio"], input[type="checkbox"] {
     margin-bottom: 10px;
 }
 
@@ -101,6 +99,29 @@ button:disabled {
     background-color: #e0e6e8;
 }
 
+.matching-slot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9f9f9;
+}
+
+.drop-zone {
+    width: 50%;
+    min-height: 40px;
+    border: 2px dashed #3498db;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+.drop-zone.drag-over {
+    background-color: #ebf5fb;
+}
+
+.dragging {
+    opacity: 0.5;
+}
+
 /* Image Question Styles */
 .question img {
     max-width: 100%;
@@ -119,7 +140,6 @@ button:disabled {
     .matching-container {
         flex-direction: column;
     }
-
     .matching-column {
         width: 100%;
         margin-bottom: 20px;
@@ -141,4 +161,24 @@ button:disabled {
 .feedback.incorrect {
     background-color: #e74c3c;
     color: #fff;
+}
+
+/* Add these styles to your existing CSS */
+.matching-slot .slot-text {
+    display: inline;
+}
+
+.reset-matches {
+    display: block;
+    margin-top: 10px;
+    background-color: #e74c3c;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.reset-matches:hover {
+    background-color: #c0392b;
 }

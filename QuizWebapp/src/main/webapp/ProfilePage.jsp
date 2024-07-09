@@ -16,6 +16,10 @@
     //DatabaseAccess dbAccess = (DatabaseAccess) application.getAttribute("DatabaseAccess");
     String profile = DatabaseAccess.getUsername(profileId);
 
+    boolean isAdmin = UserDAO.getUserInfo(username).getAdmin_status() == 1;
+    boolean isProfileAdmin = UserDAO.getUserInfo(UserDAO.getUsername(profileId)).getAdmin_status() == 1;
+    boolean isProfileBanned = UserDAO.getUserInfo(UserDAO.getUsername(profileId)).getActiveAcc() == 0;
+    //System.out.println(isProfileBanned);
     ArrayList<Quiz> mostPopularQuizzes = QuizDAO.getPopularQuizzesByUser(profileId, 0);
     ArrayList<Quiz> recentQuizzes = QuizDAO.getRecentQuizzesByUser(profileId, 0);
 
@@ -65,9 +69,8 @@
     <link rel="stylesheet" type="text/css" href="ProfilePage.css">
 </head>
 <body>
-    <div class="fixed-button-container">
-        <a href="UserHomePage.jsp" class="fixed-button">Home</a>
-    </div>
+
+
     <div class = "container">
         <h1 align="center"><%=profile%></h1>
 
@@ -223,8 +226,31 @@
             </div>
         </div>
         </div>
-        <div>
-            <a href="Sender.jsp" class="challenge-button">Send Challenge</a>
+
+        <div class="fixed-button-container">
+            <div>
+                <a href="Sender.jsp" class="challenge-button">Send Challenge</a>
+                <% if (isAdmin && !isProfileAdmin && !isProfileBanned) { %>
+                <form action="PromoteUserServlet" method="post" style="display: inline;">
+                    <input type="hidden" name="profileId" value="<%= profileId %>">
+                    <button type="submit" class="promote-button">Promote to Admin</button>
+                </form>
+                <% } %>
+            </div>
+            <a href="UserHomePage.jsp" class="fixed-button">Home</a>
+            <% if (isAdmin && !isProfileAdmin && !isProfileBanned) { %>
+            <form action="BanUserServlet" method="post">
+                <input type="hidden" name="profileId" value="<%= profileId %>">
+                <button type="submit" class="ban-button">Ban User</button>
+            </form>
+            <% } %>
+
+            <% if (isAdmin && isProfileBanned) { %>
+            <form action="UnbanUserServlet" method="post">
+                <input type="hidden" name="profileId" value="<%= profileId %>">
+                <button type="submit" class="unban-button">Unban User</button>
+            </form>
+            <% } %>
         </div>
     </div>
 

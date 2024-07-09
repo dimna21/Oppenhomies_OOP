@@ -11,37 +11,38 @@ import java.io.IOException;
 import DBpackage.DAOpackage.FriendDAO;
 import DBpackage.DAOpackage.UserDAO;
 import DBpackage.DatabaseAccess;
+import DBpackage.User;
 
 public class LookUpServlet extends HttpServlet {
 
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
-        //DatabaseAccess dbAccess = (DatabaseAccess) getServletContext().getAttribute("DatabaseAccess");
         HttpSession session = req.getSession();
-
         String usernameToLookUp = req.getParameter("usernameToLookUp");
-        String LoggedInUser = session.getAttribute("LoggedInUser").toString();
+        Object loggedInUserObj = session.getAttribute("LoggedInUser");
 
-//        System.out.println("LoggedInUser: " + LoggedInUser);
-//        System.out.println("username: " + username);
-//        System.out.println("-- END OF LOOKUP --");
+        if (loggedInUserObj == null) {
+            res.sendRedirect("login.jsp"); // Redirect to login page if user is not logged in
+            return;
+        }
 
-        boolean exists = (UserDAO.getUserInfo(usernameToLookUp) != null);
+        String LoggedInUser = loggedInUserObj.toString();
+
+        User userInfo = UserDAO.getUserInfo(usernameToLookUp);
+        boolean exists = (userInfo != null);
         boolean same = usernameToLookUp.equals(LoggedInUser);
-        RequestDispatcher dispatcher;
-        if(exists){
-            if(!same){
-                int userID = UserDAO.getUserInfo(usernameToLookUp).getUser_id();
 
-                session.setAttribute("LoggedInUser", LoggedInUser);
+        RequestDispatcher dispatcher;
+        if (exists) {
+            if (!same) {
+                int userID = userInfo.getUser_id();
                 session.setAttribute("VisitedUser", usernameToLookUp);
                 dispatcher = req.getRequestDispatcher("ProfilePage.jsp?profileId=" + userID);
-            }
-            else {
+            } else {
                 dispatcher = req.getRequestDispatcher("Visitorpage/narcissist.jsp");
             }
-        }else{
+        } else {
             dispatcher = req.getRequestDispatcher("Visitorpage/badstalker.jsp");
         }
         dispatcher.forward(req, res);

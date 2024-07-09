@@ -1,0 +1,25 @@
+package ServletPackage;
+
+import DBpackage.DAOpackage.UserDAO;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@WebServlet("/BanUserServlet")
+public class BanUserServlet extends HttpServlet {
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int profileId = Integer.parseInt(request.getParameter("profileId"));
+
+        // Call the method to deactivate the account
+        UserDAO.deleteAccount(profileId);
+
+        // Redirect to the profile page
+        response.sendRedirect("UserHomePage.jsp");
+
+    }
+}

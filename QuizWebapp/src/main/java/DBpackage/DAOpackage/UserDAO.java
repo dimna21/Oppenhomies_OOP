@@ -46,15 +46,18 @@ public class UserDAO {
 
     }
 
-    public static boolean promoteToAdmin(String admin, String user) {
-        return DatabaseAccess.promoteToAdmin(admin, user);
+    public static boolean promoteToAdmin(String user) {
+        return DatabaseAccess.promoteToAdmin(user);
 
     }
 
-    public static boolean deleteAccount(int adminID, int userID) {
-        return DatabaseAccess.deleteAccount(adminID, userID);
+    public static boolean deleteAccount( int userID) {
+        return DatabaseAccess.deleteAccount(userID);
     }
+    public static boolean unbanAccount(int userID){
+        return DatabaseAccess.unbanAccount(userID);
 
+    }
     public static ArrayList<Score> getRecentPerformance(String username, int quizId, int amount) {
         return DatabaseAccess.getRecentPerformance(username, quizId, amount);
 

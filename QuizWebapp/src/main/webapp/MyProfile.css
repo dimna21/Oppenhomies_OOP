@@ -131,3 +131,36 @@ h1 {
         transform:translateX(25%);
     }
 }
+.achievements-container {
+    margin-top: 20px;
+}
+
+.achievements-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.achievement-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: #fff;
+    border: 2px solid #371F76;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.achievement-item img {
+    width: 100px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+.achievement-item p {
+    margin: 0;
+    font-weight: bold;
+    color: #371F76;
+}
+

@@ -9,26 +9,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="fd04e7a7-2cdc-475e-a051-561b58ee9076" name="Changes" comment="Finalized Challenges">
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources.local.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources.local.xml" afterDir="false" />
+    <list default="true" id="fd04e7a7-2cdc-475e-a051-561b58ee9076" name="Changes" comment="Added Comments">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DAOpackage/AchievementDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DAOpackage/AchievementDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DAOpackage/AnnouncementDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DAOpackage/AnnouncementDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DAOpackage/ChallengeDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DAOpackage/ChallengeDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DAOpackage/FriendDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DAOpackage/FriendDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DAOpackage/NoteDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DAOpackage/NoteDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DAOpackage/QuizDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DAOpackage/QuizDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DAOpackage/StatisticDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DAOpackage/StatisticDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DAOpackage/UserDAO.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DAOpackage/UserDAO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DatabaseAccess.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DatabaseAccess.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DatabaseInfo.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/java/DBpackage/DatabaseInfo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/ProfilePage.css" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/ProfilePage.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/ProfilePage.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/ProfilePage.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DAOpackage/FriendDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DAOpackage/FriendDAO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/Visitorpage/narcissist.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/src/main/webapp/Visitorpage/narcissist.jsp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DAOpackage/UserDAO.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DAOpackage/UserDAO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DatabaseAccess.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DatabaseAccess.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DatabaseInfo.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/DBpackage/DatabaseInfo.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/classes/ServletPackage/LookUpServlet.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/classes/ServletPackage/LookUpServlet.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QuizWebapp/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/QuizWebapp/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/logs/access_log.2024-07-09" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/logs/access_log.2024-07-09" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/SESSIONS.ser" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/SESSIONS.ser" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/ProfilePage_jsp.class" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/ProfilePage_jsp.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/ProfilePage_jsp.java" beforeDir="false" afterPath="$PROJECT_DIR$/QuizWebapp/target/tomcat/work/Tomcat/localhost/_/org/apache/jsp/ProfilePage_jsp.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -384,7 +377,23 @@
       <option name="project" value="LOCAL" />
       <updated>1720533894884</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Added Comments">
+      <option name="closed" value="true" />
+      <created>1720554426937</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1720554426937</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Added Comments">
+      <option name="closed" value="true" />
+      <created>1720554583562</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1720554583562</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -404,6 +413,7 @@
     <MESSAGE value="Finished Debugging Friend Reuqests" />
     <MESSAGE value="Finalized Challenges" />
     <MESSAGE value="MoreMoreMoreMoreMoreMore Styling" />
-    <option name="LAST_COMMIT_MESSAGE" value="MoreMoreMoreMoreMoreMore Styling" />
+    <MESSAGE value="Added Comments" />
+    <option name="LAST_COMMIT_MESSAGE" value="Added Comments" />
   </component>
 </project>

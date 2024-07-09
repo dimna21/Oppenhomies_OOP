@@ -9,8 +9,8 @@
 <form action="<%= request.getContextPath() %>/LookUpServlet" method="post">
     <h1> Why'd You Look For Yourself? </h1>
     <div>
-        <label for="username">Enter Username:</label>
-        <input type="text" id="username" name="username">
+        <label for="usernameToLookUp">Enter Username:</label>
+        <input type="text" id="usernameToLookUp" name="usernameToLookUp">
     </div>
     <div>
         <button type="submit" class="button">Search</button>

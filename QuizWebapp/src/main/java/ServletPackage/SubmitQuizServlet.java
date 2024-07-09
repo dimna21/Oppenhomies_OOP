@@ -23,7 +23,7 @@ public class SubmitQuizServlet extends HttpServlet {
         ArrayList<Question> questions = QuizDAO.getQuizQuestions(quizId);
 
         String questionOrderJson = request.getParameter("questionOrder");
-        System.out.println(questionOrderJson);
+
         int[] questionOrder = parseQuestionOrder(questionOrderJson);
 
         int userScore = 0;
@@ -101,38 +101,70 @@ public class SubmitQuizServlet extends HttpServlet {
     }
 
     private static int[] checkMatchingAnswer(Question question, String matchingJson) {
+        System.out.println("Received matchingJson: " + matchingJson);
 
-        // Parse the JSON string of matchings manually
-        matchingJson = matchingJson.substring(1, matchingJson.length() - 1); // Remove outer brackets
-        String[] pairs = matchingJson.split("\\},\\{");
         QuestionMatching matchingQuestion = (QuestionMatching) question;
         ArrayList<String> words = matchingQuestion.getWords();
         ArrayList<String> matchingWords = matchingQuestion.getMatchingWords();
         int maxScore = words.size();
-
         int correctMatches = 0;
-        for (String pair : pairs) {
-            pair = pair.replaceAll("[{}\"]", ""); // Remove brackets and quotes
-            String[] keyValue = pair.split(",");
-            String left = keyValue[0].split(":")[1].trim();
-            String right = keyValue[1].split(":")[1].trim();
-            int leftIndex = words.indexOf(left);
-            int rightIndex = matchingWords.indexOf(right);
-            if (leftIndex == rightIndex) {
-                correctMatches++;
+
+        if (matchingJson == null || matchingJson.isEmpty()) {
+            System.out.println("Received empty or null matchingJson");
+            return new int[]{0, maxScore};
+        }
+
+        // Remove outer brackets, quotes, and backslashes
+        matchingJson = matchingJson.replaceAll("^\\[|\\]$", "").replaceAll("\\\\", "");
+
+        StringTokenizer tokenizer = new StringTokenizer(matchingJson, "{}:,\"");
+
+        String left = null;
+        String right = null;
+
+        while (tokenizer.hasMoreTokens()) {
+            String token = tokenizer.nextToken().trim();
+
+            if (token.equals("left")) {
+                if (tokenizer.hasMoreTokens()) {
+                    left = tokenizer.nextToken().trim();
+                }
+            } else if (token.equals("right")) {
+                if (tokenizer.hasMoreTokens()) {
+                    right = tokenizer.nextToken().trim();
+                }
+
+                // We have both left and right, so we can check the match
+                if (left != null && right != null) {
+                    int leftIndex = words.indexOf(left);
+                    int rightIndex = matchingWords.indexOf(right);
+
+                    if (leftIndex != -1 && rightIndex != -1 && leftIndex == rightIndex) {
+                        correctMatches++;
+                    }
+
+                    // Reset left and right for the next pair
+                    left = null;
+                    right = null;
+                }
             }
         }
 
+        System.out.println("Correct matches: " + correctMatches + " out of " + maxScore);
         return new int[]{correctMatches, maxScore};
     }
 
     private static int[] checkCheckboxAnswer(Question question, String[] userAnswers) {
         QuestionCheckbox q = (QuestionCheckbox) question;
         ArrayList<Integer> correctList = q.getCorrectList();
+        Set<Integer> set = new HashSet<>(correctList);
         int maxScore = 0;
         int userScore = 0;
-        for(Integer i : correctList) {
-            if(i == 1) maxScore++;
+        for (int i=0; i<correctList.size(); i++) {
+            if(correctList.get(i) == 1) {
+                maxScore++;
+                set.add(i);
+            }
         }
 
         ArrayList<Integer> userSelectedAnswers = new ArrayList<>();
@@ -140,7 +172,6 @@ public class SubmitQuizServlet extends HttpServlet {
             userSelectedAnswers.add(Integer.parseInt(answer));
         }
 
-        Set<Integer> set = new HashSet<>(correctList);
         for(Integer i : userSelectedAnswers) {
             if(set.contains(i)) {
                 set.remove(i);
@@ -156,7 +187,7 @@ public class SubmitQuizServlet extends HttpServlet {
         int maxScore = q.getAnswerList().size();
         ArrayList<String> correctAnswers = q.getAnswerList();
         int correctCount = 0;
-        System.out.println(Arrays.toString(userAnswers));
+
         // Create a set of user answers to remove duplicates
         Set<String> uniqueUserAnswers = new HashSet<>();
         for (String answer : userAnswers) {

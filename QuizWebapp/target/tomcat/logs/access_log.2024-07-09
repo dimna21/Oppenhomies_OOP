@@ -1,0 +1,7 @@
+0:0:0:0:0:0:0:1 - - [09/Jul/2024:04:27:20 +0400] "GET / HTTP/1.1" 200 8283 http-bio-8085-exec-1 368
+0:0:0:0:0:0:0:1 - - [09/Jul/2024:04:27:20 +0400] "GET /Homepage/WellWellWell.css HTTP/1.1" 200 4287 http-bio-8085-exec-3 3
+0:0:0:0:0:0:0:1 - - [09/Jul/2024:04:27:22 +0400] "GET /UserAuthentication/loginPage.jsp HTTP/1.1" 200 873 http-bio-8085-exec-4 27
+0:0:0:0:0:0:0:1 - - [09/Jul/2024:04:27:22 +0400] "GET /UserAuthentication/authen.css?v=2.0 HTTP/1.1" 200 3419 http-bio-8085-exec-5 1
+0:0:0:0:0:0:0:1 - - [09/Jul/2024:04:27:28 +0400] "POST /LoginServlet HTTP/1.1" 200 30537 http-bio-8085-exec-6 115
+0:0:0:0:0:0:0:1 - - [09/Jul/2024:04:27:28 +0400] "GET /UserHomePage.css?v=2.0 HTTP/1.1" 200 10601 http-bio-8085-exec-7 1
+0:0:0:0:0:0:0:1 - - [09/Jul/2024:04:27:30 +0400] "POST /RejectChallengeServlet HTTP/1.1" 404 995 http-bio-8085-exec-8 1

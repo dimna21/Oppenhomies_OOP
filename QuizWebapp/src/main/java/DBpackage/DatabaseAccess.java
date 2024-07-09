@@ -76,7 +76,8 @@ public class DatabaseAccess {
                         resultSet.getInt("quizzes_created"),
                         resultSet.getInt("highest_scorer"),
                         resultSet.getInt("practice_mode"),
-                        resultSet.getString("profile_pic_url")
+                        resultSet.getString("profile_pic_url"),
+                        resultSet.getInt("activeAccount")
                 );
             }
         } catch (SQLException e) {
@@ -827,10 +828,10 @@ public class DatabaseAccess {
      *  If the user is already an admin or the promoting user is not an admin,
      *  operation returns false
      */
-    public  static boolean promoteToAdmin(String admin, String user) {
-        if (!isAdmin(admin) || isAdmin(user)) {
-            return false;
-        }
+    public  static boolean promoteToAdmin(String user) {
+//        if (!isAdmin(admin) || isAdmin(user)) {
+//            return false;
+//        }
 
         String query = "UPDATE Users " +
                 "SET admin_status = 1 " +  // Assuming admin_status 1 indicates admin status
@@ -952,10 +953,19 @@ public class DatabaseAccess {
     /** Deletes a user's account if the action is performed by an admin
      * and returns a corresponding boolean
      */
-    public static  boolean deleteAccount(int adminID, int userID){
-        if (!isAdmin(getUsername(adminID))) {
-            return false;
+    public static boolean unbanAccount(int userID){
+        String query = "UPDATE Users " +
+                " SET activeAccount = " + 1 +
+                " WHERE user_id = " + userID;
+        try (Statement stmt = con.createStatement()) {
+            int rowsUpdated = stmt.executeUpdate(query);
+        } catch (SQLException e) {
+            throw new RuntimeException();
         }
+        return true;
+    }
+    public static  boolean deleteAccount( int userID){
+
         String query = "UPDATE Users " +
                 " SET activeAccount = " + 0 +
                 " WHERE user_id = " + userID;

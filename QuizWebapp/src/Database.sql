@@ -38,10 +38,10 @@ Create table Challenge(
 );
 
 INSERT INTO Challenge(from_id, to_id, quiz_id, notification) VALUES
-                                                                 (3,1,1,1),
-                                                                 (2,1,1,1),
-                                                                 (4,1,1,1),
-                                                                 (5,1,1,1);
+                                                                 (3,1,1,0),
+                                                                 (2,1,1,0),
+                                                                 (4,1,1,0),
+                                                                 (5,1,1,0);
 -- Create Users table
 CREATE TABLE Users (
                        user_id INT(10) AUTO_INCREMENT PRIMARY KEY,
@@ -360,12 +360,7 @@ INSERT INTO checkbox_answers (quiz_id,sub_id, answer, correct, order_num) VALUES
   (6,6, 'Python', 1,2 ),
   (6,6, 'C++', 1, 3),
   (6,6, 'HTML', 0, 4);
--- ---------------------------------------------------------------
-INSERT INTO Challenge(from_id, to_id, quiz_id, notification) VALUES
-                                                                 (3,1,1,1),
-                                                                 (2,1,1,1),
-                                                                 (4,1,1,1),
-                                                                 (5,1,1,1);
+
 -- --------------------------
 INSERT INTO Messages (from_id, to_id, text, notification)
 VALUES

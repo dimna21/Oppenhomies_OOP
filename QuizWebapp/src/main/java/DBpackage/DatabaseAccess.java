@@ -1450,6 +1450,86 @@ public class DatabaseAccess {
 
         return averageScore;
     }
+    public static int amountOfTimesTaken(int quizID) {
+        String query = "SELECT COUNT(*) AS times_taken FROM Scores WHERE quiz_id = ?";
+        int timesTaken = 0;
+
+        try {
+            PreparedStatement statement = con.prepareStatement(query);
+            statement.setInt(1, quizID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                timesTaken = resultSet.getInt("times_taken");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving amount of times taken for quiz ID " + quizID + ": " + e.getMessage());
+        }
+
+        return timesTaken;
+    }
+    public static ArrayList<Integer> getScoreRangeCounts(int quizID) {
+        ArrayList<Integer> scoreRangeCounts = new ArrayList<>();
+
+        // Define the score range boundaries
+        int[] scoreRanges = {10, 20, 30, 40, 50, 60, 70, 80, 90, 100};
+
+        // Initialize counts for each range
+        int[] rangeCounts = new int[scoreRanges.length]; // +1 to count scores beyond the last range
+
+        String query = "SELECT score FROM Scores WHERE quiz_id = ?";
+
+        try {
+            PreparedStatement statement = con.prepareStatement(query);
+            statement.setInt(1, quizID);
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int score = resultSet.getInt("score");
+
+                // Determine which range the score falls into
+                for (int i = 0; i < scoreRanges.length; i++) {
+                    if (score <= scoreRanges[i]) {
+                        rangeCounts[i]++;
+                        break; // Exit loop once the score range is found
+                    }
+                }
+
+                // Count scores beyond the last defined range
+                if (score > scoreRanges[scoreRanges.length - 1]) {
+                    rangeCounts[scoreRanges.length]++;
+                }
+            }
+
+            // Convert array to ArrayList for easier handling
+            for (int count : rangeCounts) {
+                scoreRangeCounts.add(count);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving score range counts for quiz ID " + quizID + ": " + e.getMessage());
+        }
+        //System.out.println(scoreRangeCounts.size());
+        return scoreRangeCounts;
+    }
+
+    public static int amountOfDifferentUsersTaken(int quizID) {
+        String query = "SELECT COUNT(DISTINCT user_id) AS different_users FROM Scores WHERE quiz_id = ?";
+        int differentUsers = 0;
+
+        try {
+            PreparedStatement statement = con.prepareStatement(query);
+            statement.setInt(1, quizID);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                differentUsers = resultSet.getInt("different_users");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException("Error retrieving amount of different users who have taken quiz ID " + quizID + ": " + e.getMessage());
+        }
+
+        return differentUsers;
+    }
 
 
 

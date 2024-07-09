@@ -110,7 +110,7 @@
 
         <div id = "tab1" class="tab-content active">
             <h2><%=profile%>'s Most Popular Quizzes</h2>
-            <div>
+            <div class = "popuquiz">
                 <% for(Quiz quiz: mostPopularQuizzes) {%>
                 <a href="QuizSummeryPage.jsp?quizId=<%=quiz.getQuiz_id()%>" class="quiz-link">
                     <div class="popular-quizzes">
@@ -125,7 +125,7 @@
 
         <div id="tab2" class="tab-content">
             <h2>Recently Created Quizzes</h2>
-            <div>
+            <div class = "rescre">
                 <% for(Quiz quiz: recentQuizzes) {%>
                 <a href="QuizSummeryPage.jsp?quizId=<%=quiz.getQuiz_id()%>" class="quiz-link">
                     <div class="recently-created-quizzes">
@@ -268,3 +268,6 @@
     </div>
 </body>
 </html>
+<div class="bg"></div>
+<div class="bg bg2"></div>
+<div class="bg bg3"></div>

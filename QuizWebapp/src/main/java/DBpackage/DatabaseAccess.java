@@ -2248,4 +2248,38 @@ public class DatabaseAccess {
         }
         return notes;
     }
+    public static ArrayList<Quiz> getQuizBySimilarName(String name) {
+        ArrayList<Quiz> quizzes = new ArrayList<>();
+        String query = "SELECT quizzes.*, users.user_id, users.username " +
+                "FROM quizzes " +
+                "LEFT JOIN users ON quizzes.quiz_creator_id = users.user_id " +
+                "WHERE quiz_name LIKE ? " +
+                "ORDER BY quizzes.times_taken DESC;";
+
+        try {
+            PreparedStatement statement = con.prepareStatement(query);
+            statement.setString(1, "%" + name + "%");
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                Quiz q = new Quiz(
+                        resultSet.getInt("quiz_id"),
+                        resultSet.getString("quiz_name"),
+                        resultSet.getString("quiz_description"),
+                        resultSet.getInt("quiz_creator_id"),
+                        resultSet.getString("username"),
+                        resultSet.getInt("random_question"),
+                        resultSet.getInt("one_page"),
+                        resultSet.getInt("immediate"),
+                        resultSet.getInt("practice"),
+                        resultSet.getTimestamp("creation_date"),
+                        resultSet.getInt("times_taken")
+                );
+                quizzes.add(q);
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        return quizzes;
+    }
 }

@@ -6,6 +6,7 @@ import DBpackage.Quiz;
 import DBpackage.Score;
 import DBpackage.ScoreAndUser;
 
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -131,6 +132,9 @@ public class QuizDAO {
          DatabaseAccess.getRecentScoresAndQuizzesForUser( scores,quizzes,userId,amount);
 
     }
-
-
+    public static ArrayList<Quiz> getQuizBySimilarName(String name) {
+        return DatabaseAccess.getQuizBySimilarName(name);
     }
+
+
+}

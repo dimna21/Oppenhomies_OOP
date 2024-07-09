@@ -2,6 +2,7 @@ import DBpackage.*;
 import DBpackage.Questions.*;
 import DBpackage.Quiz;
 import DBpackage.User;
+import com.sun.xml.internal.ws.spi.db.DatabindingException;
 import junit.framework.TestCase;
 
 import javax.faces.bean.RequestScoped;
@@ -467,6 +468,12 @@ public class DBtest extends TestCase{
         questions.add(q7);
         dbCall.populateQuiz(questions);
 
+    }
+    public void testGetQuizBySimilarName(){
+        ArrayList<Quiz> q= DatabaseAccess.getQuizBySimilarName("enera");
+        assertEquals(q.size(),1);
+        q= DatabaseAccess.getQuizBySimilarName("Quiz");
+        assertEquals(q.size(),6);
     }
 
 }

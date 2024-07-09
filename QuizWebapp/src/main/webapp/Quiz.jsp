@@ -361,6 +361,9 @@
         <% } %>
 
         <% } else if (type == QuestionTypeConstants.QUESTION_PICTURE) { %>
+        <%
+            System.out.println(((QuestionPicture)question).getImageURL());
+        %>
         <p><%=((QuestionPicture)question).getQuestion()%></p>
         <img src="<%=((QuestionPicture)question).getImageURL()%>" alt="Question Image">
         <input type="text" name="answer[<%=originalIndex%>]" id="question<%=originalIndex%>-answer" placeholder="Answer">
@@ -372,6 +375,7 @@
         <% } %>
 
         <% } else if (type == QuestionTypeConstants.QUESTION_CHECKBOX) { %>
+        <p><%=((QuestionCheckbox)question).getQuestion()%></p>
         <%ArrayList<String> cbAnswers = ((QuestionCheckbox)question).getAnswerList();%>
         <% for(int j = 0; j < cbAnswers.size(); j++) { %>
         <div class="option-group">
@@ -382,6 +386,7 @@
 
         <% } else if (type == QuestionTypeConstants.QUESTION_MATCHING) { %>
         <div class="matching-container">
+            <p><%=((QuestionMatching)question).getQuestion()%></p>
             <div class="matching-column matching-column-left">
                 <% ArrayList<String> leftItems = ((QuestionMatching)question).getWords(); %>
                 <% for(int j = 0; j < leftItems.size(); j++) { %>

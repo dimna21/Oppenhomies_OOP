@@ -22,6 +22,8 @@ public class CreateQuizServlet extends HttpServlet
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         //DatabaseAccess dbAccess = (DatabaseAccess) getServletContext().getAttribute("DatabaseAccess");
 
+
+
         BufferedReader reader = request.getReader();
         StringBuilder sb = new StringBuilder();
         String line;
@@ -48,6 +50,8 @@ public class CreateQuizServlet extends HttpServlet
         java.util.Date now = new java.util.Date();
         java.sql.Timestamp currDate = new java.sql.Timestamp(now.getTime());
 
+        // QuizDAO.deleteQuizAndRelatedQuestions(quizId);
+        // Could use this to finish editQuiz but there is not time till deadline :(
         int quizId = QuizDAO.createQuizAndGetID(quizName, quizDescription, creatorId, "", randomQuestion, immediate, practice, onePage, currDate);
 
         JsonArray questionsArray = jsonObject.getAsJsonArray("questions");

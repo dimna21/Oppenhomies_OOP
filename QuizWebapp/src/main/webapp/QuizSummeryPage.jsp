@@ -164,6 +164,11 @@
                 <button type="submit">Practice</button>
             </form>
             <% } %>
+            <% if(quizCreatorID == userId) {%>
+            <form action="EditQuiz.jsp?quizId=<%=quiz.getQuiz_id()%>" method="post">
+                <button type="submit">Edit</button>
+            </form>
+            <%} %>
         </div>
     </div>
 <script>

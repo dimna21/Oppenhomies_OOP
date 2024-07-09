@@ -475,5 +475,9 @@ public class DBtest extends TestCase{
         q= DatabaseAccess.getQuizBySimilarName("Quiz");
         assertEquals(q.size(),6);
     }
+    public void testGetScoreRangeCounts(){
+        ArrayList<Integer> in = DatabaseAccess.getScoreRangeCounts(1);
+        assertEquals(in.size(),10);
+    }
 
 }

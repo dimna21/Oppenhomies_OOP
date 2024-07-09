@@ -135,6 +135,15 @@ public class QuizDAO {
     public static ArrayList<Quiz> getQuizBySimilarName(String name) {
         return DatabaseAccess.getQuizBySimilarName(name);
     }
+    public static ArrayList<Integer> getScoreRangeCounts(int quizID) {
+        return DatabaseAccess.getScoreRangeCounts(quizID);
+    }
+    public static int amountOfTimesTaken(int quizID) {
+        return DatabaseAccess.amountOfTimesTaken(quizID);
 
+    }
+    public static int amountOfDifferentUsersTaken(int quizID) {
+        return DatabaseAccess.amountOfDifferentUsersTaken(quizID);
+    }
 
-}
+    }

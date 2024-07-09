@@ -26,7 +26,7 @@
 
     ArrayList<Challenge> challenges = new ArrayList<Challenge>();
     ArrayList<Quiz> quizzesForChallenges = new ArrayList<Quiz>();
-    ChallengeDAO.getChallengesForUser(userID, challenges, quizzesForChallenges);
+    ChallengeDAO.getWaitingChallengesForUser(userID, challenges, quizzesForChallenges);
 
     ArrayList<FriendRequest> friendRequests = FriendDAO.waitingFriendRequests(userID);
     ArrayList<Note> notes = DatabaseAccess.getNotes(userID, 0);
@@ -261,60 +261,60 @@
 
         <div id="tab8" class="tab-content">
             <h2>Friends' Activities</h2>
-                <% for(Activity activity : activities) { %>
-                <div class="friend-activity">
-                    <div class="friend-header">
-                        <h3><%= activity.getUsername() %>'s Activities</h3>
-                        <button class="toggle-button">Show All Activities</button>
-                    </div>
-                    <div class="activity-content">
-                        <div class="activity-column scores">
-                            <h4>Scores</h4>
-                            <% if(!activity.getScoreList().isEmpty()) { %>
+            <% for(Activity activity : activities) { %>
+            <div class="friend-activity">
+                <div class="friend-header">
+                    <h3><%= activity.getUsername() %>'s Activities</h3>
+                    <button class="toggle-button">Show All Activities</button>
+                </div>
+                <div class="activity-content">
+                    <div class="activity-column scores">
+                        <h4>Scores</h4>
+                        <% if(!activity.getScoreList().isEmpty()) { %>
+                        <div class="score-item">
+                            <p>Quiz ID: <%= activity.getScoreList().get(0).getQuiz_id() %>, Score: <%= activity.getScoreList().get(0).getScore() %></p>
+                        </div>
+                        <% } %>
+                        <div class="detailed-content" style="display: none;">
+                            <% for(int i = 1; i < activity.getScoreList().size(); i++) { %>
                             <div class="score-item">
-                                <p>Quiz ID: <%= activity.getScoreList().get(0).getQuiz_id() %>, Score: <%= activity.getScoreList().get(0).getScore() %></p>
+                                <p>Quiz ID: <%= activity.getScoreList().get(i).getQuiz_id() %>, Score: <%= activity.getScoreList().get(i).getScore() %></p>
                             </div>
                             <% } %>
-                            <div class="detailed-content" style="display: none;">
-                                <% for(int i = 1; i < activity.getScoreList().size(); i++) { %>
-                                <div class="score-item">
-                                    <p>Quiz ID: <%= activity.getScoreList().get(i).getQuiz_id() %>, Score: <%= activity.getScoreList().get(i).getScore() %></p>
-                                </div>
-                                <% } %>
-                            </div>
                         </div>
-                        <div class="activity-column quizzes">
-                            <h4>Quizzes</h4>
-                            <% if(!activity.getQuizList().isEmpty()) { %>
+                    </div>
+                    <div class="activity-column quizzes">
+                        <h4>Quizzes</h4>
+                        <% if(!activity.getQuizList().isEmpty()) { %>
+                        <div class="quiz-item">
+                            <p>Quiz: <%= activity.getQuizList().get(0).getName() %></p>
+                        </div>
+                        <% } %>
+                        <div class="detailed-content" style="display: none;">
+                            <% for(int i = 1; i < activity.getQuizList().size(); i++) { %>
                             <div class="quiz-item">
-                                <p>Quiz: <%= activity.getQuizList().get(0).getName() %></p>
+                                <p>Quiz: <%= activity.getQuizList().get(i).getName() %></p>
                             </div>
                             <% } %>
-                            <div class="detailed-content" style="display: none;">
-                                <% for(int i = 1; i < activity.getQuizList().size(); i++) { %>
-                                <div class="quiz-item">
-                                    <p>Quiz: <%= activity.getQuizList().get(i).getName() %></p>
-                                </div>
-                                <% } %>
-                            </div>
                         </div>
-                        <div class="activity-column achievements">
-                            <h4>Achievements</h4>
-                            <% if(!activity.getAchievementList().isEmpty()) { %>
+                    </div>
+                    <div class="activity-column achievements">
+                        <h4>Achievements</h4>
+                        <% if(!activity.getAchievementList().isEmpty()) { %>
+                        <div class="achievement-item">
+                            <p>Achievement: <%= activity.getAchievementList().get(0).getAchievementTitle() %></p>
+                        </div>
+                        <% } %>
+                        <div class="detailed-content" style="display: none;">
+                            <% for(int i = 1; i < activity.getAchievementList().size(); i++) { %>
                             <div class="achievement-item">
-                                <p>Achievement: <%= activity.getAchievementList().get(0).getAchievementTitle() %></p>
+                                <p>Achievement: <%= activity.getAchievementList().get(i).getAchievementTitle() %></p>
                             </div>
                             <% } %>
-                            <div class="detailed-content" style="display: none;">
-                                <% for(int i = 1; i < activity.getAchievementList().size(); i++) { %>
-                                <div class="achievement-item">
-                                    <p>Achievement: <%= activity.getAchievementList().get(i).getAchievementTitle() %></p>
-                                </div>
-                                <% } %>
-                            </div>
                         </div>
                     </div>
                 </div>
+            </div>
             <% } %>
         </div>
     </div>

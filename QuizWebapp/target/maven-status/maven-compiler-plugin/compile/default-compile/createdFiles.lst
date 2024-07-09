@@ -23,6 +23,7 @@ DBpackage\Activity.class
 DBpackage\DatabaseAccess.class
 DBpackage\DatabaseInfo.class
 DBpackage\hasher.class
+ServletPackage\AcceptChallengeServlet.class
 ServletPackage\CreateQuizServlet.class
 DBpackage\Questions\Question.class
 DBpackage\Quiz.class
@@ -31,6 +32,7 @@ DBpackage\Questions\QuestionFillBlank.class
 DBpackage\User.class
 DBpackage\DAOpackage\StatisticDAO.class
 DBpackage\Questions\QuestionMatching.class
+ServletPackage\RejectChallengeServlet.class
 DBpackage\DAOpackage\NoteDAO.class
 DBpackage\Questions\QuestionPicture.class
 DBpackage\ScoreAndUser.class

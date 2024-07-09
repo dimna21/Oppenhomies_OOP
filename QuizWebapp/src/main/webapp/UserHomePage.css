@@ -75,7 +75,6 @@ body {
     margin: auto;
     overflow: hidden;
     padding: 20px;
-    background-color: #795695;
 }
 
 /* Styling for headings */
@@ -94,7 +93,7 @@ h1 {
 
 /* Styling for tabs container */
 .tabs-container {
-    background: #C8A4D4;
+    background-color: rgba(200, 164, 212, 0.4);
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -105,7 +104,7 @@ h1 {
     padding: 0;
     margin: 0;
     overflow: hidden;
-    background-color: #AC94F4;
+    background-color: rgba(162,196,148,0.4);
     border-bottom: 1px solid #ccc;
 }
 
@@ -126,7 +125,7 @@ h1 {
 }
 
 .tab-link.active {
-    background-color: #C8A2C9;
+    background-color: rgba(200, 164, 212, 0.55);
     border-bottom: 2px solid #ccc;
 }
 

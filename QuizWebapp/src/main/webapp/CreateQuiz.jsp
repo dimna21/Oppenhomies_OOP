@@ -411,16 +411,17 @@
         url: 'CreateQuizServlet',
         type: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify(quizData),  // This line is changed
+        data: JSON.stringify(quizData),
         success: function(response) {
-          alert('Quiz created successfully!');
-          // Optionally, redirect or clear the form
+          // Redirect to UserHomePage.jsp upon successful creation
+          window.location.href = 'UserHomePage.jsp';
         },
         error: function(xhr, status, error) {
           alert('Error creating quiz: ' + error);
         }
       });
     });
+
 
     function setupQuestionButtons(questionId) {
       $(`#question${questionId} .saveBtn`).click(function() {

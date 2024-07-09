@@ -213,7 +213,47 @@ public class DatabaseAccess {
         catch (SQLException e) {throw new RuntimeException(e);}
     }
 
+    public static void getWaitingChallengesForUser(int userID, ArrayList<Challenge> challenges, ArrayList<Quiz> quizzes){
+        String query = "SELECT c.*, q.*, u.username as \"quiz_creator_username\", tu.username as \"to_username\", fu.username as \"from_username\" " +
+                "FROM challenge c " +
+                "LEFT JOIN quizzes q ON c.quiz_id = q.quiz_id " +
+                "LEFT JOIN users u ON q.quiz_creator_id = u.user_id " +
+                "LEFT JOIN users tu ON c.to_id = tu.user_id " +
+                "LEFT JOIN users fu ON c.from_id = fu.user_id " +
+                "WHERE c.to_id = " + userID + " AND c.notification = 0";
 
+        try {
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                Challenge challenge = new Challenge(
+                        rs.getInt("challenge_id"),
+                        rs.getInt("from_id"),
+                        rs.getInt("to_id"),
+                        rs.getInt("quiz_id"),
+                        rs.getInt("notification"),
+                        rs.getString("from_username"),
+                        rs.getString("to_username")
+                );
+
+                Quiz quiz = new Quiz(
+                        rs.getInt("quiz_id"),
+                        rs.getString("quiz_name"),
+                        rs.getString("quiz_description"),
+                        rs.getInt("quiz_creator_id"),
+                        rs.getString("quiz_creator_username"),
+                        rs.getInt("random_question"),
+                        rs.getInt("one_page"),
+                        rs.getInt("immediate"),
+                        rs.getInt("practice"),
+                        rs.getTimestamp("creation_date"),
+                        rs.getInt("times_taken")
+                );
+                challenges.add(challenge);
+                quizzes.add(quiz);
+            }
+        }
+        catch (SQLException e) {throw new RuntimeException(e);}
+    }
 
 
     public static Quiz getQuizInfo(int quiz_id){
@@ -943,7 +983,7 @@ public class DatabaseAccess {
             stmt = con.prepareStatement(query);
             if (num > 0) {
                 stmt.setInt(1, num);
-            }   
+            }
 
             ResultSet resultSet = stmt.executeQuery();
 
@@ -1439,7 +1479,7 @@ public class DatabaseAccess {
     /** This method must be called after a user takes a quiz. It takes in specified parameters
      *  and updates the database accordingly */
     public  static void quizFinished(int userID, int quizID, int score,
-                             Timestamp date, int secondsTaken, boolean practiceMode, int quizRating){
+                                     Timestamp date, int secondsTaken, boolean practiceMode, int quizRating){
 
         // Update practice mode achievement
         User user = getUserInfo(getUsername(userID));
@@ -1663,8 +1703,8 @@ public class DatabaseAccess {
 
     /** Creates a quiz object in database and returns its quizID */
     public static  int createQuizAndGetID(String quizName, String quizDescription,
-                                  int creatorID, String creatorUsername, int randomQuestion,
-                                  int immediate, int practice, int onePage, Timestamp creationDate) {
+                                          int creatorID, String creatorUsername, int randomQuestion,
+                                          int immediate, int practice, int onePage, Timestamp creationDate) {
         String query = "INSERT INTO Quizzes (quiz_name, quiz_description, quiz_creator_id, " +
                 "random_question, one_page, immediate, practice, creation_date, times_taken) " +
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -1697,8 +1737,8 @@ public class DatabaseAccess {
     }
 
     public static  void createQuizWithID(int quizId,String quizName, String quizDescription,
-                                  int creatorID, String creatorUsername, int randomQuestion,
-                                  int immediate, int practice, int onePage, Timestamp creationDate) {
+                                         int creatorID, String creatorUsername, int randomQuestion,
+                                         int immediate, int practice, int onePage, Timestamp creationDate) {
         String query = "INSERT INTO Quizzes (quiz_id,quiz_name, quiz_description, quiz_creator_id, " +
                 "random_question, one_page, immediate, practice, creation_date, times_taken) " +
                 "VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -2174,12 +2214,12 @@ public class DatabaseAccess {
         ArrayList<Score> scores = new ArrayList<>();
         while (rs.next()) {
             Score score = new Score(
-                rs.getInt("score_id"),
-                rs.getInt("quiz_id"),
-                rs.getInt("user_id"),
-                rs.getInt("score"),
-                rs.getInt("time"),
-                rs.getTimestamp("date_scored")
+                    rs.getInt("score_id"),
+                    rs.getInt("quiz_id"),
+                    rs.getInt("user_id"),
+                    rs.getInt("score"),
+                    rs.getInt("time"),
+                    rs.getTimestamp("date_scored")
             );
             scores.add(score);
         }
@@ -2224,12 +2264,12 @@ public class DatabaseAccess {
         ArrayList<Note> notes = new ArrayList<>();
         while (rs.next()) {
             Note note = new Note(
-                rs.getInt("message_id"),
-                rs.getInt("from_id"),
-                rs.getString("username"),
-                rs.getInt("to_id"),
-                rs.getString("text"),
-                rs.getInt("notification")
+                    rs.getInt("message_id"),
+                    rs.getInt("from_id"),
+                    rs.getString("username"),
+                    rs.getInt("to_id"),
+                    rs.getString("text"),
+                    rs.getInt("notification")
             );
             notes.add(note);
         }

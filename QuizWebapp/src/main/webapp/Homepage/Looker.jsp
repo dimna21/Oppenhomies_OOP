@@ -7,8 +7,8 @@
 <body>
 <form action="<%= request.getContextPath() %>/LookUpServlet" method="post">
     <div>
-        <label for="username">Username:</label>
-        <input type="text" id="username" name="username">
+        <label for="usernameToLookUp">Username:</label>
+        <input type="text" id="usernameToLookUp" name="usernameToLookUp">
     </div>
     <div>
         <button type="submit" class="button">Search</button>

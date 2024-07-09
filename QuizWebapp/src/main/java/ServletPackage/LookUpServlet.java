@@ -20,22 +20,22 @@ public class LookUpServlet extends HttpServlet {
         //DatabaseAccess dbAccess = (DatabaseAccess) getServletContext().getAttribute("DatabaseAccess");
         HttpSession session = req.getSession();
 
-        String username = req.getParameter("username");
+        String usernameToLookUp = req.getParameter("usernameToLookUp");
         String LoggedInUser = session.getAttribute("LoggedInUser").toString();
 
 //        System.out.println("LoggedInUser: " + LoggedInUser);
 //        System.out.println("username: " + username);
 //        System.out.println("-- END OF LOOKUP --");
 
-        boolean exists = (UserDAO.getUserInfo(username) != null);
-        boolean same = username.equals(LoggedInUser);
+        boolean exists = (UserDAO.getUserInfo(usernameToLookUp) != null);
+        boolean same = usernameToLookUp.equals(LoggedInUser);
         RequestDispatcher dispatcher;
         if(exists){
             if(!same){
-                int userID = UserDAO.getUserInfo(username).getUser_id();
-                session.setAttribute("username", username);
+                int userID = UserDAO.getUserInfo(usernameToLookUp).getUser_id();
+
                 session.setAttribute("LoggedInUser", LoggedInUser);
-                session.setAttribute("VisitedUser", username);
+                session.setAttribute("VisitedUser", usernameToLookUp);
                 dispatcher = req.getRequestDispatcher("ProfilePage.jsp?profileId=" + userID);
             }
             else {

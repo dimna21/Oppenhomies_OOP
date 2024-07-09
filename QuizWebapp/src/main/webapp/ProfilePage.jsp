@@ -12,7 +12,6 @@
 <%
     int userId = (Integer) session.getAttribute("userID");
     String username = (String) session.getAttribute("username");
-
     int profileId = Integer.parseInt(request.getParameter("profileId"));
     //DatabaseAccess dbAccess = (DatabaseAccess) application.getAttribute("DatabaseAccess");
     String profile = DatabaseAccess.getUsername(profileId);
@@ -38,8 +37,8 @@
     ArrayList<Note> chat = NoteDAO.getNotesForChat(userId, profileId, 0);
     //System.out.println("Chat: " + chat.size());
 
-    String LoggedInUser = session.getAttribute("LoggedInUser").toString();
-    String VisitedUser = session.getAttribute("VisitedUser").toString();
+    String LoggedInUser = (String) session.getAttribute("LoggedInUser");
+    String VisitedUser = (String) session.getAttribute("VisitedUser");
 
     boolean drugi = false;
     ArrayList<User> friends = FriendDAO.getFriendlist(LoggedInUser);
@@ -75,7 +74,7 @@
         <%if (drugi) {%>
         <div class="FRIEND-container">
             <div class="FRIEND">
-                <a href="ProfilePage.jsp" class="button">Friends</a>
+                <p class="waitfa">Friends</p>
             </div>
         </div>
         <%}
